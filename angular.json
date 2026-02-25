@@ -30,9 +30,13 @@
                 "output": "/"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ]
+            "styles": ["src/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"],
+              "sass": {
+                "silenceDeprecations": ["color-functions", "global-builtin", "import"]
+              }
+            }
           },
           "configurations": {
             "production": {
@@ -60,6 +64,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "port": 4215
+          },
           "configurations": {
             "production": {
               "buildTarget": "clicker-game:build:production"
