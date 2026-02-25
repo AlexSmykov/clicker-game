@@ -1,0 +1,9 @@
+# dirs
+/.husky
+/.idea
+/node_modules
+/public
+
+# files
+package.json
+package-lock.json
