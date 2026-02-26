@@ -10,6 +10,11 @@ export const routes: Routes = [
         path: MAIN_ROUTES.upgrades,
         loadComponent: () => import('src/app/pages/upgrades/upgrades.component'),
       },
+      {
+        path: '',
+        redirectTo: MAIN_ROUTES.upgrades,
+        pathMatch: 'full',
+      },
     ],
   },
   {

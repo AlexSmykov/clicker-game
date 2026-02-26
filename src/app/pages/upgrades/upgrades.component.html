@@ -1,1 +1,9 @@
-upgrades
+<div class="upgrades">
+  @for (key of upgradeKeys; track key) {
+    <app-upgrade
+      [data]="upgradeData[key]"
+      [costs]="upgradeCurrentData()[key].costs"
+      (buy)="buyUpgrade(key)"
+    />
+  }
+</div>

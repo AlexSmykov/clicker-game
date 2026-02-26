@@ -1,10 +1,6 @@
-.upgrades {
+.resources {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   gap: 16px;
-
-  > * {
-    flex: 1;
-  }
 }

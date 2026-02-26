@@ -1,0 +1,7 @@
+<div class="resources">
+  @for (resource of resourceCurrentData(); track resource.key) {
+    <div class="resource">
+      <app-resource [data]="resource" />
+    </div>
+  }
+</div>

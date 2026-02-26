@@ -1,0 +1,12 @@
+@let upgradeData = data();
+
+<div class="upgrade" [class.buyable]="isCanBuy()" (click)="buy.emit()">
+  <p class="name">{{ upgradeData.name }}</p>
+  <p class="description">{{ upgradeData.description }}</p>
+
+  <div class="costs">
+    @for (cost of parsedCosts(); track cost.key) {
+      <app-resource [data]="cost" />
+    }
+  </div>
+</div>
