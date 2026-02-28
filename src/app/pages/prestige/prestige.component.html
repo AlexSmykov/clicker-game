@@ -1,15 +1,25 @@
-@if (isBorderPassed()) {
-  <app-resource [data]="prestigePointsGain()" />
+<p>
+  Prestige resets most of yours parameters, resource and upgrades, but gives you
+  <app-resource-simple [key]="resourceKeys.prestigePoints" />
+</p>
 
-  <button class="prestige-button" (click)="prestige()">Perform prestige</button>
+@if (isBorderPassed()) {
+  <p>
+    <span>Performing now, you will get </span>
+    <app-resource [data]="prestigePointsGain()" />
+  </p>
+
+  <button class="prestige-button" (click)="prestige()">
+    <span>Perform prestige</span>
+  </button>
 
   <p>
-    Prestige points coefficient: log
+    <span>Prestige points coefficient: log</span>
     <sub>{{ prestigePointsCoefficient().toString() }}</sub>
-    (money)
+    <span>(<app-resource-simple [key]="resourceKeys.money" />)</span>
   </p>
 } @else {
-  <p class>You haven't passed border to perform prestige</p>
-  <p class>The current border is: {{ prestigeBorder().toString() }}</p>
-  <p class>You need to work harder!</p>
+  <p>You haven't passed border to perform prestige</p>
+  <p>The current border is: {{ prestigeBorder().toString() }}</p>
+  <p>You need to work harder!</p>
 }

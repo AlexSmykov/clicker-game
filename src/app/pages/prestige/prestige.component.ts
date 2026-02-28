@@ -6,13 +6,14 @@ import { RESOURCE_KEYS } from 'src/app/features/resource/resource.const';
 import { ParamService } from 'src/app/features/param/param.service';
 import { PARAM_KEYS } from 'src/app/features/param/param.const';
 import { UpgradeService } from 'src/app/features/upgrade/upgrade.service';
+import { ResourceSimpleComponent } from 'src/app/features/resource/components/simple/resource-simple.component';
 
 @Component({
   selector: 'app-prestige',
   templateUrl: './prestige.component.html',
   styleUrl: './prestige.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ResourceComponent],
+  imports: [ResourceComponent, ResourceSimpleComponent],
 })
 export default class PrestigeComponent {
   readonly #resourceService = inject(ResourceService);
@@ -44,6 +45,8 @@ export default class PrestigeComponent {
 
     return resourceMap[RESOURCE_KEYS.money].value.isGreaterThanOrEqualValue(this.prestigeBorder());
   });
+
+  readonly resourceKeys = RESOURCE_KEYS;
 
   prestige(): void {
     const paramMap = this.#paramService.paramMap();

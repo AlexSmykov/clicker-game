@@ -39,7 +39,7 @@ export const RESOURCE_DATA: Record<ResourceKey, ResourceData> = {
   [RESOURCE_KEYS.prestigePoints]: {
     name: 'Prestige points',
     icon: 'prestige',
-    color: '#dddddd',
+    color: '#afafaf',
     isDefaultUnlocked: false,
     isResetOnPrestige: false,
   },

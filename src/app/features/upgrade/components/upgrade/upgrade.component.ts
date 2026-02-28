@@ -16,6 +16,7 @@ import { UpgradeEffectComponent } from 'src/app/features/upgrade/components/effe
 export class UpgradeComponent {
   readonly data = input.required<UpgradeData>();
   readonly costs = input.required<UpgradeCurrentCost[]>();
+  readonly level = input.required<number>();
 
   readonly buy = output<void>();
 

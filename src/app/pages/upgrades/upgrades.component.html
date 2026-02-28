@@ -3,6 +3,7 @@
     <app-upgrade
       [data]="upgradeData[key]"
       [costs]="upgradeCurrentData()[key].costs"
+      [level]="upgradeCurrentData()[key].level"
       (buy)="buyUpgrade(key)"
     />
   }

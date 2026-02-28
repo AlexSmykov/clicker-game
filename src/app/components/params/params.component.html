@@ -1,12 +1,11 @@
 <div class="content" [class.expanded]="isExpanded()">
-  <div class="header">
+  <div class="header clickable" (click)="isExpanded.set(!this.isExpanded())">
     <p class="title">Params</p>
 
     <svg-icon
       class="icon"
       src="assets/icons/system/chevron-left.svg"
       [style.rotate.deg]="isExpanded() ? -90 : 0"
-      (click)="isExpanded.set(!this.isExpanded())"
     />
   </div>
 
