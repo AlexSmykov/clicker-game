@@ -19,6 +19,12 @@ export type UpgradeEffect = {
   change: ValueChange;
 };
 
+export type UpgradeEffectChange = {
+  paramKey: ParamKey;
+  oldValue: ExponentNumber;
+  newValue: ExponentNumber;
+};
+
 export type UpgradeCost = {
   startAtLevel: number;
   resources: UpgradeResourceCost[];

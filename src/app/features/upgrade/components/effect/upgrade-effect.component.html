@@ -1,0 +1,12 @@
+@let paramKey = effect().paramKey;
+@let effectValues = values();
+
+<p class="effect">
+  <span class="max">{{ paramData[paramKey].name }}: </span>
+
+  <app-param [data]="effectValues.oldValue" />
+
+  <span> -> </span>
+
+  <app-param [data]="effectValues.newValue" />
+</p>

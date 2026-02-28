@@ -15,37 +15,37 @@ export function changeParamValue(
   switch (changes.changeType) {
     case SIMPLE_VALUE_CHANGE_KEYS.plus:
       return value.plus(
-        typeof changes.value === 'string' ? paramCurrentValues[changes.value] : changes.value,
+        typeof changes.value === 'string' ? paramCurrentValues[changes.value].value : changes.value,
       );
 
     case SIMPLE_VALUE_CHANGE_KEYS.minus:
       return value.minus(
-        typeof changes.value === 'string' ? paramCurrentValues[changes.value] : changes.value,
+        typeof changes.value === 'string' ? paramCurrentValues[changes.value].value : changes.value,
       );
 
     case SIMPLE_VALUE_CHANGE_KEYS.multiply:
       return value.multiply(
-        typeof changes.value === 'string' ? paramCurrentValues[changes.value] : changes.value,
+        typeof changes.value === 'string' ? paramCurrentValues[changes.value].value : changes.value,
       );
 
     case SIMPLE_VALUE_CHANGE_KEYS.divide:
       return value.divide(
-        typeof changes.value === 'string' ? paramCurrentValues[changes.value] : changes.value,
+        typeof changes.value === 'string' ? paramCurrentValues[changes.value].value : changes.value,
       );
 
     case SIMPLE_VALUE_CHANGE_KEYS.power:
       return value.power(
-        typeof changes.value === 'string' ? paramCurrentValues[changes.value] : changes.value,
+        typeof changes.value === 'string' ? paramCurrentValues[changes.value].value : changes.value,
       );
 
     case SIMPLE_VALUE_CHANGE_KEYS.root:
       return value.root(
-        typeof changes.value === 'string' ? paramCurrentValues[changes.value] : changes.value,
+        typeof changes.value === 'string' ? paramCurrentValues[changes.value].value : changes.value,
       );
 
     case SIMPLE_VALUE_CHANGE_KEYS.log:
       return value.log(
-        typeof changes.value === 'string' ? paramCurrentValues[changes.value] : changes.value,
+        typeof changes.value === 'string' ? paramCurrentValues[changes.value].value : changes.value,
       );
 
     case NO_VALUE_CHANGE_KEYS.sqrt:

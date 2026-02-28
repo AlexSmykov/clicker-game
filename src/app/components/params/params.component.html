@@ -1,0 +1,24 @@
+<div class="content">
+  <div class="header">
+    <p class="title">Params</p>
+
+    <svg-icon
+      class="icon"
+      src="assets/icons/system/chevron-left.svg"
+      [style.rotate.deg]="isExpanded() ? -90 : 0"
+      (click)="isExpanded.set(!this.isExpanded())"
+    />
+  </div>
+
+  @if (isExpanded()) {
+    <div class="list" [class.expanded]="isExpanded()">
+      @for (param of paramList(); track param.key) {
+        <div class="param">
+          <p class="param-name">{{ paramData[param.key].name }}:</p>
+
+          <app-param [data]="param" />
+        </div>
+      }
+    </div>
+  }
+</div>

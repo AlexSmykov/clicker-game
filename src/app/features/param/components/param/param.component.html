@@ -1,0 +1,9 @@
+@let paramData = data();
+
+<span>{{ resourceData[paramData.key].prefix }}</span>
+
+<span>{{ parsedValue().toString() }}</span>
+
+@if (isPercent()) {
+  <span>%</span>
+}

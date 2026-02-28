@@ -1,6 +1,11 @@
-.resources {
+:host {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   flex-direction: row;
-  gap: 16px;
+  align-items: center;
+  gap: 4px;
+}
+
+.icon {
+  height: 24px;
 }

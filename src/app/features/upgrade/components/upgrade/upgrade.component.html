@@ -1,12 +1,23 @@
 @let upgradeData = data();
 
-<div class="upgrade" [class.buyable]="isCanBuy()" (click)="buy.emit()">
+<div
+  class="upgrade"
+  [class.buyable]="isCanBuy()"
+  [class.clickable]="isCanBuy()"
+  (click)="clickBuy()"
+>
   <p class="name">{{ upgradeData.name }}</p>
   <p class="description">{{ upgradeData.description }}</p>
 
+  <p class="effects">
+    @for (effect of effects(); track effect.paramKey) {
+      <app-upgrade-effect [effect]="effect" />
+    }
+  </p>
+
   <div class="costs">
     @for (cost of parsedCosts(); track cost.key) {
-      <app-resource [data]="cost" />
+      <app-resource [data]="cost" [isShort]="true" />
     }
   </div>
 </div>

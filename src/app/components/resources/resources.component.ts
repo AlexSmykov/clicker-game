@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 import { ResourceService } from 'src/app/features/resource/resource.service';
 import { RESOURCE_KEYS } from 'src/app/features/resource/resource.const';
 import { ResourceComponent } from 'src/app/features/resource/components/resource/resource.component';
-import { ExponentNumber } from 'exponential-number';
 
 @Component({
   selector: 'app-resources',
@@ -20,12 +19,9 @@ export class ResourcesComponent {
     return Object.values(RESOURCE_KEYS).map((key) => {
       return {
         key,
-        data: resourceMap[key],
+        isUnlocked: resourceMap[key].isUnlocked,
+        value: resourceMap[key].value,
       };
     });
   });
-
-  trackResourcesBy(resource: { key: string; data: ExponentNumber }): string {
-    return `${resource.key}_${resource.data.toString()}`;
-  }
 }

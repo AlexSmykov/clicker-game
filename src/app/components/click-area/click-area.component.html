@@ -1,1 +1,11 @@
-<button class="click-button" (click)="click()">Click me!</button>
+<div class="content">
+  <div class="content-zone"></div>
+
+  <button class="click-button" (click)="click()">Click me!</button>
+
+  <div class="content-zone gains">
+    <p class="title">Income per click:</p>
+
+    <app-resource [data]="moneyOnNextClick()" />
+  </div>
+</div>

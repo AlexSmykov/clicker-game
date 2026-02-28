@@ -5,7 +5,13 @@ import { ExponentNumber } from 'exponential-number';
 export type ParamKey = ObjectType<typeof PARAM_KEYS>;
 export type ParamCurrentValues = typeof PARAM_CURRENT_VALUE;
 
-export type Param = {
+export type ParamData = {
   name: string;
   defaultValue: ExponentNumber;
+  isPercent: boolean;
+  prefix: string;
+};
+
+export type ParamCurrentData = {
+  value: ExponentNumber;
 };

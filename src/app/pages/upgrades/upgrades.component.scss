@@ -1,10 +1,7 @@
 .upgrades {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  gap: 16px;
+  padding: 40px;
 
-  > * {
-    flex: 1;
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
 }

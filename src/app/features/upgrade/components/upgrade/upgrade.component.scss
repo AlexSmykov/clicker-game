@@ -1,16 +1,41 @@
 .upgrade {
-  max-width: 200px;
+  height: calc(100% - (8px + 1px) * 2);
+  width: calc(100% - (8px + 1px) * 2);
 
+  transition: 0.3s;
   border: 1px solid var(--color-border);
+  border-radius: 4px;
   padding: 8px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
 
   &.buyable {
     background-color: var(--color-background-medium);
+
+    &:hover {
+      background-color: var(--color-background-semi-dark);
+    }
+  }
+
+  .name {
+    font: var(--font-subheader);
+  }
+
+  .description {
+    flex: 1;
+    font: var(--font-additional);
+  }
+
+  .effects {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
   }
 
   .costs {
@@ -18,6 +43,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
   }
 }

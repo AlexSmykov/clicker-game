@@ -3,5 +3,5 @@ import { ExponentNumber } from 'exponential-number';
 
 export type ResourceInputData = {
   key: ResourceKey;
-  data: ExponentNumber;
+  value: ExponentNumber;
 };

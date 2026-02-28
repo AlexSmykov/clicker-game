@@ -32,10 +32,12 @@ export class UpgradeService {
               return cost;
             }
 
-            this.#resourceService.updateResource(
-              currentCostData.resource,
-              this.#resourceService.resourceMap()[cost.resource].minus(cost.value),
-            );
+            const resource = this.#resourceService.resourceMap()[cost.resource];
+
+            this.#resourceService.updateResource(currentCostData.resource, {
+              isUnlocked: resource.isUnlocked,
+              value: resource.value.minus(cost.value),
+            });
 
             return {
               ...cost,
@@ -56,7 +58,7 @@ export class UpgradeService {
     upgradeData.effects.forEach((effect) => {
       this.#paramService.updateParam(
         effect.paramKey,
-        changeParamValue(params[effect.paramKey], effect.change, params),
+        changeParamValue(params[effect.paramKey].value, effect.change, params),
       );
     });
   }

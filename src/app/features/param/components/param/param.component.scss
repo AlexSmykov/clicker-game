@@ -1,0 +1,9 @@
+:host {
+  display: inline;
+
+  font: var(--font-additional);
+
+  > * {
+    font: inherit;
+  }
+}

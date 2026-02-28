@@ -11,7 +11,10 @@ export class ParamService {
     this.paramMap.update((oldValue) => {
       return {
         ...oldValue,
-        [key]: value,
+        [key]: {
+          ...oldValue,
+          value: value,
+        },
       };
     });
   }

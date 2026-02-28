@@ -1,6 +1,9 @@
 .resources {
+  padding: 4px 8px;
+
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  gap: 16px;
+  justify-content: center;
+  gap: 20px;
 }

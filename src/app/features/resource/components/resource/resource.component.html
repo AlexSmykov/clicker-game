@@ -1,1 +1,13 @@
-<span>{{ resourceData[data().key].name }}: {{ data().data.toString() }}</span>
+<svg-icon
+  class="icon"
+  [src]="iconsPath + resourceData[data().key].icon + '.svg'"
+  [style.color]="resourceData[data().key].color"
+/>
+
+<p [style.color]="resourceData[data().key].color">
+  @if (!isShort()) {
+    {{ resourceData[data().key].name }}:
+  }
+
+  {{ data().value.toString() }}
+</p>

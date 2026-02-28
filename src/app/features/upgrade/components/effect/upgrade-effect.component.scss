@@ -1,0 +1,21 @@
+:host {
+  width: 100%;
+  display: flex;
+}
+
+.effect {
+  width: 100%;
+
+  font: var(--font-additional);
+
+  display: inline-flex;
+  gap: 4px;
+
+  .max {
+    flex: 1;
+  }
+
+  span {
+    font: inherit;
+  }
+}
