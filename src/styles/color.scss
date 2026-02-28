@@ -14,3 +14,7 @@
   --color-resource-prestige-points: #dddddd;
   --color-resource-ruby: #9b111e;
 }
+
+@function alpha($color, $opacity) {
+  @return rgba(from $color r g b / $opacity);
+}

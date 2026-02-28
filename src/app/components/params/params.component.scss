@@ -1,9 +1,17 @@
 .content {
-  padding: 16px;
+  max-height: 24px;
+
+  overflow-y: hidden;
+  transition: 0.5s;
+  padding: 8px 16px;
 
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  &.expanded {
+    max-height: 204px;
+  }
 
   .header {
     display: flex;
@@ -19,30 +27,25 @@
       height: 24px;
       width: 24px;
 
-      transition: 0.3s;
+      transition: 0.5s;
     }
   }
 
   .list {
-    flex: 1;
-
-    max-height: 24px;
+    max-height: 204px;
     max-width: fit-content;
+    min-height: fit-content;
+    height: fit-content;
 
     overflow-x: auto;
+    overflow-y: hidden;
 
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     gap: 4px;
 
-    &.expanded {
-      max-height: 200px;
-    }
-
     .param {
-      max-width: 100%;
-
       padding: 0 4px;
 
       display: flex;

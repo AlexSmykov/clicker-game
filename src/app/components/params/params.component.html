@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content" [class.expanded]="isExpanded()">
   <div class="header">
     <p class="title">Params</p>
 
@@ -10,15 +10,13 @@
     />
   </div>
 
-  @if (isExpanded()) {
-    <div class="list" [class.expanded]="isExpanded()">
-      @for (param of paramList(); track param.key) {
-        <div class="param">
-          <p class="param-name">{{ paramData[param.key].name }}:</p>
+  <div class="list">
+    @for (param of paramList(); track param.key) {
+      <div class="param">
+        <p class="param-name">{{ paramData[param.key].name }}:</p>
 
-          <app-param [data]="param" />
-        </div>
-      }
-    </div>
-  }
+        <app-param [data]="param" />
+      </div>
+    }
+  </div>
 </div>

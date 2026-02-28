@@ -1,0 +1,15 @@
+button {
+  transition: 0.2s;
+  border-radius: 4px;
+  background-color: var(--color-background-dark);
+  outline: none;
+  border: 1px solid var(--color-border);
+
+  &:hover {
+    background-color: var(--color-background-semi-dark);
+  }
+
+  &:active {
+    background-color: var(--color-background-dark);
+  }
+}

@@ -1,0 +1,5 @@
+@import 'color';
+
+:root {
+  --shadow-inset: 0 0 8px 1px inset rgba(from var(--color-white) r g b / 0.5);
+}

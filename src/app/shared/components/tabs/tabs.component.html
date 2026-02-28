@@ -1,0 +1,9 @@
+@for (tab of items(); track tab.id) {
+  <button class="tab" routerLinkActive="active" [routerLink]="tab.route">
+    <svg-icon [src]="tab.iconPath" />
+
+    <p class="tab-name">
+      {{ tab.name }}
+    </p>
+  </button>
+}

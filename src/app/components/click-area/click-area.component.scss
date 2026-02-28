@@ -23,15 +23,6 @@
 .click-button {
   width: 200px;
   height: 100px;
-
-  border-radius: 4px;
-  background-color: var(--color-background);
-  outline: none;
-  border: 1px solid var(--color-border);
-
-  &:active {
-    border: 2px solid var(--color-border);
-  }
 }
 
 .title {
