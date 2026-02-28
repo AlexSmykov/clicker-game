@@ -1,5 +1,6 @@
 :host {
-  vertical-align: middle;
+  line-height: 1;
+  vertical-align: bottom;
 
   display: inline-flex;
   flex-wrap: nowrap;
@@ -9,5 +10,5 @@
 }
 
 .icon {
-  height: 24px;
+  line-height: inherit;
 }

@@ -32,9 +32,12 @@ export default class PrestigeComponent {
     };
   });
 
-  readonly prestigeBorder = computed(
-    () => this.#paramService.paramMap()[PARAM_KEYS.prestigeBorder].value,
-  );
+  readonly prestigeBorder = computed(() => {
+    return {
+      key: RESOURCE_KEYS.money,
+      value: this.#paramService.paramMap()[PARAM_KEYS.prestigeBorder].value,
+    };
+  });
 
   readonly prestigePointsCoefficient = computed(
     () => this.#paramService.paramMap()[PARAM_KEYS.prestigePointsCoefficient].value,
@@ -43,7 +46,9 @@ export default class PrestigeComponent {
   readonly isBorderPassed = computed(() => {
     const resourceMap = this.#resourceService.resourceMap();
 
-    return resourceMap[RESOURCE_KEYS.money].value.isGreaterThanOrEqualValue(this.prestigeBorder());
+    return resourceMap[RESOURCE_KEYS.money].value.isGreaterThanOrEqualValue(
+      this.prestigeBorder().value,
+    );
   });
 
   readonly resourceKeys = RESOURCE_KEYS;

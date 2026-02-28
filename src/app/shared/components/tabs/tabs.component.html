@@ -1,6 +1,6 @@
 @for (tab of items(); track tab.id) {
   <button class="tab clickable" routerLinkActive="active" [routerLink]="tab.route">
-    <svg-icon [src]="tab.iconPath" />
+    <svg-icon class="icon" [src]="tab.iconPath" />
 
     <p class="tab-name">
       {{ tab.name }}

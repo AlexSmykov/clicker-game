@@ -16,10 +16,10 @@
   <p>
     <span>Prestige points coefficient: log</span>
     <sub>{{ prestigePointsCoefficient().toString() }}</sub>
-    <span>(<app-resource-simple [key]="resourceKeys.money" />)</span>
+    <span>(<app-resource-simple class="money-formula" [key]="resourceKeys.money" />)</span>
   </p>
 } @else {
   <p>You haven't passed border to perform prestige</p>
-  <p>The current border is: {{ prestigeBorder().toString() }}</p>
+  <p>The current border is: <app-resource [data]="prestigeBorder()" /></p>
   <p>You need to work harder!</p>
 }
