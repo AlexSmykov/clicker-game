@@ -1,11 +1,16 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { UPGRADE_CURRENT_DATA, UPGRADE_DATA } from 'src/app/features/upgrade/upgrade.const';
-import { UpgradeKey } from 'src/app/features/upgrade/upgrade.type';
+import {
+  UPGRADE_CURRENT_DATA,
+  UPGRADE_DATA,
+  UPGRADE_KEYS,
+} from 'src/app/features/upgrade/upgrade.const';
+import { UpgradeCurrentData, UpgradeKey } from 'src/app/features/upgrade/upgrade.type';
 import { changeParamValue, changeValue } from 'src/app/core/utils/value-change.utils';
 import { SimpleValueChange } from 'src/app/core/types/value-change.type';
 import { ExponentNumber } from 'exponential-number';
 import { ResourceService } from 'src/app/features/resource/resource.service';
 import { ParamService } from 'src/app/features/param/param.service';
+import { transformCostToCurrentCosts } from 'src/app/features/upgrade/upgrade.utils';
 
 @Injectable()
 export class UpgradeService {
@@ -61,5 +66,28 @@ export class UpgradeService {
         changeParamValue(params[effect.paramKey].value, effect.change, params),
       );
     });
+  }
+
+  resetOnPrestige(): void {
+    const currentDataMap = this.upgradeCurrentDataMap();
+
+    this.upgradeCurrentDataMap.set(
+      Object.fromEntries(
+        Object.values(UPGRADE_KEYS).map((key): [UpgradeKey, UpgradeCurrentData] => {
+          const currentUpgradeData = currentDataMap[key];
+          const upgradeData = UPGRADE_DATA[key];
+
+          return [
+            key,
+            {
+              costs: upgradeData.isResetOnPrestige
+                ? transformCostToCurrentCosts(upgradeData.costs)
+                : currentUpgradeData.costs,
+              level: upgradeData.isResetOnPrestige ? 0 : currentUpgradeData.level,
+            },
+          ];
+        }),
+      ) as Record<UpgradeKey, UpgradeCurrentData>,
+    );
   }
 }

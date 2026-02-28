@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
-import { Upgrade, UpgradeCurrentCost } from 'src/app/features/upgrade/upgrade.type';
+import { UpgradeCurrentCost, UpgradeData } from 'src/app/features/upgrade/upgrade.type';
 import { ResourceComponent } from 'src/app/features/resource/components/resource/resource.component';
 import { ResourceService } from 'src/app/features/resource/resource.service';
 import { ParamService } from 'src/app/features/param/param.service';
@@ -14,7 +14,7 @@ import { UpgradeEffectComponent } from 'src/app/features/upgrade/components/effe
   imports: [ResourceComponent, UpgradeEffectComponent],
 })
 export class UpgradeComponent {
-  readonly data = input.required<Upgrade>();
+  readonly data = input.required<UpgradeData>();
   readonly costs = input.required<UpgradeCurrentCost[]>();
 
   readonly buy = output<void>();

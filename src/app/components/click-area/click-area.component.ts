@@ -28,12 +28,26 @@ export class ClickAreaComponent {
 
   click(): void {
     const resources = this.#resourceService.resourceMap();
-    const params = this.#paramService.paramMap();
+
+    this.updateMoney();
+
+    if (resources[RESOURCE_KEYS.crystal].isUnlocked) {
+      this.updateCrystals();
+    }
+  }
+
+  updateMoney(): void {
+    const resources = this.#resourceService.resourceMap();
 
     this.#resourceService.updateResource(RESOURCE_KEYS.money, {
       isUnlocked: resources[RESOURCE_KEYS.money].isUnlocked,
       value: resources[RESOURCE_KEYS.money].value.plus(this.getNewMoneyValue()),
     });
+  }
+
+  updateCrystals(): void {
+    const resources = this.#resourceService.resourceMap();
+    const params = this.#paramService.paramMap();
 
     const crystalGained = calculateChance(params[PARAM_KEYS.crystalChance].value);
 

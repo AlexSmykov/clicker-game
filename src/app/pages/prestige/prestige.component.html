@@ -1,1 +1,15 @@
-prestige
+@if (isBorderPassed()) {
+  <app-resource [data]="prestigePointsGain()" />
+
+  <button class="prestige-button" (click)="prestige()">Perform prestige</button>
+
+  <p>
+    Prestige points coefficient: log
+    <sub>{{ prestigePointsCoefficient().toString() }}</sub>
+    (money)
+  </p>
+} @else {
+  <p class>You haven't passed border to perform prestige</p>
+  <p class>The current border is: {{ prestigeBorder().toString() }}</p>
+  <p class>You need to work harder!</p>
+}

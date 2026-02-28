@@ -7,38 +7,67 @@ export const PARAM_KEYS = {
   crystalMoneyMultiplier: 'crystalMoneyMultiplier',
   simpleMoneyPower: 'simpleMoneyPower',
   crystalChance: 'crystalChance',
+  prestigePointsCoefficient: 'prestigePointsCoefficient',
+  prestigeBorder: 'prestigeBorder',
+  prestigeBorderGrowth: 'prestigeBorderGrowth',
 } as const;
 
 export const PARAM_DATA: Record<ParamKey, ParamData> = {
   [PARAM_KEYS.simpleMoneyMultiplier]: {
     name: 'Simple multiplier',
     defaultValue: new ExponentNumber(0, 1),
-    isPercent: false,
     prefix: 'x',
+    isPercent: false,
+    isResetOnPrestige: true,
   },
   [PARAM_KEYS.simpleMoneyMultiplierIncrement]: {
     name: 'Simple multiplier increment',
     defaultValue: new ExponentNumber(0, 1),
-    isPercent: false,
     prefix: 'x',
+    isPercent: false,
+    isResetOnPrestige: true,
   },
   [PARAM_KEYS.crystalMoneyMultiplier]: {
     name: 'Crystal multiplier',
     defaultValue: new ExponentNumber(0, 1),
-    isPercent: false,
     prefix: 'x',
+    isPercent: false,
+    isResetOnPrestige: true,
   },
   [PARAM_KEYS.simpleMoneyPower]: {
     name: 'Simple power',
     defaultValue: new ExponentNumber(0, 1),
-    isPercent: false,
     prefix: '^',
+    isPercent: false,
+    isResetOnPrestige: true,
   },
   [PARAM_KEYS.crystalChance]: {
     name: 'Crystal chance',
     defaultValue: new ExponentNumber(0, 100000),
-    isPercent: true,
     prefix: '+',
+    isPercent: true,
+    isResetOnPrestige: true,
+  },
+  [PARAM_KEYS.prestigePointsCoefficient]: {
+    name: 'Prestige points coefficient',
+    defaultValue: new ExponentNumber(0, 10),
+    prefix: '',
+    isPercent: false,
+    isResetOnPrestige: false,
+  },
+  [PARAM_KEYS.prestigeBorder]: {
+    name: 'Prestige border',
+    defaultValue: new ExponentNumber(1, 1),
+    prefix: '',
+    isPercent: false,
+    isResetOnPrestige: false,
+  },
+  [PARAM_KEYS.prestigeBorderGrowth]: {
+    name: 'Prestige border growth',
+    defaultValue: new ExponentNumber(0, 1.2),
+    prefix: '^',
+    isPercent: false,
+    isResetOnPrestige: false,
   },
 };
 
@@ -56,4 +85,11 @@ export const PARAM_CURRENT_VALUE: Record<ParamKey, ParamCurrentData> = {
     value: PARAM_DATA[PARAM_KEYS.simpleMoneyPower].defaultValue.copy(),
   },
   [PARAM_KEYS.crystalChance]: { value: PARAM_DATA[PARAM_KEYS.crystalChance].defaultValue.copy() },
+  [PARAM_KEYS.prestigePointsCoefficient]: {
+    value: PARAM_DATA[PARAM_KEYS.prestigePointsCoefficient].defaultValue.copy(),
+  },
+  [PARAM_KEYS.prestigeBorder]: { value: PARAM_DATA[PARAM_KEYS.prestigeBorder].defaultValue.copy() },
+  [PARAM_KEYS.prestigeBorderGrowth]: {
+    value: PARAM_DATA[PARAM_KEYS.prestigeBorderGrowth].defaultValue.copy(),
+  },
 };

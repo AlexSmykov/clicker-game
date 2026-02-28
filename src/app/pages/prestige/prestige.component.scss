@@ -1,0 +1,13 @@
+:host {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.prestige-button {
+  height: 100px;
+  width: 200px;
+}

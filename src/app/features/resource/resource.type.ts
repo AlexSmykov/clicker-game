@@ -8,6 +8,8 @@ export type ResourceData = {
   name: string;
   color: string;
   icon: string;
+  isResetOnPrestige: boolean;
+  isDefaultUnlocked: boolean;
 };
 
 export type ResourceCurrentData = {

@@ -21,9 +21,12 @@ export class ParamsComponent {
   readonly paramList = computed((): ParamInputData[] => {
     const paramMap = this.#paramService.paramMap();
 
-    const paramList = Object.values(PARAM_KEYS)
+    return Object.values(PARAM_KEYS)
       .filter((key) => {
-        return !paramMap[key].value.isEqual(PARAM_DATA[key as ParamKey].defaultValue);
+        return (
+          !paramMap[key].value.isEqual(PARAM_DATA[key as ParamKey].defaultValue) ||
+          key === PARAM_KEYS.simpleMoneyMultiplier
+        );
       })
       .map((key) => {
         return {
@@ -31,15 +34,6 @@ export class ParamsComponent {
           value: paramMap[key].value,
         };
       });
-
-    return paramList.length
-      ? paramList
-      : [
-          {
-            key: PARAM_KEYS.simpleMoneyMultiplier,
-            value: paramMap[PARAM_KEYS.simpleMoneyMultiplier].value,
-          },
-        ];
   });
 
   readonly paramData = PARAM_DATA;

@@ -8,8 +8,9 @@ export type ParamCurrentValues = typeof PARAM_CURRENT_VALUE;
 export type ParamData = {
   name: string;
   defaultValue: ExponentNumber;
-  isPercent: boolean;
   prefix: string;
+  isPercent: boolean;
+  isResetOnPrestige: boolean;
 };
 
 export type ParamCurrentData = {

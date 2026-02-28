@@ -1,4 +1,4 @@
-import { Upgrade, UpgradeCurrentData, UpgradeKey } from 'src/app/features/upgrade/upgrade.type';
+import { UpgradeCurrentData, UpgradeData, UpgradeKey } from 'src/app/features/upgrade/upgrade.type';
 import { ExponentNumber } from 'exponential-number';
 import { RESOURCE_KEYS } from 'src/app/features/resource/resource.const';
 import { SIMPLE_VALUE_CHANGE_KEYS } from 'src/app/core/consts/value-change.const';
@@ -13,10 +13,11 @@ export const UPGRADE_KEYS = {
   simpleMultiplierBoost: 'simpleMultiplierBoost',
 } as const;
 
-export const UPGRADE_DATA: Record<UpgradeKey, Upgrade> = {
+export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
   [UPGRADE_KEYS.simpleMultiplier]: {
     name: 'Simple multiplier',
     description: 'Add simple multiplier to your income',
+    isResetOnPrestige: true,
     effects: [
       {
         paramKey: PARAM_KEYS.simpleMoneyMultiplier,
@@ -45,6 +46,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, Upgrade> = {
   [UPGRADE_KEYS.simpleMultiplierBoost]: {
     name: 'Simple multiplier booster',
     description: 'Multiply your simple multiplier and upgrade effect',
+    isResetOnPrestige: true,
     effects: [
       {
         paramKey: PARAM_KEYS.simpleMoneyMultiplierIncrement,
@@ -80,6 +82,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, Upgrade> = {
   [UPGRADE_KEYS.simplePower]: {
     name: 'Simple power',
     description: 'Raise your money income to power',
+    isResetOnPrestige: true,
     effects: [
       {
         paramKey: PARAM_KEYS.simpleMoneyPower,
@@ -108,6 +111,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, Upgrade> = {
   [UPGRADE_KEYS.crystalMultiplier]: {
     name: 'Crystal power',
     description: 'Multiply your money income again',
+    isResetOnPrestige: true,
     effects: [
       {
         paramKey: PARAM_KEYS.crystalMoneyMultiplier,
@@ -136,6 +140,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, Upgrade> = {
   [UPGRADE_KEYS.crystalChance]: {
     name: 'Crystal chance',
     description: 'Increase you chance to get crystal on click',
+    isResetOnPrestige: true,
     effects: [
       {
         paramKey: PARAM_KEYS.crystalChance,

@@ -3,7 +3,7 @@ import { UpgradeCost, UpgradeCurrentCost } from 'src/app/features/upgrade/upgrad
 export function transformCostToCurrentCosts(costs: UpgradeCost[]): UpgradeCurrentCost[] {
   return costs[0].resources.map((cost) => {
     return {
-      value: cost.defaultValue,
+      value: cost.defaultValue.copy(),
       resource: cost.resource,
     };
   });
