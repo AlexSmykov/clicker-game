@@ -1,10 +1,10 @@
 <div class="upgrades">
-  @for (key of upgradeKeys; track key) {
+  @for (upgrade of upgradeList(); track upgrade.key) {
     <app-upgrade
-      [data]="upgradeData[key]"
-      [costs]="upgradeCurrentData()[key].costs"
-      [level]="upgradeCurrentData()[key].level"
-      (buy)="buyUpgrade(key)"
+      [data]="upgrade.data"
+      [costs]="upgrade.currentData.costs"
+      [level]="upgrade.currentData.level"
+      (buy)="buyUpgrade(upgrade.key)"
     />
   }
 </div>

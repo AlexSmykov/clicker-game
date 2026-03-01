@@ -30,7 +30,9 @@
             [attr.y1]="line.y1"
             [attr.x2]="line.x2"
             [attr.y2]="line.y2"
-            stroke="white"
+            [style.stroke]="
+              line.isUnlocked ? 'var(--color-border)' : 'var(--color-border-disabled)'
+            "
           />
         }
       </svg>

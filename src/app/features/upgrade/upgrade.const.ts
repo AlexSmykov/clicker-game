@@ -7,10 +7,10 @@ import { transformCostToCurrentCosts } from 'src/app/features/upgrade/upgrade.ut
 
 export const UPGRADE_KEYS = {
   simpleMultiplier: 'simpleMultiplier',
-  crystalMultiplier: 'crystalMultiplier',
-  simplePower: 'simplePower',
-  crystalChance: 'crystalChance',
   simpleMultiplierBoost: 'simpleMultiplierBoost',
+  simplePower: 'simplePower',
+  crystalMultiplier: 'crystalMultiplier',
+  crystalChance: 'crystalChance',
 } as const;
 
 export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
@@ -68,7 +68,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         startAtLevel: 0,
         resources: [
           {
-            defaultValue: new ExponentNumber(0, 1000),
+            defaultValue: new ExponentNumber(0, 500),
             resource: RESOURCE_KEYS.money,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,

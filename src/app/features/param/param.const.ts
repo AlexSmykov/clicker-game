@@ -43,14 +43,14 @@ export const PARAM_DATA: Record<ParamKey, ParamData> = {
     isResetOnPrestige: true,
   },
   [PARAM_KEYS.baseCrystalChance]: {
-    name: 'Crystal chance',
+    name: 'Base crystal chance',
     defaultValue: new ExponentNumber(0, 0),
     prefix: '+',
     isPercent: true,
     isResetOnPrestige: true,
   },
   [PARAM_KEYS.crystalChance]: {
-    name: 'Crystal chance',
+    name: 'Upgrade crystal chance',
     defaultValue: new ExponentNumber(0, 0),
     prefix: '+',
     isPercent: true,

@@ -13,6 +13,7 @@ export const UNLOCK_KEYS = {
   baseUnlock: 'baseUnlock',
   prestige: 'prestige',
   crystals: 'crystals',
+  statistics: 'statistics',
 } as const;
 
 export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
@@ -62,7 +63,7 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
     costs: [
       {
         resourceKey: RESOURCE_KEYS.money,
-        value: new ExponentNumber(0, 10000),
+        value: new ExponentNumber(0, 2500),
       },
     ],
     effect: (
@@ -87,6 +88,23 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
       });
     },
   },
+  [UNLOCK_KEYS.statistics]: {
+    name: 'Statistics tab',
+    description: 'New tap to observe all your stats',
+    iconPath: `statistics.svg`,
+    position: {
+      x: 1,
+      y: 2,
+    },
+    requiredUnlocks: [UNLOCK_KEYS.crystals],
+    costs: [
+      {
+        resourceKey: RESOURCE_KEYS.crystal,
+        value: new ExponentNumber(0, 10),
+      },
+    ],
+    effect: () => {},
+  },
 };
 
 export const UNLOCK_CURRENT_DATA: Record<UnlockKey, UnlockCurrentData> = {
@@ -99,6 +117,10 @@ export const UNLOCK_CURRENT_DATA: Record<UnlockKey, UnlockCurrentData> = {
     isResetOnPrestige: false,
   },
   [UNLOCK_KEYS.crystals]: {
+    isUnlocked: false,
+    isResetOnPrestige: false,
+  },
+  [UNLOCK_KEYS.statistics]: {
     isUnlocked: false,
     isResetOnPrestige: false,
   },

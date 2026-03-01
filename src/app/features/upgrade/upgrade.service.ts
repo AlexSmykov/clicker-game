@@ -28,6 +28,7 @@ export class UpgradeService {
       return {
         ...oldCurrentData,
         [key]: {
+          ...oldUpgradeData,
           costs: oldUpgradeData.costs.map((cost) => {
             const currentCostData = upgradeData.costs
               .find((cost) => cost.startAtLevel <= oldUpgradeData.level)

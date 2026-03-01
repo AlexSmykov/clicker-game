@@ -109,6 +109,7 @@ export default class UnlocksComponent implements AfterViewInit {
               y1: this.treeSize - unlock.y - UNLOCK_OBJECT_SIZE_HALF,
               x2: requiredUnlock.x + UNLOCK_OBJECT_SIZE_HALF,
               y2: this.treeSize - requiredUnlock.y - UNLOCK_OBJECT_SIZE_HALF,
+              isUnlocked: unlock.isUnlocked,
             };
           })
           .filter((value) => value !== null);

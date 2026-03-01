@@ -26,7 +26,7 @@ export const RESOURCE_DATA: Record<ResourceKey, ResourceData> = {
     name: 'Crystals',
     icon: 'crystal',
     color: '#59d4ff',
-    isDefaultUnlocked: true,
+    isDefaultUnlocked: false,
     isResetOnPrestige: true,
   },
   [RESOURCE_KEYS.ruby]: {
