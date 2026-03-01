@@ -1,0 +1,38 @@
+:host {
+  flex: 1;
+  min-height: 0;
+}
+
+.viewport {
+  height: calc(100% + 300px);
+  flex: 1;
+
+  position: relative;
+  overflow: auto;
+  scrollbar-width: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  width: fit-content;
+  height: fit-content;
+}
+
+.content {
+  position: absolute;
+  top: 0;
+
+  border-radius: 50%;
+  border: 5px solid var(--color-white);
+  transform-origin: 0 0;
+
+  height: 5000px;
+  width: 5000px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

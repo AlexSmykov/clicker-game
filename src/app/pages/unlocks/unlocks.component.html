@@ -1,1 +1,19 @@
-unlocks
+<div
+  #viewport
+  class="viewport"
+  (wheel)="onWheel($event)"
+  (mousedown)="isDragOn.set(true)"
+  (mouseup)="isDragOn.set(false)"
+  (mouseleave)="isDragOn.set(false)"
+  (mousemove)="onMouseMove($event)"
+>
+  <div
+    class="wrapper"
+    [style.height.px]="content.scrollHeight * scale()"
+    [style.width.px]="content.scrollWidth * scale()"
+  >
+    <div #content class="content" [style.transform]="'scale(' + scale() + ')'">
+      <p>Unlocks</p>
+    </div>
+  </div>
+</div>
