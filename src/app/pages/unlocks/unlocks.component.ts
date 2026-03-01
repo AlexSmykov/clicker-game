@@ -5,6 +5,7 @@ import {
   computed,
   ElementRef,
   inject,
+  OnDestroy,
   signal,
   viewChild,
 } from '@angular/core';
@@ -16,6 +17,9 @@ import { UnlockComponent } from 'src/app/features/unlock/components/unlock/unloc
 import { UnlockInputData } from 'src/app/features/unlock/components/unlock/unlock.type';
 import { ParamService } from 'src/app/features/param/param.service';
 import { UpgradeService } from 'src/app/features/upgrade/upgrade.service';
+import { LocalStorageService } from 'src/app/core/services/local-storage/local-storage.service';
+import { LOCAL_STORAGE_KEYS } from 'src/app/core/services/local-storage/local-storage.const';
+import { UnlockPageInterfaceSaveData } from 'src/app/pages/unlocks/unlocks.type';
 
 const MAX_SCROLL_VALUE = 7;
 const MIN_SCROLL_VALUE = -3;
@@ -33,14 +37,18 @@ const TREE_SIZE_HALF = TREE_SIZE / 2;
   styleUrl: './unlocks.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [UnlockComponent],
+  host: {
+    '(window:beforeunload)': 'ngOnDestroy()',
+  },
 })
-export default class UnlocksComponent implements AfterViewInit {
+export default class UnlocksComponent implements AfterViewInit, OnDestroy {
   readonly viewport = viewChild.required<ElementRef<HTMLDivElement>>('viewport');
 
   readonly #unlockService = inject(UnlockService);
   readonly #resourceService = inject(ResourceService);
   readonly #upgradeService = inject(UpgradeService);
   readonly #paramService = inject(ParamService);
+  readonly #localStorageService = inject(LocalStorageService);
 
   readonly scaleLevel = signal(0);
   readonly isDragOn = signal(false);
@@ -120,7 +128,33 @@ export default class UnlocksComponent implements AfterViewInit {
   readonly treeSize = TREE_SIZE;
 
   ngAfterViewInit(): void {
-    this.setScroll();
+    this.setScale();
+
+    setTimeout(() => this.setScroll());
+  }
+
+  ngOnDestroy(): void {
+    this.savePageData();
+  }
+
+  savePageData(): void {
+    const data: UnlockPageInterfaceSaveData = {
+      scaleLevel: this.scaleLevel(),
+    };
+
+    this.#localStorageService.setItem(LOCAL_STORAGE_KEYS.unlockInterfaceData, JSON.stringify(data));
+  }
+
+  setScale(): void {
+    const savedData = this.#localStorageService.getItem(LOCAL_STORAGE_KEYS.unlockInterfaceData);
+
+    if (!savedData) {
+      return;
+    }
+
+    const parsedSaveData = JSON.parse(savedData) as UnlockPageInterfaceSaveData;
+
+    this.scaleLevel.set(parsedSaveData.scaleLevel);
   }
 
   setScroll(): void {
