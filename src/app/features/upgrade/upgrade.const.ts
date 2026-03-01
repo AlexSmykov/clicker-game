@@ -171,22 +171,27 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
 export const UPGRADE_CURRENT_DATA: Record<UpgradeKey, UpgradeCurrentData> = {
   [UPGRADE_KEYS.simpleMultiplier]: {
     costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.simpleMultiplier].costs),
+    isUnlocked: true,
     level: 0,
   },
   [UPGRADE_KEYS.simpleMultiplierBoost]: {
     costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.simpleMultiplierBoost].costs),
+    isUnlocked: true,
     level: 0,
   },
   [UPGRADE_KEYS.simplePower]: {
     costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.simplePower].costs),
+    isUnlocked: true,
     level: 0,
   },
   [UPGRADE_KEYS.crystalMultiplier]: {
     costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.crystalMultiplier].costs),
+    isUnlocked: false,
     level: 0,
   },
   [UPGRADE_KEYS.crystalChance]: {
     costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.crystalChance].costs),
+    isUnlocked: false,
     level: 0,
   },
 } as const;

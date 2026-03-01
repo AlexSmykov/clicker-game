@@ -1,0 +1,38 @@
+@let unlock = data();
+
+<div
+  class="unlock"
+  [style.width.px]="unlock.size"
+  [style.height.px]="unlock.size"
+  [class.unlocked]="unlock.isUnlocked"
+  [class.available]="unlock.isCanBuy"
+  [class.resetless]="!unlock.isResetOnPrestige"
+  (click)="clickUnlock()"
+  (mouseenter)="isShowTooltip.set(true)"
+  (mouseleave)="isShowTooltip.set(false)"
+>
+  <svg-icon class="icon" [src]="iconDir + unlock.icon" />
+</div>
+
+<div class="tooltip" [class.is-show]="isShowTooltip()" [style.top.px]="unlock.size + 10">
+  <p class="name">{{ unlock.name }}</p>
+  <p class="description">{{ unlock.description }}</p>
+
+  @if (!unlock.isUnlocked) {
+    <div class="costs">
+      @for (cost of unlock.costs; track cost.key) {
+        <app-resource [data]="cost" [isShort]="true" />
+      }
+    </div>
+
+    @if (unlock.isCanBuy) {
+      <p class="description">Click to buy</p>
+    }
+  } @else {
+    <p class="description">Bought</p>
+
+    @if (!unlock.isResetOnPrestige) {
+      <p class="description resetless">Doesn't reset on prestige</p>
+    }
+  }
+</div>

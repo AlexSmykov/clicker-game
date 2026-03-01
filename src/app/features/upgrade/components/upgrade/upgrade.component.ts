@@ -31,20 +31,26 @@ export class UpgradeComponent {
 
   readonly isCanBuy = computed(() => {
     const costs = this.parsedCosts();
-    const resources = this.#resourceService.resourceMap();
+    const resourcesCurrentData = this.#resourceService.resourcesCurrentData();
 
-    return costs.every((cost) => resources[cost.key].value.isGreaterThanOrEqualValue(cost.value));
+    return costs.every((cost) =>
+      resourcesCurrentData[cost.key].value.isGreaterThanOrEqualValue(cost.value),
+    );
   });
 
   readonly effects = computed(() => {
     const effects = this.data().effects;
-    const paramMap = this.#paramService.paramMap();
+    const paramsCurrentData = this.#paramService.paramsCurrentData();
 
     return effects.map((effect) => {
       return {
         paramKey: effect.paramKey,
-        oldValue: paramMap[effect.paramKey].value,
-        newValue: changeParamValue(paramMap[effect.paramKey].value.copy(), effect.change, paramMap),
+        oldValue: paramsCurrentData[effect.paramKey].value,
+        newValue: changeParamValue(
+          paramsCurrentData[effect.paramKey].value.copy(),
+          effect.change,
+          paramsCurrentData,
+        ),
       };
     });
   });

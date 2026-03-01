@@ -6,6 +6,7 @@ export const PARAM_KEYS = {
   simpleMoneyMultiplierIncrement: 'simpleMoneyMultiplierIncrement',
   crystalMoneyMultiplier: 'crystalMoneyMultiplier',
   simpleMoneyPower: 'simpleMoneyPower',
+  baseCrystalChance: 'baseCrystalChance',
   crystalChance: 'crystalChance',
   prestigePointsCoefficient: 'prestigePointsCoefficient',
   prestigeBorder: 'prestigeBorder',
@@ -41,9 +42,16 @@ export const PARAM_DATA: Record<ParamKey, ParamData> = {
     isPercent: false,
     isResetOnPrestige: true,
   },
+  [PARAM_KEYS.baseCrystalChance]: {
+    name: 'Crystal chance',
+    defaultValue: new ExponentNumber(0, 0),
+    prefix: '+',
+    isPercent: true,
+    isResetOnPrestige: true,
+  },
   [PARAM_KEYS.crystalChance]: {
     name: 'Crystal chance',
-    defaultValue: new ExponentNumber(0, 100000),
+    defaultValue: new ExponentNumber(0, 0),
     prefix: '+',
     isPercent: true,
     isResetOnPrestige: true,
@@ -83,6 +91,9 @@ export const PARAM_CURRENT_VALUE: Record<ParamKey, ParamCurrentData> = {
   },
   [PARAM_KEYS.simpleMoneyPower]: {
     value: PARAM_DATA[PARAM_KEYS.simpleMoneyPower].defaultValue.copy(),
+  },
+  [PARAM_KEYS.baseCrystalChance]: {
+    value: PARAM_DATA[PARAM_KEYS.baseCrystalChance].defaultValue.copy(),
   },
   [PARAM_KEYS.crystalChance]: { value: PARAM_DATA[PARAM_KEYS.crystalChance].defaultValue.copy() },
   [PARAM_KEYS.prestigePointsCoefficient]: {

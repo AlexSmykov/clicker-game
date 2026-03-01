@@ -14,13 +14,13 @@ export class ResourcesComponent {
   readonly #resourceService = inject(ResourceService);
 
   readonly resourceCurrentData = computed(() => {
-    const resourceMap = this.#resourceService.resourceMap();
+    const resourcesCurrentData = this.#resourceService.resourcesCurrentData();
 
     return Object.values(RESOURCE_KEYS).map((key) => {
       return {
         key,
-        isUnlocked: resourceMap[key].isUnlocked,
-        value: resourceMap[key].value,
+        isUnlocked: resourcesCurrentData[key].isUnlocked,
+        value: resourcesCurrentData[key].value,
       };
     });
   });

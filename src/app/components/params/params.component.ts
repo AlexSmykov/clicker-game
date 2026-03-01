@@ -19,7 +19,7 @@ export class ParamsComponent {
   readonly isExpanded = signal(true);
 
   readonly paramList = computed((): ParamInputData[] => {
-    const paramMap = this.#paramService.paramMap();
+    const paramMap = this.#paramService.paramsCurrentData();
 
     return Object.values(PARAM_KEYS)
       .filter((key) => {

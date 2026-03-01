@@ -27,42 +27,44 @@ export class ClickAreaComponent {
   });
 
   click(): void {
-    const resources = this.#resourceService.resourceMap();
+    const resourcesCurrentData = this.#resourceService.resourcesCurrentData();
 
     this.updateMoney();
 
-    if (resources[RESOURCE_KEYS.crystal].isUnlocked) {
+    if (resourcesCurrentData[RESOURCE_KEYS.crystal].isUnlocked) {
       this.updateCrystals();
     }
   }
 
   updateMoney(): void {
-    const resources = this.#resourceService.resourceMap();
+    const resourcesCurrentData = this.#resourceService.resourcesCurrentData();
 
     this.#resourceService.updateResource(RESOURCE_KEYS.money, {
-      isUnlocked: resources[RESOURCE_KEYS.money].isUnlocked,
-      value: resources[RESOURCE_KEYS.money].value.plus(this.getNewMoneyValue()),
+      value: resourcesCurrentData[RESOURCE_KEYS.money].value.plus(this.getNewMoneyValue()),
     });
   }
 
   updateCrystals(): void {
-    const resources = this.#resourceService.resourceMap();
-    const params = this.#paramService.paramMap();
+    const resourcesCurrentData = this.#resourceService.resourcesCurrentData();
+    const paramsCurrentData = this.#paramService.paramsCurrentData();
 
-    const crystalGained = calculateChance(params[PARAM_KEYS.crystalChance].value);
+    const crystalGained = calculateChance(
+      paramsCurrentData[PARAM_KEYS.crystalChance].value
+        .copy()
+        .plus(paramsCurrentData[PARAM_KEYS.baseCrystalChance].value),
+    );
 
     this.#resourceService.updateResource(RESOURCE_KEYS.crystal, {
-      isUnlocked: resources[RESOURCE_KEYS.crystal].isUnlocked,
-      value: resources[RESOURCE_KEYS.crystal].value.plus(crystalGained),
+      value: resourcesCurrentData[RESOURCE_KEYS.crystal].value.plus(crystalGained),
     });
   }
 
   getNewMoneyValue(): ExponentNumber {
-    const params = this.#paramService.paramMap();
+    const paramsCurrentData = this.#paramService.paramsCurrentData();
 
     return new ExponentNumber(0, 1)
-      .multiply(params[PARAM_KEYS.simpleMoneyMultiplier].value)
-      .multiply(params[PARAM_KEYS.crystalMoneyMultiplier].value)
-      .power(params[PARAM_KEYS.simpleMoneyPower].value);
+      .multiply(paramsCurrentData[PARAM_KEYS.simpleMoneyMultiplier].value)
+      .multiply(paramsCurrentData[PARAM_KEYS.crystalMoneyMultiplier].value)
+      .power(paramsCurrentData[PARAM_KEYS.simpleMoneyPower].value);
   }
 }

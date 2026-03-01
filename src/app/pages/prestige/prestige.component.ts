@@ -7,6 +7,7 @@ import { ParamService } from 'src/app/features/param/param.service';
 import { PARAM_KEYS } from 'src/app/features/param/param.const';
 import { UpgradeService } from 'src/app/features/upgrade/upgrade.service';
 import { ResourceSimpleComponent } from 'src/app/features/resource/components/simple/resource-simple.component';
+import { UnlockService } from 'src/app/features/unlock/unlock.service';
 
 @Component({
   selector: 'app-prestige',
@@ -19,34 +20,35 @@ export default class PrestigeComponent {
   readonly #resourceService = inject(ResourceService);
   readonly #paramService = inject(ParamService);
   readonly #upgradeService = inject(UpgradeService);
+  readonly #unlockService = inject(UnlockService);
 
   readonly prestigePointsGain = computed((): ResourceInputData => {
-    const paramMap = this.#paramService.paramMap();
-    const resourceMap = this.#resourceService.resourceMap();
+    const paramsCurrentData = this.#paramService.paramsCurrentData();
+    const resourcesCurrentData = this.#resourceService.resourcesCurrentData();
 
     return {
       key: RESOURCE_KEYS.prestigePoints,
-      value: resourceMap[RESOURCE_KEYS.money].value
+      value: resourcesCurrentData[RESOURCE_KEYS.money].value
         .copy()
-        .log(paramMap[PARAM_KEYS.prestigePointsCoefficient].value),
+        .log(paramsCurrentData[PARAM_KEYS.prestigePointsCoefficient].value),
     };
   });
 
   readonly prestigeBorder = computed(() => {
     return {
       key: RESOURCE_KEYS.money,
-      value: this.#paramService.paramMap()[PARAM_KEYS.prestigeBorder].value,
+      value: this.#paramService.paramsCurrentData()[PARAM_KEYS.prestigeBorder].value,
     };
   });
 
   readonly prestigePointsCoefficient = computed(
-    () => this.#paramService.paramMap()[PARAM_KEYS.prestigePointsCoefficient].value,
+    () => this.#paramService.paramsCurrentData()[PARAM_KEYS.prestigePointsCoefficient].value,
   );
 
   readonly isBorderPassed = computed(() => {
-    const resourceMap = this.#resourceService.resourceMap();
+    const resourcesCurrentData = this.#resourceService.resourcesCurrentData();
 
-    return resourceMap[RESOURCE_KEYS.money].value.isGreaterThanOrEqualValue(
+    return resourcesCurrentData[RESOURCE_KEYS.money].value.isGreaterThanOrEqualValue(
       this.prestigeBorder().value,
     );
   });
@@ -54,25 +56,25 @@ export default class PrestigeComponent {
   readonly resourceKeys = RESOURCE_KEYS;
 
   prestige(): void {
-    const paramMap = this.#paramService.paramMap();
+    const paramsCurrentData = this.#paramService.paramsCurrentData();
 
     this.#resourceService.updateResource(RESOURCE_KEYS.prestigePoints, {
       isUnlocked: true,
       value: this.#resourceService
-        .resourceMap()
+        .resourcesCurrentData()
         [RESOURCE_KEYS.prestigePoints].value.copy()
         .plus(this.prestigePointsGain().value),
     });
 
-    this.#paramService.updateParam(
-      PARAM_KEYS.prestigeBorder,
-      paramMap[PARAM_KEYS.prestigeBorder].value
+    this.#paramService.updateParam(PARAM_KEYS.prestigeBorder, {
+      value: paramsCurrentData[PARAM_KEYS.prestigeBorder].value
         .copy()
-        .power(paramMap[PARAM_KEYS.prestigeBorderGrowth].value),
-    );
+        .power(paramsCurrentData[PARAM_KEYS.prestigeBorderGrowth].value),
+    });
 
     this.#resourceService.resetOnPrestige();
     this.#paramService.resetOnPrestige();
     this.#upgradeService.resetOnPrestige();
+    this.#unlockService.resetOnPrestige();
   }
 }

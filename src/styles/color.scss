@@ -5,7 +5,9 @@
   --color-background-dark: #232323;
   --color-background-semi-dark: #303030;
   --color-background-medium: #3e3e3e;
+
   --color-border: #ffffff;
+  --color-border-disabled: #888888;
 
   --color-text-primary: #ffffff;
 
@@ -13,6 +15,10 @@
   --color-resource-crystal: #59d4ff;
   --color-resource-prestige-points: #dddddd;
   --color-resource-ruby: #9b111e;
+
+  --color-unlock-available: #94ff94;
+  --color-unlock-bought: #ffd041;
+  --color-unlock-resetless: #5ec5c8;
 }
 
 @function alpha($color, $opacity) {

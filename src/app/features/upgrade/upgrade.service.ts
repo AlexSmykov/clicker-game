@@ -37,11 +37,10 @@ export class UpgradeService {
               return cost;
             }
 
-            const resource = this.#resourceService.resourceMap()[cost.resource];
+            const resourceCurrentData = this.#resourceService.resourcesCurrentData()[cost.resource];
 
             this.#resourceService.updateResource(currentCostData.resource, {
-              isUnlocked: resource.isUnlocked,
-              value: resource.value.minus(cost.value),
+              value: resourceCurrentData.value.minus(cost.value),
             });
 
             return {
@@ -58,13 +57,28 @@ export class UpgradeService {
       };
     });
 
-    const params = this.#paramService.paramMap();
+    const paramsCurrentData = this.#paramService.paramsCurrentData();
 
     upgradeData.effects.forEach((effect) => {
-      this.#paramService.updateParam(
-        effect.paramKey,
-        changeParamValue(params[effect.paramKey].value, effect.change, params),
-      );
+      this.#paramService.updateParam(effect.paramKey, {
+        value: changeParamValue(
+          paramsCurrentData[effect.paramKey].value,
+          effect.change,
+          paramsCurrentData,
+        ),
+      });
+    });
+  }
+
+  updateUpgrade(key: UpgradeKey, data: Partial<UpgradeCurrentData>): void {
+    this.upgradeCurrentDataMap.update((oldValue) => {
+      return {
+        ...oldValue,
+        [key]: {
+          ...oldValue[key],
+          ...data,
+        },
+      };
     });
   }
 
@@ -83,6 +97,7 @@ export class UpgradeService {
               costs: upgradeData.isResetOnPrestige
                 ? transformCostToCurrentCosts(upgradeData.costs)
                 : currentUpgradeData.costs,
+              isUnlocked: currentUpgradeData.isUnlocked,
               level: upgradeData.isResetOnPrestige ? 0 : currentUpgradeData.level,
             },
           ];

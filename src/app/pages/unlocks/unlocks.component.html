@@ -12,8 +12,40 @@
     [style.height.px]="content.scrollHeight * scale()"
     [style.width.px]="content.scrollWidth * scale()"
   >
-    <div #content class="content" [style.transform]="'scale(' + scale() + ')'">
-      <p>Unlocks</p>
+    <div
+      #content
+      class="content"
+      [style.transform]="'scale(' + scale() + ')'"
+      [style.width.px]="treeSize"
+      [style.height.px]="treeSize"
+    >
+      @for (unlock of unlockList(); track unlock.key) {
+        <app-unlock [data]="unlock" (buy)="buyUnlock(unlock.key, unlock.isCanBuy)" />
+      }
+
+      <svg [style.width.px]="treeSize" [style.height.px]="treeSize">
+        @for (line of lines(); track $index) {
+          <line
+            [attr.x1]="line.x1"
+            [attr.y1]="line.y1"
+            [attr.x2]="line.x2"
+            [attr.y2]="line.y2"
+            stroke="white"
+          />
+        }
+      </svg>
     </div>
+  </div>
+</div>
+
+<div class="info">
+  <p>Use mouse to move and mousewheel to zoom</p>
+  <p>You can buy available unlocks and hover/click on them to open info about them</p>
+  <p>Click on unlock with open info to buy it</p>
+  <br />
+  <p>Zoom</p>
+  <div class="zoom-buttons">
+    <button class="zoom-button" (click)="downScale()">+</button>
+    <button class="zoom-button" (click)="upScale()">-</button>
   </div>
 </div>

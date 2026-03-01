@@ -9,24 +9,27 @@ import { ExponentNumber } from 'exponential-number';
 
 @Injectable()
 export class ResourceService {
-  readonly resourceMap = signal(RESOURCE_CURRENT_VALUES);
+  readonly resourcesCurrentData = signal(RESOURCE_CURRENT_VALUES);
 
-  updateResource(key: ResourceKey, value: ResourceCurrentData): void {
-    this.resourceMap.update((oldValue) => {
+  updateResource(key: ResourceKey, data: Partial<ResourceCurrentData>): void {
+    this.resourcesCurrentData.update((oldValue) => {
       return {
         ...oldValue,
-        [key]: value,
+        [key]: {
+          ...oldValue[key],
+          ...data,
+        },
       };
     });
   }
 
   resetOnPrestige(): void {
-    const currentDataMap = this.resourceMap();
+    const resourcesCurrentData = this.resourcesCurrentData();
 
-    this.resourceMap.set(
+    this.resourcesCurrentData.set(
       Object.fromEntries(
         Object.values(RESOURCE_KEYS).map((key): [ResourceKey, ResourceCurrentData] => {
-          const currentResourceData = currentDataMap[key];
+          const currentResourceData = resourcesCurrentData[key];
           const resourceData = RESOURCE_DATA[key];
 
           return [

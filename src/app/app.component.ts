@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { ResourceService } from 'src/app/features/resource/resource.service';
 import { UpgradeService } from 'src/app/features/upgrade/upgrade.service';
 import { ParamService } from 'src/app/features/param/param.service';
+import { UnlockService } from 'src/app/features/unlock/unlock.service';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,6 @@ import { ParamService } from 'src/app/features/param/param.service';
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterOutlet],
-  providers: [ResourceService, ParamService, UpgradeService],
+  providers: [ResourceService, ParamService, UpgradeService, UnlockService],
 })
 export class AppComponent {}

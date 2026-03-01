@@ -40,6 +40,7 @@ export type UpgradeResourceCost = {
 export type UpgradeCurrentData = {
   costs: UpgradeCurrentCost[];
   level: number;
+  isUnlocked: boolean;
 };
 
 export type UpgradeCurrentCost = {
