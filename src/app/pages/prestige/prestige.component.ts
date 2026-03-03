@@ -72,6 +72,18 @@ export default class PrestigeComponent {
         .power(paramsCurrentData[PARAM_KEYS.prestigeBorderGrowth].value),
     });
 
+    this.#upgradeService.updateUpgrade(PARAM_KEYS.prestigeMoneyPower, {
+      isUnlocked: true,
+    });
+
+    this.#upgradeService.updateUpgrade(PARAM_KEYS.prestigeCrystalChance, {
+      isUnlocked: true,
+    });
+
+    this.#upgradeService.updateUpgrade(PARAM_KEYS.prestigeCrystalMultiplier, {
+      isUnlocked: true,
+    });
+
     this.#resourceService.resetOnPrestige();
     this.#paramService.resetOnPrestige();
     this.#upgradeService.resetOnPrestige();

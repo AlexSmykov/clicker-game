@@ -72,9 +72,13 @@ export default class UnlocksComponent implements AfterViewInit, OnDestroy {
           size: UNLOCK_OBJECT_SIZE,
           offset: OFFSET,
           isResetOnPrestige: value.isResetOnPrestige,
-          isCanBuy: data.costs.every((cost) =>
-            resourcesCurrentData[cost.resourceKey].value.isGreaterThanOrEqualValue(cost.value),
-          ),
+          isCanBuy:
+            data.costs.every((cost) =>
+              resourcesCurrentData[cost.resourceKey].value.isGreaterThanOrEqualValue(cost.value),
+            ) &&
+            data.requiredUnlocks.every(
+              (requiredUnlockKey) => unlocksCurrentData[requiredUnlockKey].isUnlocked,
+            ),
           costs: data.costs.map((cost) => {
             return {
               key: cost.resourceKey,
@@ -88,11 +92,11 @@ export default class UnlocksComponent implements AfterViewInit, OnDestroy {
         };
       })
       .filter(
-        (item, _, allItems) =>
+        (item) =>
           item.isUnlocked ||
           item.requiredUnlocks.length === 0 ||
-          allItems.some(
-            (otherItem) => item.requiredUnlocks.includes(otherItem.key) && otherItem.isUnlocked,
+          item.requiredUnlocks.some(
+            (requiredUnlockKey) => unlocksCurrentData[requiredUnlockKey].isUnlocked,
           ),
       );
   });
@@ -193,6 +197,14 @@ export default class UnlocksComponent implements AfterViewInit, OnDestroy {
     if (isCanBuy) {
       this.#unlockService.updateUnlock(key, {
         isUnlocked: true,
+      });
+
+      const resourcesCurrentData = this.#resourceService.resourcesCurrentData();
+
+      UNLOCK_DATA[key].costs.forEach((cost) => {
+        this.#resourceService.updateResource(cost.resourceKey, {
+          value: resourcesCurrentData[cost.resourceKey].value.minus(cost.value),
+        });
       });
 
       UNLOCK_DATA[key].effect(this.#upgradeService, this.#paramService, this.#resourceService);

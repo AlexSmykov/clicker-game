@@ -35,9 +35,7 @@ export class ResourceService {
           return [
             key,
             {
-              isUnlocked: resourceData.isResetOnPrestige
-                ? resourceData.isDefaultUnlocked
-                : currentResourceData.isUnlocked,
+              isUnlocked: currentResourceData.isUnlocked,
               value: resourceData.isResetOnPrestige
                 ? new ExponentNumber(0, 0)
                 : currentResourceData.value,

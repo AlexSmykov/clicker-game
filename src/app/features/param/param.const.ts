@@ -8,9 +8,15 @@ export const PARAM_KEYS = {
   simpleMoneyPower: 'simpleMoneyPower',
   baseCrystalChance: 'baseCrystalChance',
   crystalChance: 'crystalChance',
+  bonusCrystalChance: 'bonusCrystalChance',
   prestigePointsCoefficient: 'prestigePointsCoefficient',
   prestigeBorder: 'prestigeBorder',
   prestigeBorderGrowth: 'prestigeBorderGrowth',
+  prestigeMoneyPower: 'prestigeMoneyPower',
+  prestigeCrystalChance: 'prestigeCrystalChance',
+  prestigeCrystalMultiplier: 'prestigeCrystalMultiplier',
+  baseRubiesChance: 'baseRubiesChance',
+  bonusPrestigePointsMultiplier: 'bonusPrestigePointsMultiplier',
 } as const;
 
 export const PARAM_DATA: Record<ParamKey, ParamData> = {
@@ -37,7 +43,7 @@ export const PARAM_DATA: Record<ParamKey, ParamData> = {
   },
   [PARAM_KEYS.simpleMoneyPower]: {
     name: 'Simple power',
-    defaultValue: new ExponentNumber(0, 1),
+    defaultValue: new ExponentNumber(0, 0),
     prefix: '^',
     isPercent: false,
     isResetOnPrestige: true,
@@ -47,10 +53,17 @@ export const PARAM_DATA: Record<ParamKey, ParamData> = {
     defaultValue: new ExponentNumber(0, 0),
     prefix: '+',
     isPercent: true,
-    isResetOnPrestige: true,
+    isResetOnPrestige: false,
   },
   [PARAM_KEYS.crystalChance]: {
     name: 'Upgrade crystal chance',
+    defaultValue: new ExponentNumber(0, 0),
+    prefix: '+',
+    isPercent: true,
+    isResetOnPrestige: true,
+  },
+  [PARAM_KEYS.bonusCrystalChance]: {
+    name: 'Bonus crystal chance',
     defaultValue: new ExponentNumber(0, 0),
     prefix: '+',
     isPercent: true,
@@ -77,6 +90,41 @@ export const PARAM_DATA: Record<ParamKey, ParamData> = {
     isPercent: false,
     isResetOnPrestige: false,
   },
+  [PARAM_KEYS.prestigeMoneyPower]: {
+    name: 'Prestige money power',
+    defaultValue: new ExponentNumber(0, 0),
+    prefix: '^',
+    isPercent: false,
+    isResetOnPrestige: true,
+  },
+  [PARAM_KEYS.prestigeCrystalChance]: {
+    name: 'Prestige crystal chance',
+    defaultValue: new ExponentNumber(0, 0),
+    prefix: '+',
+    isPercent: true,
+    isResetOnPrestige: true,
+  },
+  [PARAM_KEYS.prestigeCrystalMultiplier]: {
+    name: 'Prestige crystal multiplier',
+    defaultValue: new ExponentNumber(0, 1),
+    prefix: 'x',
+    isPercent: false,
+    isResetOnPrestige: true,
+  },
+  [PARAM_KEYS.baseRubiesChance]: {
+    name: 'Base ruby chance',
+    defaultValue: new ExponentNumber(0, 0),
+    prefix: '+',
+    isPercent: true,
+    isResetOnPrestige: false,
+  },
+  [PARAM_KEYS.bonusPrestigePointsMultiplier]: {
+    name: 'Bonus PP multiplier',
+    defaultValue: new ExponentNumber(0, 0),
+    prefix: 'x',
+    isPercent: false,
+    isResetOnPrestige: true,
+  },
 };
 
 export const PARAM_CURRENT_VALUE: Record<ParamKey, ParamCurrentData> = {
@@ -95,6 +143,9 @@ export const PARAM_CURRENT_VALUE: Record<ParamKey, ParamCurrentData> = {
   [PARAM_KEYS.baseCrystalChance]: {
     value: PARAM_DATA[PARAM_KEYS.baseCrystalChance].defaultValue.copy(),
   },
+  [PARAM_KEYS.bonusCrystalChance]: {
+    value: PARAM_DATA[PARAM_KEYS.bonusCrystalChance].defaultValue.copy(),
+  },
   [PARAM_KEYS.crystalChance]: { value: PARAM_DATA[PARAM_KEYS.crystalChance].defaultValue.copy() },
   [PARAM_KEYS.prestigePointsCoefficient]: {
     value: PARAM_DATA[PARAM_KEYS.prestigePointsCoefficient].defaultValue.copy(),
@@ -102,5 +153,20 @@ export const PARAM_CURRENT_VALUE: Record<ParamKey, ParamCurrentData> = {
   [PARAM_KEYS.prestigeBorder]: { value: PARAM_DATA[PARAM_KEYS.prestigeBorder].defaultValue.copy() },
   [PARAM_KEYS.prestigeBorderGrowth]: {
     value: PARAM_DATA[PARAM_KEYS.prestigeBorderGrowth].defaultValue.copy(),
+  },
+  [PARAM_KEYS.prestigeMoneyPower]: {
+    value: PARAM_DATA[PARAM_KEYS.prestigeMoneyPower].defaultValue.copy(),
+  },
+  [PARAM_KEYS.prestigeCrystalChance]: {
+    value: PARAM_DATA[PARAM_KEYS.prestigeCrystalChance].defaultValue.copy(),
+  },
+  [PARAM_KEYS.prestigeCrystalMultiplier]: {
+    value: PARAM_DATA[PARAM_KEYS.prestigeCrystalMultiplier].defaultValue.copy(),
+  },
+  [PARAM_KEYS.baseRubiesChance]: {
+    value: PARAM_DATA[PARAM_KEYS.baseRubiesChance].defaultValue.copy(),
+  },
+  [PARAM_KEYS.bonusPrestigePointsMultiplier]: {
+    value: PARAM_DATA[PARAM_KEYS.bonusPrestigePointsMultiplier].defaultValue.copy(),
   },
 };

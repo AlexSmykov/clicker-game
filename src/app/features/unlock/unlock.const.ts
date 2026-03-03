@@ -13,12 +13,14 @@ export const UNLOCK_KEYS = {
   baseUnlock: 'baseUnlock',
   prestige: 'prestige',
   crystals: 'crystals',
+  rubies: 'rubies',
   statistics: 'statistics',
+  bonusCrystalChance: 'bonusCrystalChance',
 } as const;
 
 export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
   [UNLOCK_KEYS.baseUnlock]: {
-    name: 'Base unlock',
+    name: 'Start here',
     description: 'Basic unlock to open next routes',
     iconPath: `base.svg`,
     position: {
@@ -35,7 +37,7 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
     effect: () => {},
   },
   [UNLOCK_KEYS.prestige]: {
-    name: 'Prestige reset layer',
+    name: 'First reset layer',
     description: 'You can prestige, to gain special resource',
     iconPath: `prestige.svg`,
     position: {
@@ -52,8 +54,8 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
     effect: () => {},
   },
   [UNLOCK_KEYS.crystals]: {
-    name: 'Cristal resource',
-    description: 'New resource - crystals. Can be gained on click with some chance',
+    name: 'Second resource',
+    description: 'New resource - crystals. Can be gained with some chance on click',
     iconPath: `crystals.svg`,
     position: {
       x: 1,
@@ -88,6 +90,31 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
       });
     },
   },
+  [UNLOCK_KEYS.rubies]: {
+    name: 'Rubies',
+    description: 'Red crystals for you! Can be gained with small chance on crystal gain',
+    iconPath: `crystals.svg`,
+    position: {
+      x: 1,
+      y: -1,
+    },
+    requiredUnlocks: [UNLOCK_KEYS.crystals],
+    costs: [
+      {
+        resourceKey: RESOURCE_KEYS.crystal,
+        value: new ExponentNumber(0, 100),
+      },
+    ],
+    effect: (_: UpgradeService, paramService: ParamService, resourceService: ResourceService) => {
+      resourceService.updateResource(RESOURCE_KEYS.ruby, {
+        isUnlocked: true,
+      });
+
+      paramService.updateParam(PARAM_KEYS.baseRubiesChance, {
+        value: new ExponentNumber(0, 10000),
+      });
+    },
+  },
   [UNLOCK_KEYS.statistics]: {
     name: 'Statistics tab',
     description: 'New tap to observe all your stats',
@@ -105,6 +132,33 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
     ],
     effect: () => {},
   },
+  [UNLOCK_KEYS.bonusCrystalChance]: {
+    name: 'Lucky crystal',
+    description: 'Some crystal chance for you',
+    iconPath: `crystal.svg`,
+    position: {
+      x: 2,
+      y: 1,
+    },
+    requiredUnlocks: [UNLOCK_KEYS.crystals],
+    costs: [
+      {
+        resourceKey: RESOURCE_KEYS.crystal,
+        value: new ExponentNumber(0, 20),
+      },
+      {
+        resourceKey: RESOURCE_KEYS.money,
+        value: new ExponentNumber(1, 6),
+      },
+    ],
+    effect: (_: UpgradeService, paramService: ParamService) => {
+      paramService.updateParam(PARAM_KEYS.bonusCrystalChance, {
+        value: paramService
+          .paramsCurrentData()
+          [PARAM_KEYS.bonusCrystalChance].value.plus(new ExponentNumber(0, 50000)),
+      });
+    },
+  },
 };
 
 export const UNLOCK_CURRENT_DATA: Record<UnlockKey, UnlockCurrentData> = {
@@ -120,8 +174,16 @@ export const UNLOCK_CURRENT_DATA: Record<UnlockKey, UnlockCurrentData> = {
     isUnlocked: false,
     isResetOnPrestige: false,
   },
+  [UNLOCK_KEYS.rubies]: {
+    isUnlocked: false,
+    isResetOnPrestige: false,
+  },
   [UNLOCK_KEYS.statistics]: {
     isUnlocked: false,
     isResetOnPrestige: false,
+  },
+  [UNLOCK_KEYS.bonusCrystalChance]: {
+    isUnlocked: false,
+    isResetOnPrestige: true,
   },
 };

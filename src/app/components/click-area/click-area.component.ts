@@ -65,6 +65,6 @@ export class ClickAreaComponent {
     return new ExponentNumber(0, 1)
       .multiply(paramsCurrentData[PARAM_KEYS.simpleMoneyMultiplier].value)
       .multiply(paramsCurrentData[PARAM_KEYS.crystalMoneyMultiplier].value)
-      .power(paramsCurrentData[PARAM_KEYS.simpleMoneyPower].value);
+      .power(new ExponentNumber(0, 1).plus(paramsCurrentData[PARAM_KEYS.simpleMoneyPower].value));
   }
 }
