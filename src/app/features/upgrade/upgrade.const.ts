@@ -14,11 +14,24 @@ export const UPGRADE_KEYS = {
   prestigeMoneyPower: 'prestigeMoneyPower',
   prestigeCrystalChance: 'prestigeCrystalChance',
   prestigeCrystalMultiplier: 'prestigeCrystalMultiplier',
+  moneyCrystalChance: 'moneyCrystalChance',
+
+  moneyLogBase: 'moneyLogBase',
+  moneyLogPower: 'moneyLogPower',
+
+  crystalLogBase: 'crystalLogBase',
+  crystalLogPower: 'crystalLogPower',
+
+  prestigeLogBase: 'prestigeLogBase',
+  prestigeLogPower: 'prestigeLogPower',
+
+  rubyLogBase: 'rubyLogBase',
+  rubyLogPower: 'rubyLogPower',
 } as const;
 
 export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
   [UPGRADE_KEYS.simpleMoneyMultiplier]: {
-    name: 'Simple multiplier',
+    name: 'Money multiplier',
     description: 'Add simple multiplier to your income',
     isResetOnPrestige: true,
     effects: [
@@ -44,11 +57,37 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
           },
         ],
       },
+      {
+        startAtLevel: 100,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(1, 35),
+            resource: RESOURCE_KEYS.money,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
+              value: new ExponentNumber(0, 4),
+            },
+          },
+        ],
+      },
+      {
+        startAtLevel: 1000,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(1, 650),
+            resource: RESOURCE_KEYS.money,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
+              value: new ExponentNumber(0, 10),
+            },
+          },
+        ],
+      },
     ],
   },
   [UPGRADE_KEYS.simpleMoneyMultiplierBoost]: {
-    name: 'Simple multiplier booster',
-    description: 'Multiply your simple multiplier and upgrade effect',
+    name: 'Money booster',
+    description: 'Multiply your simple multiplier effect',
     isResetOnPrestige: true,
     effects: [
       {
@@ -83,7 +122,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
     ],
   },
   [UPGRADE_KEYS.simpleMoneyPower]: {
-    name: 'Simple power',
+    name: 'POW',
     description: 'Raise your money income to power',
     isResetOnPrestige: true,
     effects: [
@@ -112,7 +151,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
     ],
   },
   [UPGRADE_KEYS.crystalMultiplier]: {
-    name: 'Crystal power',
+    name: 'Crystal shard',
     description: 'Multiply your money income again',
     isResetOnPrestige: true,
     effects: [
@@ -138,10 +177,23 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
           },
         ],
       },
+      {
+        startAtLevel: 48,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 100),
+            resource: RESOURCE_KEYS.crystal,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
+              value: new ExponentNumber(0, 1.1),
+            },
+          },
+        ],
+      },
     ],
   },
   [UPGRADE_KEYS.crystalChance]: {
-    name: 'Crystal chance',
+    name: 'Crystal magnet',
     description: 'Increase you chance to get crystal on click',
     isResetOnPrestige: true,
     effects: [
@@ -163,6 +215,32 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
               value: new ExponentNumber(0, 1),
+            },
+          },
+        ],
+      },
+      {
+        startAtLevel: 99,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 100),
+            resource: RESOURCE_KEYS.crystal,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 10),
+            },
+          },
+        ],
+      },
+      {
+        startAtLevel: 189,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 1000),
+            resource: RESOURCE_KEYS.crystal,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
+              value: new ExponentNumber(0, 1.1),
             },
           },
         ],
@@ -308,6 +386,452 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
       },
     ],
   },
+  [UPGRADE_KEYS.moneyCrystalChance]: {
+    name: 'Money synergism',
+    description: 'Increase crystal chance by your money',
+    isResetOnPrestige: true,
+    effects: [
+      {
+        paramKey: PARAM_KEYS.moneyCrystalChance,
+        change: {
+          changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+          value: new ExponentNumber(0, 2000),
+        },
+      },
+    ],
+    costs: [
+      {
+        startAtLevel: 0,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(1, 9),
+            resource: RESOURCE_KEYS.prestigePoints,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
+              value: new ExponentNumber(0, 10),
+            },
+          },
+        ],
+      },
+      {
+        startAtLevel: 100,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(1, 120),
+            resource: RESOURCE_KEYS.prestigePoints,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
+              value: new ExponentNumber(0, 1000),
+            },
+          },
+        ],
+      },
+    ],
+  },
+
+  [UPGRADE_KEYS.moneyLogBase]: {
+    name: 'Money log base',
+    description: 'Decrease base of log(money)  multiplier',
+    isResetOnPrestige: true,
+    effects: [
+      {
+        paramKey: PARAM_KEYS.moneyLogBase,
+        change: {
+          changeType: SIMPLE_VALUE_CHANGE_KEYS.divide,
+          value: new ExponentNumber(0, 1.5),
+        },
+      },
+    ],
+    costs: [
+      {
+        startAtLevel: 0,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 10000),
+            resource: RESOURCE_KEYS.money,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.power,
+              value: new ExponentNumber(0, 1.2),
+            },
+          },
+          {
+            defaultValue: new ExponentNumber(0, 1),
+            resource: RESOURCE_KEYS.prestigePoints,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 0),
+            },
+          },
+        ],
+      },
+      {
+        startAtLevel: 10,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(1, 50),
+            resource: RESOURCE_KEYS.money,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.power,
+              value: new ExponentNumber(0, 2),
+            },
+          },
+          {
+            defaultValue: new ExponentNumber(0, 2),
+            resource: RESOURCE_KEYS.prestigePoints,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 1),
+            },
+          },
+        ],
+      },
+    ],
+  },
+  [UPGRADE_KEYS.moneyLogPower]: {
+    name: 'Money log power',
+    description: 'Raise log(money)  to power',
+    isResetOnPrestige: true,
+    effects: [
+      {
+        paramKey: PARAM_KEYS.moneyLogPower,
+        change: {
+          changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+          value: new ExponentNumber(0, 0.5),
+        },
+      },
+    ],
+    costs: [
+      {
+        startAtLevel: 0,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 10),
+            resource: RESOURCE_KEYS.crystal,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 10),
+            },
+          },
+          {
+            defaultValue: new ExponentNumber(0, 1),
+            resource: RESOURCE_KEYS.prestigePoints,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 0),
+            },
+          },
+        ],
+      },
+      {
+        startAtLevel: 10,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 250),
+            resource: RESOURCE_KEYS.crystal,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
+              value: new ExponentNumber(0, 1.25),
+            },
+          },
+          {
+            defaultValue: new ExponentNumber(0, 2),
+            resource: RESOURCE_KEYS.prestigePoints,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 1),
+            },
+          },
+        ],
+      },
+    ],
+  },
+
+  [UPGRADE_KEYS.crystalLogBase]: {
+    name: 'Crystal log base',
+    description: 'Decrease base of log(crystals)  multiplier',
+    isResetOnPrestige: true,
+    effects: [
+      {
+        paramKey: PARAM_KEYS.crystalLogBase,
+        change: {
+          changeType: SIMPLE_VALUE_CHANGE_KEYS.divide,
+          value: new ExponentNumber(0, 1.5),
+        },
+      },
+    ],
+    costs: [
+      {
+        startAtLevel: 0,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 25),
+            resource: RESOURCE_KEYS.crystal,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 25),
+            },
+          },
+        ],
+      },
+      {
+        startAtLevel: 9,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 250),
+            resource: RESOURCE_KEYS.crystal,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
+              value: new ExponentNumber(0, 1.2),
+            },
+          },
+        ],
+      },
+    ],
+  },
+  [UPGRADE_KEYS.crystalLogPower]: {
+    name: 'Crystal log power',
+    description: 'Raise log(crystal)  to power',
+    isResetOnPrestige: true,
+    effects: [
+      {
+        paramKey: PARAM_KEYS.crystalLogPower,
+        change: {
+          changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+          value: new ExponentNumber(0, 0.5),
+        },
+      },
+    ],
+    costs: [
+      {
+        startAtLevel: 0,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(1, 9),
+            resource: RESOURCE_KEYS.money,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.power,
+              value: new ExponentNumber(0, 1.375),
+            },
+          },
+          {
+            defaultValue: new ExponentNumber(0, 10),
+            resource: RESOURCE_KEYS.crystal,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 10),
+            },
+          },
+        ],
+      },
+      {
+        startAtLevel: 9,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(1, 100),
+            resource: RESOURCE_KEYS.money,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.power,
+              value: new ExponentNumber(0, 1.75),
+            },
+          },
+          {
+            defaultValue: new ExponentNumber(0, 100),
+            resource: RESOURCE_KEYS.crystal,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
+              value: new ExponentNumber(0, 2),
+            },
+          },
+        ],
+      },
+    ],
+  },
+
+  [UPGRADE_KEYS.prestigeLogBase]: {
+    name: 'PP log base',
+    description: 'Decrease base of log(PP) multiplier',
+    isResetOnPrestige: false,
+    effects: [
+      {
+        paramKey: PARAM_KEYS.prestigeLogBase,
+        change: {
+          changeType: SIMPLE_VALUE_CHANGE_KEYS.divide,
+          value: new ExponentNumber(0, 1.5),
+        },
+      },
+    ],
+    costs: [
+      {
+        startAtLevel: 0,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 15),
+            resource: RESOURCE_KEYS.prestigePoints,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
+              value: new ExponentNumber(0, 1.5),
+            },
+          },
+        ],
+      },
+      {
+        startAtLevel: 10,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 500),
+            resource: RESOURCE_KEYS.crystal,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
+              value: new ExponentNumber(0, 2.5),
+            },
+          },
+        ],
+      },
+    ],
+  },
+  [UPGRADE_KEYS.prestigeLogPower]: {
+    name: 'PP log power',
+    description: 'Raise log(PP) to power',
+    isResetOnPrestige: false,
+    effects: [
+      {
+        paramKey: PARAM_KEYS.prestigeLogPower,
+        change: {
+          changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+          value: new ExponentNumber(0, 0.5),
+        },
+      },
+    ],
+    costs: [
+      {
+        startAtLevel: 0,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 10),
+            resource: RESOURCE_KEYS.prestigePoints,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 20),
+            },
+          },
+        ],
+      },
+      {
+        startAtLevel: 10,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 250),
+            resource: RESOURCE_KEYS.prestigePoints,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
+              value: new ExponentNumber(0, 1.5),
+            },
+          },
+        ],
+      },
+    ],
+  },
+
+  [UPGRADE_KEYS.rubyLogBase]: {
+    name: 'Ruby log base',
+    description: 'Decrease base of log(rubies) multiplier',
+    isResetOnPrestige: true,
+    effects: [
+      {
+        paramKey: PARAM_KEYS.rubyLogBase,
+        change: {
+          changeType: SIMPLE_VALUE_CHANGE_KEYS.divide,
+          value: new ExponentNumber(0, 1.75),
+        },
+      },
+    ],
+    costs: [
+      {
+        startAtLevel: 0,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 1),
+            resource: RESOURCE_KEYS.ruby,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 1),
+            },
+          },
+        ],
+      },
+      {
+        startAtLevel: 9,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 10),
+            resource: RESOURCE_KEYS.crystal,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 5),
+            },
+          },
+        ],
+      },
+    ],
+  },
+  [UPGRADE_KEYS.rubyLogPower]: {
+    name: 'Ruby log power',
+    description: 'Raise log(Ruby) to power',
+    isResetOnPrestige: true,
+    effects: [
+      {
+        paramKey: PARAM_KEYS.rubyLogPower,
+        change: {
+          changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+          value: new ExponentNumber(0, 1),
+        },
+      },
+    ],
+    costs: [
+      {
+        startAtLevel: 0,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 50),
+            resource: RESOURCE_KEYS.crystal,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 50),
+            },
+          },
+          {
+            defaultValue: new ExponentNumber(0, 1),
+            resource: RESOURCE_KEYS.ruby,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 1),
+            },
+          },
+        ],
+      },
+      {
+        startAtLevel: 9,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 500),
+            resource: RESOURCE_KEYS.ruby,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 250),
+            },
+          },
+          {
+            defaultValue: new ExponentNumber(0, 10),
+            resource: RESOURCE_KEYS.prestigePoints,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 5),
+            },
+          },
+        ],
+      },
+    ],
+  },
 };
 
 export const UPGRADE_CURRENT_DATA: Record<UpgradeKey, UpgradeCurrentData> = {
@@ -348,6 +872,55 @@ export const UPGRADE_CURRENT_DATA: Record<UpgradeKey, UpgradeCurrentData> = {
   },
   [UPGRADE_KEYS.prestigeCrystalMultiplier]: {
     costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.prestigeCrystalMultiplier].costs),
+    isUnlocked: false,
+    level: 0,
+  },
+  [UPGRADE_KEYS.moneyCrystalChance]: {
+    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.moneyCrystalChance].costs),
+    isUnlocked: false,
+    level: 0,
+  },
+
+  [UPGRADE_KEYS.moneyLogBase]: {
+    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.moneyLogBase].costs),
+    isUnlocked: false,
+    level: 0,
+  },
+  [UPGRADE_KEYS.moneyLogPower]: {
+    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.moneyLogPower].costs),
+    isUnlocked: false,
+    level: 0,
+  },
+
+  [UPGRADE_KEYS.crystalLogBase]: {
+    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.crystalLogBase].costs),
+    isUnlocked: false,
+    level: 0,
+  },
+  [UPGRADE_KEYS.crystalLogPower]: {
+    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.crystalLogPower].costs),
+    isUnlocked: false,
+    level: 0,
+  },
+
+  [UPGRADE_KEYS.prestigeLogBase]: {
+    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.prestigeLogBase].costs),
+    isUnlocked: false,
+    level: 0,
+  },
+  [UPGRADE_KEYS.prestigeLogPower]: {
+    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.prestigeLogPower].costs),
+    isUnlocked: false,
+    level: 0,
+  },
+
+  [UPGRADE_KEYS.rubyLogBase]: {
+    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.rubyLogBase].costs),
+    isUnlocked: false,
+    level: 0,
+  },
+  [UPGRADE_KEYS.rubyLogPower]: {
+    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.rubyLogPower].costs),
     isUnlocked: false,
     level: 0,
   },

@@ -16,6 +16,12 @@ export const UNLOCK_KEYS = {
   rubies: 'rubies',
   statistics: 'statistics',
   bonusCrystalChance: 'bonusCrystalChance',
+  moneyCrystalChance: 'moneyCrystalChance',
+  logarithms: 'logarithms',
+  moneyLog: 'moneyLog',
+  crystalLog: 'crystalLog',
+  prestigeLog: 'prestigeLog',
+  rubyLog: 'rubyLog',
 } as const;
 
 export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
@@ -159,6 +165,159 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
       });
     },
   },
+  [UNLOCK_KEYS.moneyCrystalChance]: {
+    name: 'Money crystallization',
+    description: 'You can spend your money to gain more crystals',
+    iconPath: `money-crystal.svg`,
+    position: {
+      x: 3,
+      y: 2,
+    },
+    requiredUnlocks: [UNLOCK_KEYS.crystals],
+    costs: [
+      {
+        resourceKey: RESOURCE_KEYS.crystal,
+        value: new ExponentNumber(0, 100),
+      },
+      {
+        resourceKey: RESOURCE_KEYS.money,
+        value: new ExponentNumber(1, 15),
+      },
+    ],
+    effect: (_: UpgradeService, paramService: ParamService) => {
+      paramService.updateParam(PARAM_KEYS.bonusCrystalChance, {
+        value: paramService
+          .paramsCurrentData()
+          [PARAM_KEYS.bonusCrystalChance].value.plus(new ExponentNumber(0, 50000)),
+      });
+    },
+  },
+  [UNLOCK_KEYS.logarithms]: {
+    name: 'Logarithm route',
+    description:
+      'Open a few new unlocks to add some synergism into game and also help you progress through game',
+    iconPath: `log.svg`,
+    position: {
+      x: 4,
+      y: 0,
+    },
+    requiredUnlocks: [UNLOCK_KEYS.crystals, UNLOCK_KEYS.prestige],
+    costs: [
+      {
+        resourceKey: RESOURCE_KEYS.crystal,
+        value: new ExponentNumber(0, 50),
+      },
+      {
+        resourceKey: RESOURCE_KEYS.prestigePoints,
+        value: new ExponentNumber(0, 25),
+      },
+    ],
+    effect: () => {},
+  },
+  [UNLOCK_KEYS.moneyLog]: {
+    name: 'Gold logarithm',
+    description: 'The more money you have - the more you gain. Multiply your money by log(money)',
+    iconPath: `log-money.svg`,
+    position: {
+      x: 5,
+      y: -3,
+    },
+    requiredUnlocks: [UNLOCK_KEYS.logarithms],
+    costs: [
+      {
+        resourceKey: RESOURCE_KEYS.money,
+        value: new ExponentNumber(1, 15),
+      },
+      {
+        resourceKey: RESOURCE_KEYS.prestigePoints,
+        value: new ExponentNumber(0, 10),
+      },
+    ],
+    effect: (upgradeService: UpgradeService) => {
+      upgradeService.updateUpgrade(UPGRADE_KEYS.moneyLogBase, { isUnlocked: true });
+
+      upgradeService.updateUpgrade(UPGRADE_KEYS.moneyLogPower, { isUnlocked: true });
+    },
+  },
+  [UNLOCK_KEYS.crystalLog]: {
+    name: 'Crystallized logarithm',
+    description: "Now you shouldn't spend all your crystals. Multiply your money by log(crystals)",
+    iconPath: `log-crystals.svg`,
+    position: {
+      x: 5,
+      y: -1,
+    },
+    requiredUnlocks: [UNLOCK_KEYS.logarithms],
+    costs: [
+      {
+        resourceKey: RESOURCE_KEYS.crystal,
+        value: new ExponentNumber(0, 75),
+      },
+      {
+        resourceKey: RESOURCE_KEYS.prestigePoints,
+        value: new ExponentNumber(0, 10),
+      },
+    ],
+    effect: (upgradeService: UpgradeService) => {
+      upgradeService.updateUpgrade(UPGRADE_KEYS.crystalLogBase, { isUnlocked: true });
+
+      upgradeService.updateUpgrade(UPGRADE_KEYS.crystalLogPower, { isUnlocked: true });
+    },
+  },
+  [UNLOCK_KEYS.prestigeLog]: {
+    name: 'VIP logarithm',
+    description: 'Better boost with each prestige. Multiply your money by log(PP)',
+    iconPath: `log-prestige.svg`,
+    position: {
+      x: 5,
+      y: 1,
+    },
+    requiredUnlocks: [UNLOCK_KEYS.logarithms],
+    costs: [
+      {
+        resourceKey: RESOURCE_KEYS.money,
+        value: new ExponentNumber(1, 10),
+      },
+      {
+        resourceKey: RESOURCE_KEYS.crystal,
+        value: new ExponentNumber(0, 20),
+      },
+      {
+        resourceKey: RESOURCE_KEYS.prestigePoints,
+        value: new ExponentNumber(0, 35),
+      },
+    ],
+    effect: (upgradeService: UpgradeService) => {
+      upgradeService.updateUpgrade(UPGRADE_KEYS.prestigeLogBase, { isUnlocked: true });
+
+      upgradeService.updateUpgrade(UPGRADE_KEYS.prestigeLogPower, { isUnlocked: true });
+    },
+  },
+  [UNLOCK_KEYS.rubyLog]: {
+    name: 'Ruby log',
+    description: 'Now rubies is useful. Multiply your money by log(rubies)',
+    iconPath: `log-rubies.svg`,
+    position: {
+      x: 5,
+      y: 3,
+    },
+    requiredUnlocks: [UNLOCK_KEYS.logarithms, UNLOCK_KEYS.rubies],
+    costs: [
+      {
+        resourceKey: RESOURCE_KEYS.prestigePoints,
+        value: new ExponentNumber(0, 10),
+      },
+      {
+        resourceKey: RESOURCE_KEYS.ruby,
+        value: new ExponentNumber(0, 4),
+      },
+    ],
+    effect: (upgradeService: UpgradeService) => {
+      upgradeService.updateUpgrade(UPGRADE_KEYS.rubyLogBase, { isUnlocked: true });
+
+      upgradeService.updateUpgrade(UPGRADE_KEYS.rubyLogPower, { isUnlocked: true });
+    },
+  },
 };
 
 export const UNLOCK_CURRENT_DATA: Record<UnlockKey, UnlockCurrentData> = {
@@ -183,6 +342,30 @@ export const UNLOCK_CURRENT_DATA: Record<UnlockKey, UnlockCurrentData> = {
     isResetOnPrestige: false,
   },
   [UNLOCK_KEYS.bonusCrystalChance]: {
+    isUnlocked: false,
+    isResetOnPrestige: true,
+  },
+  [UNLOCK_KEYS.moneyCrystalChance]: {
+    isUnlocked: false,
+    isResetOnPrestige: true,
+  },
+  [UNLOCK_KEYS.logarithms]: {
+    isUnlocked: false,
+    isResetOnPrestige: false,
+  },
+  [UNLOCK_KEYS.moneyLog]: {
+    isUnlocked: false,
+    isResetOnPrestige: true,
+  },
+  [UNLOCK_KEYS.crystalLog]: {
+    isUnlocked: false,
+    isResetOnPrestige: true,
+  },
+  [UNLOCK_KEYS.prestigeLog]: {
+    isUnlocked: false,
+    isResetOnPrestige: true,
+  },
+  [UNLOCK_KEYS.rubyLog]: {
     isUnlocked: false,
     isResetOnPrestige: true,
   },
