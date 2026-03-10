@@ -12,7 +12,7 @@ export const PARAM_KEYS = {
   bonusCrystalChance: 'bonusCrystalChance',
   moneyCrystalChance: 'moneyCrystalChance',
   prestigePointsCoefficient: 'prestigePointsCoefficient',
-  prestigeBorderExponent: 'prestigeBorderExponent',
+  prestigeBorder: 'prestigeBorder',
   prestigeBorderGrowth: 'prestigeBorderGrowth',
   prestigeMoneyPower: 'prestigeMoneyPower',
   prestigeCrystalChance: 'prestigeCrystalChance',
@@ -105,8 +105,8 @@ export const PARAM_DATA: Record<ParamKey, ParamData> = {
     isResetOnPrestige: false,
     isWithOne: false,
   },
-  [PARAM_KEYS.prestigeBorderExponent]: {
-    name: 'Prestige border exponent',
+  [PARAM_KEYS.prestigeBorder]: {
+    name: 'Prestige border',
     defaultValue: new ExponentNumber(1, environment.isBorderlessPrestige ? 1 : 10),
     prefix: '',
     isPercent: false,
@@ -269,8 +269,8 @@ export const PARAM_CURRENT_VALUE: Record<ParamKey, ParamCurrentData> = {
   [PARAM_KEYS.prestigePointsCoefficient]: {
     value: PARAM_DATA[PARAM_KEYS.prestigePointsCoefficient].defaultValue.copy(),
   },
-  [PARAM_KEYS.prestigeBorderExponent]: {
-    value: PARAM_DATA[PARAM_KEYS.prestigeBorderExponent].defaultValue.copy(),
+  [PARAM_KEYS.prestigeBorder]: {
+    value: PARAM_DATA[PARAM_KEYS.prestigeBorder].defaultValue.copy(),
   },
   [PARAM_KEYS.prestigeBorderGrowth]: {
     value: PARAM_DATA[PARAM_KEYS.prestigeBorderGrowth].defaultValue.copy(),

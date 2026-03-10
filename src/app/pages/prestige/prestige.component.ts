@@ -38,7 +38,7 @@ export default class PrestigeComponent {
   readonly prestigeBorder = computed(() => {
     return {
       key: RESOURCE_KEYS.money,
-      value: this.#paramService.paramsCurrentData()[PARAM_KEYS.prestigeBorderExponent].value,
+      value: this.#paramService.paramsCurrentData()[PARAM_KEYS.prestigeBorder].value,
     };
   });
 
@@ -67,8 +67,8 @@ export default class PrestigeComponent {
         .plus(this.prestigePointsGain().value),
     });
 
-    this.#paramService.updateParam(PARAM_KEYS.prestigeBorderExponent, {
-      value: paramsCurrentData[PARAM_KEYS.prestigeBorderExponent].value
+    this.#paramService.updateParam(PARAM_KEYS.prestigeBorder, {
+      value: paramsCurrentData[PARAM_KEYS.prestigeBorder].value
         .copy()
         .power(paramsCurrentData[PARAM_KEYS.prestigeBorderGrowth].value),
     });
