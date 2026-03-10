@@ -18,8 +18,8 @@
     box-shadow: 0 0 0 2px inset var(--color-unlock-bought);
 
     &.resetless {
-      color: var(--color-unlock-resetless);
-      box-shadow: 0 0 0 2px inset var(--color-unlock-resetless);
+      color: var(--color-resetless);
+      box-shadow: 0 0 0 2px inset var(--color-resetless);
     }
   }
 
@@ -70,6 +70,14 @@
   }
 
   .resetless {
-    color: var(--color-unlock-resetless);
+    color: var(--color-resetless);
+  }
+
+  .costs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
   }
 }

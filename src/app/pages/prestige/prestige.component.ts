@@ -8,6 +8,7 @@ import { PARAM_KEYS } from 'src/app/features/param/param.const';
 import { UpgradeService } from 'src/app/features/upgrade/upgrade.service';
 import { ResourceSimpleComponent } from 'src/app/features/resource/components/simple/resource-simple.component';
 import { UnlockService } from 'src/app/features/unlock/unlock.service';
+import { UPGRADE_KEYS } from 'src/app/features/upgrade/upgrade.const';
 
 @Component({
   selector: 'app-prestige',
@@ -72,15 +73,15 @@ export default class PrestigeComponent {
         .power(paramsCurrentData[PARAM_KEYS.prestigeBorderGrowth].value),
     });
 
-    this.#upgradeService.updateUpgrade(PARAM_KEYS.prestigeMoneyPower, {
+    this.#upgradeService.updateUpgrade(UPGRADE_KEYS.prestigeMoneyPower, {
       isUnlocked: true,
     });
 
-    this.#upgradeService.updateUpgrade(PARAM_KEYS.prestigeCrystalChance, {
+    this.#upgradeService.updateUpgrade(UPGRADE_KEYS.prestigeCrystalChance, {
       isUnlocked: true,
     });
 
-    this.#upgradeService.updateUpgrade(PARAM_KEYS.prestigeCrystalMultiplier, {
+    this.#upgradeService.updateUpgrade(UPGRADE_KEYS.prestigeCrystalShardsMultiplier, {
       isUnlocked: true,
     });
 

@@ -9,24 +9,20 @@ export const UPGRADE_KEYS = {
   simpleMoneyMultiplier: 'simpleMoneyMultiplier',
   simpleMoneyMultiplierBoost: 'simpleMoneyMultiplierBoost',
   simpleMoneyPower: 'simpleMoneyPower',
-  crystalMultiplier: 'crystalMultiplier',
+  crystalShardMoneyMultiplier: 'crystalShardMoneyMultiplier',
   crystalChance: 'crystalChance',
   prestigeMoneyPower: 'prestigeMoneyPower',
   prestigeCrystalChance: 'prestigeCrystalChance',
-  prestigeCrystalMultiplier: 'prestigeCrystalMultiplier',
+  prestigeCrystalShardsMultiplier: 'prestigeCrystalMultiplier',
   moneyCrystalChance: 'moneyCrystalChance',
-
   moneyLogBase: 'moneyLogBase',
   moneyLogPower: 'moneyLogPower',
-
-  crystalLogBase: 'crystalLogBase',
-  crystalLogPower: 'crystalLogPower',
-
+  crystalShardLogBase: 'crystalShardLogBase',
+  crystalShardLogPower: 'crystalShardLogPower',
   prestigeLogBase: 'prestigeLogBase',
   prestigeLogPower: 'prestigeLogPower',
-
-  rubyLogBase: 'rubyLogBase',
-  rubyLogPower: 'rubyLogPower',
+  rubyShardLogBase: 'rubyShardLogBase',
+  rubyShardLogPower: 'rubyShardLogPower',
 } as const;
 
 export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
@@ -150,13 +146,13 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
       },
     ],
   },
-  [UPGRADE_KEYS.crystalMultiplier]: {
-    name: 'Crystal shard',
-    description: 'Multiply your money income again',
+  [UPGRADE_KEYS.crystalShardMoneyMultiplier]: {
+    name: 'Shiny rock',
+    description: 'Multiply your money income on each level',
     isResetOnPrestige: true,
     effects: [
       {
-        paramKey: PARAM_KEYS.crystalMoneyMultiplier,
+        paramKey: PARAM_KEYS.crystalShardsMoneyMultiplier,
         change: {
           changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
           value: new ExponentNumber(0, 2),
@@ -169,7 +165,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         resources: [
           {
             defaultValue: new ExponentNumber(0, 4),
-            resource: RESOURCE_KEYS.crystal,
+            resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
               value: new ExponentNumber(0, 2),
@@ -182,7 +178,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         resources: [
           {
             defaultValue: new ExponentNumber(0, 100),
-            resource: RESOURCE_KEYS.crystal,
+            resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
               value: new ExponentNumber(0, 1.1),
@@ -194,7 +190,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
   },
   [UPGRADE_KEYS.crystalChance]: {
     name: 'Crystal magnet',
-    description: 'Increase you chance to get crystal on click',
+    description: 'Increase your crystal chance',
     isResetOnPrestige: true,
     effects: [
       {
@@ -211,7 +207,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         resources: [
           {
             defaultValue: new ExponentNumber(0, 1),
-            resource: RESOURCE_KEYS.crystal,
+            resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
               value: new ExponentNumber(0, 1),
@@ -224,7 +220,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         resources: [
           {
             defaultValue: new ExponentNumber(0, 100),
-            resource: RESOURCE_KEYS.crystal,
+            resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
               value: new ExponentNumber(0, 10),
@@ -237,7 +233,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         resources: [
           {
             defaultValue: new ExponentNumber(0, 1000),
-            resource: RESOURCE_KEYS.crystal,
+            resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
               value: new ExponentNumber(0, 1.1),
@@ -303,8 +299,8 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
     ],
   },
   [UPGRADE_KEYS.prestigeCrystalChance]: {
-    name: 'Frequent crystals',
-    description: 'More chance to gain crystal on click',
+    name: 'Better radar',
+    description: 'More chance to gain crystal resources on click',
     isResetOnPrestige: false,
     effects: [
       {
@@ -357,13 +353,13 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
       },
     ],
   },
-  [UPGRADE_KEYS.prestigeCrystalMultiplier]: {
+  [UPGRADE_KEYS.prestigeCrystalShardsMultiplier]: {
     name: 'Crystal clone machine',
     description: 'Multiplies crystals on click, nice',
     isResetOnPrestige: false,
     effects: [
       {
-        paramKey: PARAM_KEYS.prestigeCrystalMultiplier,
+        paramKey: PARAM_KEYS.prestigeCrystalShardsMultiplier,
         change: {
           changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
           value: new ExponentNumber(0, 1),
@@ -387,8 +383,8 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
     ],
   },
   [UPGRADE_KEYS.moneyCrystalChance]: {
-    name: 'Money synergism',
-    description: 'Increase crystal chance by your money',
+    name: 'Money-crystals synergism',
+    description: 'Spend money to gain more crystal chance',
     isResetOnPrestige: true,
     effects: [
       {
@@ -405,7 +401,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         resources: [
           {
             defaultValue: new ExponentNumber(1, 9),
-            resource: RESOURCE_KEYS.prestigePoints,
+            resource: RESOURCE_KEYS.money,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
               value: new ExponentNumber(0, 10),
@@ -428,7 +424,6 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
       },
     ],
   },
-
   [UPGRADE_KEYS.moneyLogBase]: {
     name: 'Money log base',
     description: 'Decrease base of log(money)  multiplier',
@@ -506,7 +501,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         resources: [
           {
             defaultValue: new ExponentNumber(0, 10),
-            resource: RESOURCE_KEYS.crystal,
+            resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
               value: new ExponentNumber(0, 10),
@@ -527,7 +522,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         resources: [
           {
             defaultValue: new ExponentNumber(0, 250),
-            resource: RESOURCE_KEYS.crystal,
+            resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
               value: new ExponentNumber(0, 1.25),
@@ -545,14 +540,13 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
       },
     ],
   },
-
-  [UPGRADE_KEYS.crystalLogBase]: {
-    name: 'Crystal log base',
-    description: 'Decrease base of log(crystals)  multiplier',
+  [UPGRADE_KEYS.crystalShardLogBase]: {
+    name: 'Crystal shard log base',
+    description: 'Decrease base of log(crystal shards)  multiplier',
     isResetOnPrestige: true,
     effects: [
       {
-        paramKey: PARAM_KEYS.crystalLogBase,
+        paramKey: PARAM_KEYS.crystalShardsLogBase,
         change: {
           changeType: SIMPLE_VALUE_CHANGE_KEYS.divide,
           value: new ExponentNumber(0, 1.5),
@@ -565,7 +559,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         resources: [
           {
             defaultValue: new ExponentNumber(0, 25),
-            resource: RESOURCE_KEYS.crystal,
+            resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
               value: new ExponentNumber(0, 25),
@@ -578,7 +572,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         resources: [
           {
             defaultValue: new ExponentNumber(0, 250),
-            resource: RESOURCE_KEYS.crystal,
+            resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
               value: new ExponentNumber(0, 1.2),
@@ -588,13 +582,13 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
       },
     ],
   },
-  [UPGRADE_KEYS.crystalLogPower]: {
-    name: 'Crystal log power',
-    description: 'Raise log(crystal)  to power',
+  [UPGRADE_KEYS.crystalShardLogPower]: {
+    name: 'Crystal shard log power',
+    description: 'Raise log(crystal shards)  to power',
     isResetOnPrestige: true,
     effects: [
       {
-        paramKey: PARAM_KEYS.crystalLogPower,
+        paramKey: PARAM_KEYS.crystalShardsLogPower,
         change: {
           changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
           value: new ExponentNumber(0, 0.5),
@@ -615,7 +609,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
           },
           {
             defaultValue: new ExponentNumber(0, 10),
-            resource: RESOURCE_KEYS.crystal,
+            resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
               value: new ExponentNumber(0, 10),
@@ -636,7 +630,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
           },
           {
             defaultValue: new ExponentNumber(0, 100),
-            resource: RESOURCE_KEYS.crystal,
+            resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
               value: new ExponentNumber(0, 2),
@@ -646,7 +640,6 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
       },
     ],
   },
-
   [UPGRADE_KEYS.prestigeLogBase]: {
     name: 'PP log base',
     description: 'Decrease base of log(PP) multiplier',
@@ -679,7 +672,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         resources: [
           {
             defaultValue: new ExponentNumber(0, 500),
-            resource: RESOURCE_KEYS.crystal,
+            resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
               value: new ExponentNumber(0, 2.5),
@@ -731,14 +724,13 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
       },
     ],
   },
-
-  [UPGRADE_KEYS.rubyLogBase]: {
-    name: 'Ruby log base',
-    description: 'Decrease base of log(rubies) multiplier',
+  [UPGRADE_KEYS.rubyShardLogBase]: {
+    name: 'Ruby shard log base',
+    description: 'Decrease base of log(ruby shards) multiplier',
     isResetOnPrestige: true,
     effects: [
       {
-        paramKey: PARAM_KEYS.rubyLogBase,
+        paramKey: PARAM_KEYS.rubyShardsLogBase,
         change: {
           changeType: SIMPLE_VALUE_CHANGE_KEYS.divide,
           value: new ExponentNumber(0, 1.75),
@@ -751,7 +743,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         resources: [
           {
             defaultValue: new ExponentNumber(0, 1),
-            resource: RESOURCE_KEYS.ruby,
+            resource: RESOURCE_KEYS.rubyShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
               value: new ExponentNumber(0, 1),
@@ -764,7 +756,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         resources: [
           {
             defaultValue: new ExponentNumber(0, 10),
-            resource: RESOURCE_KEYS.crystal,
+            resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
               value: new ExponentNumber(0, 5),
@@ -774,13 +766,13 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
       },
     ],
   },
-  [UPGRADE_KEYS.rubyLogPower]: {
-    name: 'Ruby log power',
-    description: 'Raise log(Ruby) to power',
+  [UPGRADE_KEYS.rubyShardLogPower]: {
+    name: 'Ruby shard log power',
+    description: 'Raise log(ruby shards) to power',
     isResetOnPrestige: true,
     effects: [
       {
-        paramKey: PARAM_KEYS.rubyLogPower,
+        paramKey: PARAM_KEYS.rubyShardsLogPower,
         change: {
           changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
           value: new ExponentNumber(0, 1),
@@ -793,7 +785,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         resources: [
           {
             defaultValue: new ExponentNumber(0, 50),
-            resource: RESOURCE_KEYS.crystal,
+            resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
               value: new ExponentNumber(0, 50),
@@ -801,7 +793,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
           },
           {
             defaultValue: new ExponentNumber(0, 1),
-            resource: RESOURCE_KEYS.ruby,
+            resource: RESOURCE_KEYS.rubyShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
               value: new ExponentNumber(0, 1),
@@ -814,7 +806,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         resources: [
           {
             defaultValue: new ExponentNumber(0, 500),
-            resource: RESOURCE_KEYS.ruby,
+            resource: RESOURCE_KEYS.rubyShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
               value: new ExponentNumber(0, 250),
@@ -850,8 +842,10 @@ export const UPGRADE_CURRENT_DATA: Record<UpgradeKey, UpgradeCurrentData> = {
     isUnlocked: true,
     level: 0,
   },
-  [UPGRADE_KEYS.crystalMultiplier]: {
-    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.crystalMultiplier].costs),
+  [UPGRADE_KEYS.crystalShardMoneyMultiplier]: {
+    costs: transformCostToCurrentCosts(
+      UPGRADE_DATA[UPGRADE_KEYS.crystalShardMoneyMultiplier].costs,
+    ),
     isUnlocked: false,
     level: 0,
   },
@@ -870,8 +864,10 @@ export const UPGRADE_CURRENT_DATA: Record<UpgradeKey, UpgradeCurrentData> = {
     isUnlocked: false,
     level: 0,
   },
-  [UPGRADE_KEYS.prestigeCrystalMultiplier]: {
-    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.prestigeCrystalMultiplier].costs),
+  [UPGRADE_KEYS.prestigeCrystalShardsMultiplier]: {
+    costs: transformCostToCurrentCosts(
+      UPGRADE_DATA[UPGRADE_KEYS.prestigeCrystalShardsMultiplier].costs,
+    ),
     isUnlocked: false,
     level: 0,
   },
@@ -892,13 +888,13 @@ export const UPGRADE_CURRENT_DATA: Record<UpgradeKey, UpgradeCurrentData> = {
     level: 0,
   },
 
-  [UPGRADE_KEYS.crystalLogBase]: {
-    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.crystalLogBase].costs),
+  [UPGRADE_KEYS.crystalShardLogBase]: {
+    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.crystalShardLogBase].costs),
     isUnlocked: false,
     level: 0,
   },
-  [UPGRADE_KEYS.crystalLogPower]: {
-    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.crystalLogPower].costs),
+  [UPGRADE_KEYS.crystalShardLogPower]: {
+    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.crystalShardLogPower].costs),
     isUnlocked: false,
     level: 0,
   },
@@ -914,13 +910,13 @@ export const UPGRADE_CURRENT_DATA: Record<UpgradeKey, UpgradeCurrentData> = {
     level: 0,
   },
 
-  [UPGRADE_KEYS.rubyLogBase]: {
-    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.rubyLogBase].costs),
+  [UPGRADE_KEYS.rubyShardLogBase]: {
+    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.rubyShardLogBase].costs),
     isUnlocked: false,
     level: 0,
   },
-  [UPGRADE_KEYS.rubyLogPower]: {
-    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.rubyLogPower].costs),
+  [UPGRADE_KEYS.rubyShardLogPower]: {
+    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.rubyShardLogPower].costs),
     isUnlocked: false,
     level: 0,
   },

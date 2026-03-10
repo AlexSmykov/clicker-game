@@ -12,16 +12,18 @@ export const UNLOCK_ICON_DIR_PATH = 'assets/icons/unlocks/';
 export const UNLOCK_KEYS = {
   baseUnlock: 'baseUnlock',
   prestige: 'prestige',
+  crystalShards: 'crystalShards',
   crystals: 'crystals',
+  rubyShards: 'rubyShards',
   rubies: 'rubies',
   statistics: 'statistics',
   bonusCrystalChance: 'bonusCrystalChance',
   moneyCrystalChance: 'moneyCrystalChance',
   logarithms: 'logarithms',
   moneyLog: 'moneyLog',
-  crystalLog: 'crystalLog',
+  crystalShardLog: 'crystalShardLog',
   prestigeLog: 'prestigeLog',
-  rubyLog: 'rubyLog',
+  rubyShardLog: 'rubyShardLog',
 } as const;
 
 export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
@@ -59,10 +61,11 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
     ],
     effect: () => {},
   },
-  [UNLOCK_KEYS.crystals]: {
-    name: 'Second resource',
-    description: 'New resource - crystals. Can be gained with some chance on click',
-    iconPath: `crystals.svg`,
+  [UNLOCK_KEYS.crystalShards]: {
+    name: 'Crystal shards',
+    description:
+      'New resource - crystal shards. Can be gained with some chance on click. Chance displayed in "param list"',
+    iconPath: `crystal-shards.svg`,
     position: {
       x: 1,
       y: 1,
@@ -83,11 +86,11 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
         isUnlocked: true,
       });
 
-      upgradeService.updateUpgrade(UPGRADE_KEYS.crystalMultiplier, {
+      upgradeService.updateUpgrade(UPGRADE_KEYS.crystalShardMoneyMultiplier, {
         isUnlocked: true,
       });
 
-      resourceService.updateResource(RESOURCE_KEYS.crystal, {
+      resourceService.updateResource(RESOURCE_KEYS.crystalShards, {
         isUnlocked: true,
       });
 
@@ -96,28 +99,79 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
       });
     },
   },
-  [UNLOCK_KEYS.rubies]: {
-    name: 'Rubies',
-    description: 'Red crystals for you! Can be gained with small chance on crystal gain',
+  [UNLOCK_KEYS.crystals]: {
+    name: 'Crystals',
+    description:
+      'With your crystal shards you can collect the whole crystals. Affects by crystal chance, but divided and log',
     iconPath: `crystals.svg`,
+    position: {
+      x: 3,
+      y: 1,
+    },
+    requiredUnlocks: [UNLOCK_KEYS.crystalShards],
+    costs: [
+      {
+        resourceKey: RESOURCE_KEYS.crystalShards,
+        value: new ExponentNumber(0, 1000),
+      },
+    ],
+    effect: (_: UpgradeService, paramService: ParamService, resourceService: ResourceService) => {
+      resourceService.updateResource(RESOURCE_KEYS.crystals, {
+        isUnlocked: true,
+      });
+
+      paramService.updateParam(PARAM_KEYS.crystalChanceRootBaseForCrystals, {
+        value: new ExponentNumber(0, 10),
+      });
+    },
+  },
+  [UNLOCK_KEYS.rubyShards]: {
+    name: 'Ruby shards',
+    description: 'New more rare resource. Also can be gained on click, but with much lower chance',
+    iconPath: `ruby-shards.svg`,
     position: {
       x: 1,
       y: -1,
     },
-    requiredUnlocks: [UNLOCK_KEYS.crystals],
+    requiredUnlocks: [UNLOCK_KEYS.baseUnlock],
     costs: [
       {
-        resourceKey: RESOURCE_KEYS.crystal,
+        resourceKey: RESOURCE_KEYS.crystalShards,
         value: new ExponentNumber(0, 100),
       },
     ],
     effect: (_: UpgradeService, paramService: ParamService, resourceService: ResourceService) => {
-      resourceService.updateResource(RESOURCE_KEYS.ruby, {
+      resourceService.updateResource(RESOURCE_KEYS.rubyShards, {
         isUnlocked: true,
       });
 
-      paramService.updateParam(PARAM_KEYS.baseRubiesChance, {
+      paramService.updateParam(PARAM_KEYS.baseRubyChance, {
         value: new ExponentNumber(0, 10000),
+      });
+    },
+  },
+  [UNLOCK_KEYS.rubies]: {
+    name: 'Rubies',
+    description: 'After a lot of time mining shards, you finally able to mine rubies',
+    iconPath: `rubies.svg`,
+    position: {
+      x: 3,
+      y: -1,
+    },
+    requiredUnlocks: [UNLOCK_KEYS.rubyShards],
+    costs: [
+      {
+        resourceKey: RESOURCE_KEYS.rubyShards,
+        value: new ExponentNumber(0, 1000),
+      },
+    ],
+    effect: (_: UpgradeService, paramService: ParamService, resourceService: ResourceService) => {
+      resourceService.updateResource(RESOURCE_KEYS.rubies, {
+        isUnlocked: true,
+      });
+
+      paramService.updateParam(PARAM_KEYS.rubyChanceRootBaseForRubies, {
+        value: new ExponentNumber(0, 5),
       });
     },
   },
@@ -129,10 +183,10 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
       x: 1,
       y: 2,
     },
-    requiredUnlocks: [UNLOCK_KEYS.crystals],
+    requiredUnlocks: [UNLOCK_KEYS.crystalShards],
     costs: [
       {
-        resourceKey: RESOURCE_KEYS.crystal,
+        resourceKey: RESOURCE_KEYS.crystalShards,
         value: new ExponentNumber(0, 10),
       },
     ],
@@ -141,16 +195,16 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
   [UNLOCK_KEYS.bonusCrystalChance]: {
     name: 'Lucky crystal',
     description: 'Some crystal chance for you',
-    iconPath: `crystal.svg`,
+    iconPath: `crystals.svg`,
     position: {
       x: 2,
-      y: 1,
+      y: 2,
     },
-    requiredUnlocks: [UNLOCK_KEYS.crystals],
+    requiredUnlocks: [UNLOCK_KEYS.crystalShards],
     costs: [
       {
-        resourceKey: RESOURCE_KEYS.crystal,
-        value: new ExponentNumber(0, 20),
+        resourceKey: RESOURCE_KEYS.crystalShards,
+        value: new ExponentNumber(0, 25),
       },
       {
         resourceKey: RESOURCE_KEYS.money,
@@ -171,12 +225,12 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
     iconPath: `money-crystal.svg`,
     position: {
       x: 3,
-      y: 2,
+      y: 3,
     },
-    requiredUnlocks: [UNLOCK_KEYS.crystals],
+    requiredUnlocks: [UNLOCK_KEYS.bonusCrystalChance],
     costs: [
       {
-        resourceKey: RESOURCE_KEYS.crystal,
+        resourceKey: RESOURCE_KEYS.crystalShards,
         value: new ExponentNumber(0, 100),
       },
       {
@@ -184,12 +238,8 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
         value: new ExponentNumber(1, 15),
       },
     ],
-    effect: (_: UpgradeService, paramService: ParamService) => {
-      paramService.updateParam(PARAM_KEYS.bonusCrystalChance, {
-        value: paramService
-          .paramsCurrentData()
-          [PARAM_KEYS.bonusCrystalChance].value.plus(new ExponentNumber(0, 50000)),
-      });
+    effect: (upgradeService: UpgradeService) => {
+      upgradeService.updateUpgrade(UPGRADE_KEYS.moneyCrystalChance, { isUnlocked: true });
     },
   },
   [UNLOCK_KEYS.logarithms]: {
@@ -198,13 +248,13 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
       'Open a few new unlocks to add some synergism into game and also help you progress through game',
     iconPath: `log.svg`,
     position: {
-      x: 4,
-      y: 0,
+      x: -1,
+      y: 3,
     },
-    requiredUnlocks: [UNLOCK_KEYS.crystals, UNLOCK_KEYS.prestige],
+    requiredUnlocks: [UNLOCK_KEYS.crystalShards, UNLOCK_KEYS.prestige],
     costs: [
       {
-        resourceKey: RESOURCE_KEYS.crystal,
+        resourceKey: RESOURCE_KEYS.crystalShards,
         value: new ExponentNumber(0, 50),
       },
       {
@@ -219,8 +269,8 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
     description: 'The more money you have - the more you gain. Multiply your money by log(money)',
     iconPath: `log-money.svg`,
     position: {
-      x: 5,
-      y: -3,
+      x: -1,
+      y: 4,
     },
     requiredUnlocks: [UNLOCK_KEYS.logarithms],
     costs: [
@@ -233,35 +283,52 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
         value: new ExponentNumber(0, 10),
       },
     ],
-    effect: (upgradeService: UpgradeService) => {
+    effect: (upgradeService: UpgradeService, paramService: ParamService) => {
       upgradeService.updateUpgrade(UPGRADE_KEYS.moneyLogBase, { isUnlocked: true });
 
       upgradeService.updateUpgrade(UPGRADE_KEYS.moneyLogPower, { isUnlocked: true });
+
+      paramService.updateParam(PARAM_KEYS.moneyLogBase, {
+        value: new ExponentNumber(0, 9),
+      });
+
+      paramService.updateParam(PARAM_KEYS.moneyLogPower, {
+        value: new ExponentNumber(0, 1),
+      });
     },
   },
-  [UNLOCK_KEYS.crystalLog]: {
+  [UNLOCK_KEYS.crystalShardLog]: {
     name: 'Crystallized logarithm',
-    description: "Now you shouldn't spend all your crystals. Multiply your money by log(crystals)",
+    description:
+      "Now you shouldn't spend all your crystals. Multiply your money by log(crystal shards)",
     iconPath: `log-crystals.svg`,
     position: {
-      x: 5,
-      y: -1,
+      x: 0,
+      y: 4,
     },
     requiredUnlocks: [UNLOCK_KEYS.logarithms],
     costs: [
       {
-        resourceKey: RESOURCE_KEYS.crystal,
+        resourceKey: RESOURCE_KEYS.crystalShards,
         value: new ExponentNumber(0, 75),
       },
       {
         resourceKey: RESOURCE_KEYS.prestigePoints,
-        value: new ExponentNumber(0, 10),
+        value: new ExponentNumber(0, 30),
       },
     ],
-    effect: (upgradeService: UpgradeService) => {
-      upgradeService.updateUpgrade(UPGRADE_KEYS.crystalLogBase, { isUnlocked: true });
+    effect: (upgradeService: UpgradeService, paramService: ParamService) => {
+      upgradeService.updateUpgrade(UPGRADE_KEYS.crystalShardLogBase, { isUnlocked: true });
 
-      upgradeService.updateUpgrade(UPGRADE_KEYS.crystalLogPower, { isUnlocked: true });
+      upgradeService.updateUpgrade(UPGRADE_KEYS.crystalShardLogPower, { isUnlocked: true });
+
+      paramService.updateParam(PARAM_KEYS.crystalShardsLogBase, {
+        value: new ExponentNumber(0, 4),
+      });
+
+      paramService.updateParam(PARAM_KEYS.crystalShardsLogPower, {
+        value: new ExponentNumber(0, 1.5),
+      });
     },
   },
   [UNLOCK_KEYS.prestigeLog]: {
@@ -269,53 +336,69 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
     description: 'Better boost with each prestige. Multiply your money by log(PP)',
     iconPath: `log-prestige.svg`,
     position: {
-      x: 5,
-      y: 1,
+      x: 1,
+      y: 4,
     },
     requiredUnlocks: [UNLOCK_KEYS.logarithms],
     costs: [
       {
         resourceKey: RESOURCE_KEYS.money,
-        value: new ExponentNumber(1, 10),
+        value: new ExponentNumber(1, 40),
       },
       {
-        resourceKey: RESOURCE_KEYS.crystal,
-        value: new ExponentNumber(0, 20),
+        resourceKey: RESOURCE_KEYS.crystalShards,
+        value: new ExponentNumber(0, 50),
       },
       {
         resourceKey: RESOURCE_KEYS.prestigePoints,
-        value: new ExponentNumber(0, 35),
+        value: new ExponentNumber(0, 75),
       },
     ],
-    effect: (upgradeService: UpgradeService) => {
+    effect: (upgradeService: UpgradeService, paramService: ParamService) => {
       upgradeService.updateUpgrade(UPGRADE_KEYS.prestigeLogBase, { isUnlocked: true });
 
       upgradeService.updateUpgrade(UPGRADE_KEYS.prestigeLogPower, { isUnlocked: true });
+
+      paramService.updateParam(PARAM_KEYS.prestigeLogBase, {
+        value: new ExponentNumber(0, 3),
+      });
+
+      paramService.updateParam(PARAM_KEYS.prestigeLogPower, {
+        value: new ExponentNumber(0, 1),
+      });
     },
   },
-  [UNLOCK_KEYS.rubyLog]: {
-    name: 'Ruby log',
-    description: 'Now rubies is useful. Multiply your money by log(rubies)',
+  [UNLOCK_KEYS.rubyShardLog]: {
+    name: 'Ruby shard log',
+    description: 'Now rubies is useful. Multiply your money by log(ruby shards)',
     iconPath: `log-rubies.svg`,
     position: {
-      x: 5,
-      y: 3,
+      x: 2,
+      y: 4,
     },
-    requiredUnlocks: [UNLOCK_KEYS.logarithms, UNLOCK_KEYS.rubies],
+    requiredUnlocks: [UNLOCK_KEYS.logarithms, UNLOCK_KEYS.rubyShards],
     costs: [
       {
         resourceKey: RESOURCE_KEYS.prestigePoints,
-        value: new ExponentNumber(0, 10),
+        value: new ExponentNumber(0, 100),
       },
       {
-        resourceKey: RESOURCE_KEYS.ruby,
-        value: new ExponentNumber(0, 4),
+        resourceKey: RESOURCE_KEYS.rubyShards,
+        value: new ExponentNumber(0, 2),
       },
     ],
-    effect: (upgradeService: UpgradeService) => {
-      upgradeService.updateUpgrade(UPGRADE_KEYS.rubyLogBase, { isUnlocked: true });
+    effect: (upgradeService: UpgradeService, paramService: ParamService) => {
+      upgradeService.updateUpgrade(UPGRADE_KEYS.rubyShardLogBase, { isUnlocked: true });
 
-      upgradeService.updateUpgrade(UPGRADE_KEYS.rubyLogPower, { isUnlocked: true });
+      upgradeService.updateUpgrade(UPGRADE_KEYS.rubyShardLogPower, { isUnlocked: true });
+
+      paramService.updateParam(PARAM_KEYS.rubyShardsLogBase, {
+        value: new ExponentNumber(0, 1),
+      });
+
+      paramService.updateParam(PARAM_KEYS.rubyShardsLogPower, {
+        value: new ExponentNumber(0, 2),
+      });
     },
   },
 };
@@ -329,7 +412,15 @@ export const UNLOCK_CURRENT_DATA: Record<UnlockKey, UnlockCurrentData> = {
     isUnlocked: false,
     isResetOnPrestige: false,
   },
+  [UNLOCK_KEYS.crystalShards]: {
+    isUnlocked: false,
+    isResetOnPrestige: false,
+  },
   [UNLOCK_KEYS.crystals]: {
+    isUnlocked: false,
+    isResetOnPrestige: false,
+  },
+  [UNLOCK_KEYS.rubyShards]: {
     isUnlocked: false,
     isResetOnPrestige: false,
   },
@@ -357,7 +448,7 @@ export const UNLOCK_CURRENT_DATA: Record<UnlockKey, UnlockCurrentData> = {
     isUnlocked: false,
     isResetOnPrestige: true,
   },
-  [UNLOCK_KEYS.crystalLog]: {
+  [UNLOCK_KEYS.crystalShardLog]: {
     isUnlocked: false,
     isResetOnPrestige: true,
   },
@@ -365,7 +456,7 @@ export const UNLOCK_CURRENT_DATA: Record<UnlockKey, UnlockCurrentData> = {
     isUnlocked: false,
     isResetOnPrestige: true,
   },
-  [UNLOCK_KEYS.rubyLog]: {
+  [UNLOCK_KEYS.rubyShardLog]: {
     isUnlocked: false,
     isResetOnPrestige: true,
   },

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { ParamInputData } from 'src/app/features/param/components/param/param.type';
 import { PARAM_DATA } from 'src/app/features/param/param.const';
 import { HUNDRED_PERCENT_DIVIDER } from 'src/app/core/consts/percent.const';
+import { ExponentNumber } from 'exponential-number';
 
 @Component({
   selector: 'app-param',
@@ -19,11 +20,17 @@ export class ParamComponent {
   readonly parsedValue = computed(() => {
     const data = this.data();
 
+    let value = data.value;
+
     if (this.isPercent()) {
-      return data.value.copy().divide(HUNDRED_PERCENT_DIVIDER);
+      value = data.value.copy().divide(HUNDRED_PERCENT_DIVIDER);
     }
 
-    return data.value;
+    if (this.resourceData[data.key].isWithOne) {
+      value = data.value.copy().plus(new ExponentNumber(0, 1));
+    }
+
+    return value;
   });
 
   readonly resourceData = PARAM_DATA;

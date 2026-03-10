@@ -7,8 +7,10 @@ import { ExponentNumber } from 'exponential-number';
 
 export const RESOURCE_KEYS = {
   money: 'money',
-  crystal: 'crystal',
-  ruby: 'ruby',
+  crystalShards: 'crystalShards',
+  crystals: 'crystals',
+  rubyShards: 'rubyShards',
+  rubies: 'rubies',
   prestigePoints: 'prestigePoints',
 } as const;
 
@@ -22,17 +24,31 @@ export const RESOURCE_DATA: Record<ResourceKey, ResourceData> = {
     isDefaultUnlocked: true,
     isResetOnPrestige: true,
   },
-  [RESOURCE_KEYS.crystal]: {
+  [RESOURCE_KEYS.crystalShards]: {
+    name: 'Crystal shards',
+    icon: 'crystal-shards',
+    color: '#99daff',
+    isDefaultUnlocked: false,
+    isResetOnPrestige: true,
+  },
+  [RESOURCE_KEYS.crystals]: {
     name: 'Crystals',
-    icon: 'crystal',
+    icon: 'crystals',
     color: '#59d4ff',
     isDefaultUnlocked: false,
     isResetOnPrestige: true,
   },
-  [RESOURCE_KEYS.ruby]: {
+  [RESOURCE_KEYS.rubyShards]: {
+    name: 'Ruby shards',
+    icon: 'ruby-shards',
+    color: '#ed3c4d',
+    isDefaultUnlocked: false,
+    isResetOnPrestige: true,
+  },
+  [RESOURCE_KEYS.rubies]: {
     name: 'Rubies',
-    icon: 'crystal',
-    color: '#c81b2b',
+    icon: 'rubies',
+    color: '#d12233',
     isDefaultUnlocked: false,
     isResetOnPrestige: true,
   },
@@ -50,12 +66,20 @@ export const RESOURCE_CURRENT_VALUES: Record<ResourceKey, ResourceCurrentData> =
     isUnlocked: RESOURCE_DATA[RESOURCE_KEYS.money].isDefaultUnlocked,
     value: new ExponentNumber(0, 0),
   },
-  [RESOURCE_KEYS.crystal]: {
-    isUnlocked: RESOURCE_DATA[RESOURCE_KEYS.crystal].isDefaultUnlocked,
+  [RESOURCE_KEYS.crystalShards]: {
+    isUnlocked: RESOURCE_DATA[RESOURCE_KEYS.crystalShards].isDefaultUnlocked,
     value: new ExponentNumber(0, 0),
   },
-  [RESOURCE_KEYS.ruby]: {
-    isUnlocked: RESOURCE_DATA[RESOURCE_KEYS.ruby].isDefaultUnlocked,
+  [RESOURCE_KEYS.crystals]: {
+    isUnlocked: RESOURCE_DATA[RESOURCE_KEYS.crystals].isDefaultUnlocked,
+    value: new ExponentNumber(0, 0),
+  },
+  [RESOURCE_KEYS.rubyShards]: {
+    isUnlocked: RESOURCE_DATA[RESOURCE_KEYS.rubyShards].isDefaultUnlocked,
+    value: new ExponentNumber(0, 0),
+  },
+  [RESOURCE_KEYS.rubies]: {
+    isUnlocked: RESOURCE_DATA[RESOURCE_KEYS.rubies].isDefaultUnlocked,
     value: new ExponentNumber(0, 0),
   },
   [RESOURCE_KEYS.prestigePoints]: {

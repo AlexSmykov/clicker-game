@@ -6,7 +6,7 @@
   [class.clickable]="isCanBuy()"
   (click)="clickBuy()"
 >
-  <p class="name">
+  <p class="name" [class.resetless]="!upgradeData.isResetOnPrestige">
     {{ upgradeData.name }}
 
     @if (level(); as level) {

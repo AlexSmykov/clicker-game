@@ -25,7 +25,7 @@ export class UnlockComponent {
   readonly iconDir = UNLOCK_ICON_DIR_PATH;
 
   clickUnlock(): void {
-    if (this.isShowTooltip()) {
+    if (this.isShowTooltip() && !this.data().isUnlocked) {
       this.buy.emit();
     }
 

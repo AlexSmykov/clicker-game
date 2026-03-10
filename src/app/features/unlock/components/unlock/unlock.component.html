@@ -8,8 +8,8 @@
   [class.available]="unlock.isCanBuy"
   [class.resetless]="!unlock.isResetOnPrestige"
   (click)="clickUnlock()"
-  (mouseenter)="isShowTooltip.set(true)"
-  (mouseleave)="isShowTooltip.set(false)"
+  (mouseenter)="isShowTooltip.set(true); $event.preventDefault()"
+  (mouseleave)="isShowTooltip.set(false); $event.preventDefault()"
 >
   <svg-icon class="icon" [src]="iconDir + unlock.icon" />
 </div>

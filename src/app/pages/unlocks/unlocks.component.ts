@@ -20,6 +20,7 @@ import { UpgradeService } from 'src/app/features/upgrade/upgrade.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage/local-storage.service';
 import { LOCAL_STORAGE_KEYS } from 'src/app/core/services/local-storage/local-storage.const';
 import { UnlockPageInterfaceSaveData } from 'src/app/pages/unlocks/unlocks.type';
+import { environment } from 'src/environments/environment.dev';
 
 const MAX_SCROLL_VALUE = 7;
 const MIN_SCROLL_VALUE = -3;
@@ -194,7 +195,7 @@ export default class UnlocksComponent implements AfterViewInit, OnDestroy {
   }
 
   buyUnlock(key: UnlockKey, isCanBuy: boolean): void {
-    if (isCanBuy) {
+    if (isCanBuy || environment.freeUnlocks) {
       this.#unlockService.updateUnlock(key, {
         isUnlocked: true,
       });

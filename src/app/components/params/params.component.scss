@@ -1,19 +1,18 @@
 .content {
-  max-height: 24px;
+  height: 24px;
 
   overflow-y: hidden;
   transition: 0.5s;
   padding: 8px 16px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  background-color: var(--color-background-dark);
 
   &.expanded {
-    max-height: 204px;
+    height: 210px;
   }
 
   .header {
+    margin-bottom: 8px;
+
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -32,9 +31,9 @@
   }
 
   .list {
-    max-height: 204px;
-    max-width: fit-content;
-    min-height: fit-content;
+    max-height: 210px;
+    max-width: 100%;
+    width: fit-content;
     height: fit-content;
 
     overflow-x: auto;
@@ -43,7 +42,8 @@
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    gap: 4px;
+    column-gap: 8px;
+    row-gap: 4px;
 
     .param {
       padding: 0 4px;

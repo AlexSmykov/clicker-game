@@ -11,6 +11,7 @@ export type ParamData = {
   prefix: string;
   isPercent: boolean;
   isResetOnPrestige: boolean;
+  isWithOne: boolean;
 };
 
 export type ParamCurrentData = {
