@@ -252,7 +252,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         paramKey: PARAM_KEYS.prestigeMoneyPower,
         change: {
           changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
-          value: new ExponentNumber(0, 0.01),
+          value: new ExponentNumber(0, 0.02),
         },
       },
     ],
@@ -442,7 +442,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         startAtLevel: 0,
         resources: [
           {
-            defaultValue: new ExponentNumber(0, 10000),
+            defaultValue: new ExponentNumber(1, 9),
             resource: RESOURCE_KEYS.money,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.power,
@@ -463,7 +463,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         startAtLevel: 10,
         resources: [
           {
-            defaultValue: new ExponentNumber(1, 50),
+            defaultValue: new ExponentNumber(1, 100),
             resource: RESOURCE_KEYS.money,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.power,
@@ -561,8 +561,8 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
             defaultValue: new ExponentNumber(0, 25),
             resource: RESOURCE_KEYS.crystalShards,
             change: {
-              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
-              value: new ExponentNumber(0, 25),
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
+              value: new ExponentNumber(0, 1.3),
             },
           },
         ],
@@ -571,11 +571,11 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         startAtLevel: 9,
         resources: [
           {
-            defaultValue: new ExponentNumber(0, 250),
+            defaultValue: new ExponentNumber(0, 500),
             resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
-              value: new ExponentNumber(0, 1.2),
+              value: new ExponentNumber(0, 2),
             },
           },
         ],
@@ -604,15 +604,15 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
             resource: RESOURCE_KEYS.money,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.power,
-              value: new ExponentNumber(0, 1.375),
+              value: new ExponentNumber(0, 1.4),
             },
           },
           {
-            defaultValue: new ExponentNumber(0, 10),
+            defaultValue: new ExponentNumber(0, 25),
             resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
-              value: new ExponentNumber(0, 10),
+              value: new ExponentNumber(0, 25),
             },
           },
         ],
@@ -625,15 +625,15 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
             resource: RESOURCE_KEYS.money,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.power,
-              value: new ExponentNumber(0, 1.75),
+              value: new ExponentNumber(0, 1.8),
             },
           },
           {
-            defaultValue: new ExponentNumber(0, 100),
+            defaultValue: new ExponentNumber(0, 250),
             resource: RESOURCE_KEYS.crystalShards,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
-              value: new ExponentNumber(0, 2),
+              value: new ExponentNumber(0, 1.5),
             },
           },
         ],
@@ -700,20 +700,20 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         startAtLevel: 0,
         resources: [
           {
-            defaultValue: new ExponentNumber(0, 10),
+            defaultValue: new ExponentNumber(0, 50),
             resource: RESOURCE_KEYS.prestigePoints,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
-              value: new ExponentNumber(0, 20),
+              value: new ExponentNumber(0, 50),
             },
           },
         ],
       },
       {
-        startAtLevel: 10,
+        startAtLevel: 9,
         resources: [
           {
-            defaultValue: new ExponentNumber(0, 250),
+            defaultValue: new ExponentNumber(0, 500),
             resource: RESOURCE_KEYS.prestigePoints,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,

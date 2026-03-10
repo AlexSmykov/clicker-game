@@ -41,13 +41,16 @@
 </div>
 
 <div class="info">
-  <p>Use mouse to move and mousewheel to zoom</p>
-  <p>You can buy available unlocks and hover/click on them to open info about them</p>
-  <p>Click on unlock with open info to buy it</p>
-  <br />
-  <p>Zoom</p>
-  <div class="zoom-buttons">
-    <button class="zoom-button" (click)="downScale()">+</button>
-    <button class="zoom-button" (click)="upScale()">-</button>
-  </div>
+  <app-dropdown label="Info">
+    <p>Use mouse to move and mousewheel to zoom</p>
+    <p>You can buy available unlocks and hover/click on them to open info about them</p>
+    <p>Click on unlock with open info to buy it</p>
+  </app-dropdown>
+
+  <app-dropdown label="Zoom">
+    <div class="zoom-buttons">
+      <button class="zoom-button" (click)="downScale()">+</button>
+      <button class="zoom-button" (click)="upScale()">-</button>
+    </div>
+  </app-dropdown>
 </div>

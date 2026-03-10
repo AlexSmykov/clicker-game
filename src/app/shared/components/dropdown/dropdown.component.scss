@@ -1,0 +1,31 @@
+.content {
+  height: 24px;
+
+  padding: 8px;
+  overflow-y: hidden;
+  background-color: var(--color-background-dark);
+
+  &.expanded {
+    height: calc(100% - 8px * 2);
+  }
+
+  .header {
+    margin-bottom: 8px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 8px;
+
+    .title {
+      font: var(--font-subheader);
+    }
+
+    .icon {
+      height: 24px;
+      width: 24px;
+
+      transition: 0.5s;
+    }
+  }
+}

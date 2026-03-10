@@ -1,0 +1,13 @@
+<div class="content" [class.expanded]="isExpanded()">
+  <div class="header clickable" (click)="isExpanded.set(!this.isExpanded())">
+    <p class="title">{{ label() }}</p>
+
+    <svg-icon
+      class="icon"
+      src="assets/icons/system/chevron-left.svg"
+      [style.rotate.deg]="isExpanded() ? -90 : 0"
+    />
+  </div>
+
+  <ng-content />
+</div>

@@ -4,10 +4,12 @@
   [style.color]="resourceData[data().key].color"
 />
 
-<span [style.color]="resourceData[data().key].color">
+<p [style.color]="resourceData[data().key].color">
   @if (!isShort()) {
-    {{ resourceData[data().key].name }}:
+    <span class="name"> {{ resourceData[data().key].name }}: </span>
   }
 
-  {{ data().value.toString() }}
-</span>
+  <span class="value">
+    {{ data().value.toString() }}
+  </span>
+</p>

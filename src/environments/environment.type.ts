@@ -1,3 +1,4 @@
 export type Environment = {
-  freeUnlocks: boolean;
+  isFreeUnlocks: boolean;
+  isBorderlessPrestige: boolean;
 };

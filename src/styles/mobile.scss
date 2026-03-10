@@ -1,0 +1,25 @@
+$mobile-width: 700px;
+
+@media (min-width: $mobile-width + 1) and (min-height: $mobile-width + 1) {
+  .mobile-show {
+    display: none !important;
+  }
+}
+
+@media (max-width: $mobile-width), (max-height: $mobile-width) {
+  .mobile-hidden {
+    display: none !important;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $mobile-width + 1) and (min-height: $mobile-width + 1) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: $mobile-width), (max-height: $mobile-width) {
+    @content;
+  }
+}

@@ -1,65 +1,36 @@
-.content {
-  height: 24px;
+:host {
+  padding: 0 8px;
+}
 
+.list {
+  max-height: 210px;
+  max-width: 100%;
+  width: fit-content;
+  height: fit-content;
+
+  overflow-x: auto;
   overflow-y: hidden;
-  transition: 0.5s;
-  padding: 8px 16px;
-  background-color: var(--color-background-dark);
 
-  &.expanded {
-    height: 210px;
-  }
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  column-gap: 8px;
+  row-gap: 4px;
 
-  .header {
-    margin-bottom: 8px;
+  .param {
+    padding: 0 4px;
 
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     gap: 8px;
 
-    .title {
-      font: var(--font-subheader);
+    .param-name {
+      font: var(--font-additional);
     }
 
-    .icon {
-      height: 24px;
-      width: 24px;
-
-      transition: 0.5s;
-    }
-  }
-
-  .list {
-    max-height: 210px;
-    max-width: 100%;
-    width: fit-content;
-    height: fit-content;
-
-    overflow-x: auto;
-    overflow-y: hidden;
-
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    column-gap: 8px;
-    row-gap: 4px;
-
-    .param {
-      padding: 0 4px;
-
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      gap: 8px;
-
-      .param-name {
-        font: var(--font-additional);
-      }
-
-      &:nth-child(even) {
-        background-color: var(--color-background-semi-dark);
-      }
+    &:nth-child(even) {
+      background-color: var(--color-background-semi-dark);
     }
   }
 }

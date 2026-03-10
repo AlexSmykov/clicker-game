@@ -21,6 +21,7 @@ import { LocalStorageService } from 'src/app/core/services/local-storage/local-s
 import { LOCAL_STORAGE_KEYS } from 'src/app/core/services/local-storage/local-storage.const';
 import { UnlockPageInterfaceSaveData } from 'src/app/pages/unlocks/unlocks.type';
 import { environment } from 'src/environments/environment.dev';
+import { DropdownComponent } from 'src/app/shared/components/dropdown/dropdown.component';
 
 const MAX_SCROLL_VALUE = 7;
 const MIN_SCROLL_VALUE = -3;
@@ -37,7 +38,7 @@ const TREE_SIZE_HALF = TREE_SIZE / 2;
   templateUrl: './unlocks.component.html',
   styleUrl: './unlocks.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [UnlockComponent],
+  imports: [UnlockComponent, DropdownComponent],
   host: {
     '(window:beforeunload)': 'ngOnDestroy()',
   },
@@ -166,7 +167,7 @@ export default class UnlocksComponent implements AfterViewInit, OnDestroy {
     const viewport = this.viewport().nativeElement;
 
     viewport.scrollLeft = (viewport.scrollWidth - viewport.clientWidth) / 2;
-    viewport.scrollTop = (viewport.scrollHeight - viewport.clientHeight) / 2 + 200;
+    viewport.scrollTop = (viewport.scrollHeight - viewport.clientHeight) / 2 + 100;
   }
 
   onWheel(event: WheelEvent): void {
@@ -195,7 +196,7 @@ export default class UnlocksComponent implements AfterViewInit, OnDestroy {
   }
 
   buyUnlock(key: UnlockKey, isCanBuy: boolean): void {
-    if (isCanBuy || environment.freeUnlocks) {
+    if (isCanBuy || environment.isFreeUnlocks) {
       this.#unlockService.updateUnlock(key, {
         isUnlocked: true,
       });

@@ -56,7 +56,7 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
     costs: [
       {
         resourceKey: RESOURCE_KEYS.money,
-        value: new ExponentNumber(0, 10000000),
+        value: new ExponentNumber(1, 10),
       },
     ],
     effect: () => {},
