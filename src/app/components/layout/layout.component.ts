@@ -8,6 +8,7 @@ import { TabItem } from 'src/app/shared/components/tabs/tabs.type';
 import { TabsComponent } from 'src/app/shared/components/tabs/tabs.component';
 import { getMainRouteLink } from 'src/app/app.links';
 import { UnlockService } from 'src/app/features/unlock/unlock.service';
+import { UNLOCK_KEYS } from 'src/app/features/unlock/unlock.const';
 
 @Component({
   selector: 'app-layout',
@@ -26,10 +27,10 @@ export default class LayoutComponent {
       .filter((routeId) => {
         switch (routeId) {
           case MAIN_ROUTE_IDS.prestige:
-            return unlocksCurrentData.prestige.isUnlocked;
+            return unlocksCurrentData[UNLOCK_KEYS.prestige].isUnlocked;
 
-          case MAIN_ROUTE_IDS.statistics:
-            return unlocksCurrentData.statistics.isUnlocked;
+          case MAIN_ROUTE_IDS.statistic:
+            return unlocksCurrentData[UNLOCK_KEYS.statistic].isUnlocked;
 
           default:
             return true;

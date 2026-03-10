@@ -23,7 +23,7 @@ export const routes: Routes = [
       },
       {
         title: 'Clicker game | Statistics',
-        path: MAIN_ROUTE_IDS.statistics,
+        path: MAIN_ROUTE_IDS.statistic,
         loadComponent: () => import('src/app/pages/statistics/statistics.component'),
       },
       {

@@ -16,7 +16,7 @@ export const UNLOCK_KEYS = {
   crystals: 'crystals',
   rubyShards: 'rubyShards',
   rubies: 'rubies',
-  statistics: 'statistics',
+  statistic: 'statistic',
   bonusCrystalChance: 'bonusCrystalChance',
   moneyCrystalChance: 'moneyCrystalChance',
   logarithms: 'logarithms',
@@ -175,10 +175,10 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
       });
     },
   },
-  [UNLOCK_KEYS.statistics]: {
-    name: 'Statistics tab',
+  [UNLOCK_KEYS.statistic]: {
+    name: 'Statistic tab',
     description: 'New tap to observe all your stats',
-    iconPath: `statistics.svg`,
+    iconPath: `statistic.svg`,
     position: {
       x: 1,
       y: 2,
@@ -428,7 +428,7 @@ export const UNLOCK_CURRENT_DATA: Record<UnlockKey, UnlockCurrentData> = {
     isUnlocked: false,
     isResetOnPrestige: false,
   },
-  [UNLOCK_KEYS.statistics]: {
+  [UNLOCK_KEYS.statistic]: {
     isUnlocked: false,
     isResetOnPrestige: false,
   },
