@@ -1,3 +1,5 @@
+@import 'mobile';
+
 .resources {
   padding: 4px 8px;
   background-color: var(--color-background-dark);
@@ -6,5 +8,10 @@
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
-  gap: 20px;
+  column-gap: 8px;
+  row-gap: 4px;
+
+  @include mobile {
+    justify-content: space-between;
+  }
 }

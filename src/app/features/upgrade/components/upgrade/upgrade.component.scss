@@ -20,6 +20,15 @@
     }
   }
 
+  &.resetless {
+    border: 1px solid var(--color-resetless);
+
+    .name {
+      font: var(--font-subheader);
+      color: var(--color-resetless);
+    }
+  }
+
   .name {
     font: var(--font-subheader);
   }

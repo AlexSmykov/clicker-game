@@ -1,3 +1,5 @@
+@import 'mobile';
+
 :host {
   vertical-align: bottom;
 
@@ -8,16 +10,33 @@
   gap: 4px;
 }
 
-.value {
-  width: 100px;
-
-  color: inherit;
-}
-
-.name {
-  color: inherit;
-}
-
 .icon {
   height: 24px;
+}
+
+.info {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+
+  .name {
+    color: inherit;
+
+    @include mobile {
+      font: var(--font-additional);
+    }
+  }
+
+  .value {
+    width: 100px;
+
+    color: inherit;
+
+    @include mobile {
+      width: 80px;
+      font: var(--font-additional);
+    }
+  }
 }

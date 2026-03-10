@@ -4,9 +4,10 @@
   class="upgrade"
   [class.buyable]="isCanBuy()"
   [class.clickable]="isCanBuy()"
+  [class.resetless]="!upgradeData.isResetOnPrestige"
   (click)="clickBuy()"
 >
-  <p class="name" [class.resetless]="!upgradeData.isResetOnPrestige">
+  <p class="name">
     {{ upgradeData.name }}
 
     @if (level(); as level) {
