@@ -24,6 +24,7 @@ export const UNLOCK_KEYS = {
   crystalShardLog: 'crystalShardLog',
   prestigeLog: 'prestigeLog',
   rubyShardLog: 'rubyShardLog',
+  bonusPrestigePointsMultiplier: 'bonusPrestigePointsMultiplier',
 } as const;
 
 export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
@@ -291,18 +292,10 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
         value: new ExponentNumber(0, 10),
       },
     ],
-    effect: (upgradeService: UpgradeService, paramService: ParamService) => {
+    effect: (upgradeService: UpgradeService) => {
       upgradeService.updateUpgrade(UPGRADE_KEYS.moneyLogBase, { isUnlocked: true });
 
       upgradeService.updateUpgrade(UPGRADE_KEYS.moneyLogPower, { isUnlocked: true });
-
-      paramService.updateParam(PARAM_KEYS.moneyLogBase, {
-        value: new ExponentNumber(0, 9),
-      });
-
-      paramService.updateParam(PARAM_KEYS.moneyLogPower, {
-        value: new ExponentNumber(0, 1),
-      });
     },
   },
   [UNLOCK_KEYS.crystalShardLog]: {
@@ -325,18 +318,10 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
         value: new ExponentNumber(0, 30),
       },
     ],
-    effect: (upgradeService: UpgradeService, paramService: ParamService) => {
+    effect: (upgradeService: UpgradeService) => {
       upgradeService.updateUpgrade(UPGRADE_KEYS.crystalShardLogBase, { isUnlocked: true });
 
       upgradeService.updateUpgrade(UPGRADE_KEYS.crystalShardLogPower, { isUnlocked: true });
-
-      paramService.updateParam(PARAM_KEYS.crystalShardsLogBase, {
-        value: new ExponentNumber(0, 4),
-      });
-
-      paramService.updateParam(PARAM_KEYS.crystalShardsLogPower, {
-        value: new ExponentNumber(0, 1.5),
-      });
     },
   },
   [UNLOCK_KEYS.prestigeLog]: {
@@ -362,18 +347,10 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
         value: new ExponentNumber(0, 75),
       },
     ],
-    effect: (upgradeService: UpgradeService, paramService: ParamService) => {
+    effect: (upgradeService: UpgradeService) => {
       upgradeService.updateUpgrade(UPGRADE_KEYS.prestigeLogBase, { isUnlocked: true });
 
       upgradeService.updateUpgrade(UPGRADE_KEYS.prestigeLogPower, { isUnlocked: true });
-
-      paramService.updateParam(PARAM_KEYS.prestigeLogBase, {
-        value: new ExponentNumber(0, 3),
-      });
-
-      paramService.updateParam(PARAM_KEYS.prestigeLogPower, {
-        value: new ExponentNumber(0, 1),
-      });
     },
   },
   [UNLOCK_KEYS.rubyShardLog]: {
@@ -395,16 +372,33 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
         value: new ExponentNumber(0, 2),
       },
     ],
-    effect: (upgradeService: UpgradeService, paramService: ParamService) => {
+    effect: (upgradeService: UpgradeService) => {
       upgradeService.updateUpgrade(UPGRADE_KEYS.rubyShardLogBase, { isUnlocked: true });
 
       upgradeService.updateUpgrade(UPGRADE_KEYS.rubyShardLogPower, { isUnlocked: true });
-
-      paramService.updateParam(PARAM_KEYS.rubyShardsLogBase, {
-        value: new ExponentNumber(0, 1),
-      });
-
-      paramService.updateParam(PARAM_KEYS.rubyShardsLogPower, {
+    },
+  },
+  [UNLOCK_KEYS.bonusPrestigePointsMultiplier]: {
+    name: 'Bonus PP multiplier',
+    description: '',
+    iconPath: `prestige-points-multiplier.svg`,
+    position: {
+      x: 5,
+      y: 0,
+    },
+    requiredUnlocks: [UNLOCK_KEYS.crystals, UNLOCK_KEYS.rubyShards],
+    costs: [
+      {
+        resourceKey: RESOURCE_KEYS.crystals,
+        value: new ExponentNumber(0, 5),
+      },
+      {
+        resourceKey: RESOURCE_KEYS.rubyShards,
+        value: new ExponentNumber(0, 25),
+      },
+    ],
+    effect: (_: UpgradeService, paramService: ParamService) => {
+      paramService.updateParam(PARAM_KEYS.bonusPrestigePointsMultiplier, {
         value: new ExponentNumber(0, 2),
       });
     },
@@ -452,6 +446,9 @@ export const UNLOCK_CURRENT_DATA: Record<UnlockKey, UnlockCurrentData> = {
     isUnlocked: false,
   },
   [UNLOCK_KEYS.rubyShardLog]: {
+    isUnlocked: false,
+  },
+  [UNLOCK_KEYS.bonusPrestigePointsMultiplier]: {
     isUnlocked: false,
   },
 };

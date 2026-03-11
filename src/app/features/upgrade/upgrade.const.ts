@@ -119,7 +119,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
     ],
   },
   [UPGRADE_KEYS.simpleMoneyPower]: {
-    name: 'POW',
+    name: 'Power drink',
     description: 'Raise your money income to power',
     isResetOnPrestige: true,
     effects: [

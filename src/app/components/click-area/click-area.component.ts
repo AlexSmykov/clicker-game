@@ -127,7 +127,11 @@ export class ClickAreaComponent {
     const value = new ExponentNumber(0, 1)
       .multiply(paramsCurrentData[PARAM_KEYS.simpleMoneyMultiplier].value)
       .multiply(paramsCurrentData[PARAM_KEYS.crystalShardsMoneyMultiplier].value)
-      .power(new ExponentNumber(0, 1).plus(paramsCurrentData[PARAM_KEYS.simpleMoneyPower].value));
+      .power(
+        new ExponentNumber(0, 1)
+          .plus(paramsCurrentData[PARAM_KEYS.simpleMoneyPower].value)
+          .plus(paramsCurrentData[PARAM_KEYS.prestigeMoneyPower].value),
+      );
 
     if (
       unlocksCurrentData[UNLOCK_KEYS.moneyLog].isUnlocked &&
