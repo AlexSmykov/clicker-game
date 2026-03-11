@@ -253,7 +253,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         paramKey: PARAM_KEYS.prestigeMoneyPower,
         change: {
           changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
-          value: new ExponentNumber(0, 0.02),
+          value: new ExponentNumber(0, 0.025),
         },
       },
     ],
@@ -308,7 +308,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         paramKey: PARAM_KEYS.prestigeCrystalChance,
         change: {
           changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
-          value: new ExponentNumber(0, 20000),
+          value: new ExponentNumber(0, 25000),
         },
       },
     ],

@@ -143,7 +143,7 @@ export const PARAM_DATA: Record<ParamKey, ParamData> = {
     defaultValue: new ExponentNumber(0, 1),
     prefix: 'x',
     isPercent: false,
-    isResetOnPrestige: true,
+    isResetOnPrestige: false,
     isWithOne: false,
   },
   [PARAM_KEYS.baseRubyChance]: {
