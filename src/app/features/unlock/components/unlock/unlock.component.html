@@ -6,7 +6,6 @@
   [style.height.px]="unlock.size"
   [class.unlocked]="unlock.isUnlocked"
   [class.available]="unlock.isCanBuy"
-  [class.resetless]="!unlock.isResetOnPrestige"
   (click)="clickUnlock()"
   (mouseenter)="isShowTooltip.set(true); $event.stopImmediatePropagation(); $event.preventDefault()"
   (mouseleave)="isShowTooltip.set(false)"
@@ -30,9 +29,5 @@
     }
   } @else {
     <p class="unlocked-text">Unlocked</p>
-
-    @if (!unlock.isResetOnPrestige) {
-      <p class="description resetless">Doesn't reset on prestige</p>
-    }
   }
 </div>

@@ -9,7 +9,6 @@ export type UnlockInputData = {
   offset: number;
   isUnlocked: boolean;
   isCanBuy: boolean;
-  isResetOnPrestige: boolean;
   requiredUnlocks: UnlockKey[];
   icon: string;
   costs: ResourceInputData[];

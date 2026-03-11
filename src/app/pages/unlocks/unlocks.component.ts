@@ -73,7 +73,6 @@ export default class UnlocksComponent implements AfterViewInit, OnDestroy {
           isUnlocked: value.isUnlocked,
           size: UNLOCK_OBJECT_SIZE,
           offset: OFFSET,
-          isResetOnPrestige: value.isResetOnPrestige,
           isCanBuy:
             data.costs.every((cost) =>
               resourcesCurrentData[cost.resourceKey].value.isGreaterThanOrEqualValue(cost.value),

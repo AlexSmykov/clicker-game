@@ -7,7 +7,6 @@ import { ParamService } from 'src/app/features/param/param.service';
 import { PARAM_KEYS } from 'src/app/features/param/param.const';
 import { UpgradeService } from 'src/app/features/upgrade/upgrade.service';
 import { ResourceSimpleComponent } from 'src/app/features/resource/components/simple/resource-simple.component';
-import { UnlockService } from 'src/app/features/unlock/unlock.service';
 import { UPGRADE_KEYS } from 'src/app/features/upgrade/upgrade.const';
 
 @Component({
@@ -21,7 +20,6 @@ export default class PrestigeComponent {
   readonly #resourceService = inject(ResourceService);
   readonly #paramService = inject(ParamService);
   readonly #upgradeService = inject(UpgradeService);
-  readonly #unlockService = inject(UnlockService);
 
   readonly prestigePointsGain = computed((): ResourceInputData => {
     const paramsCurrentData = this.#paramService.paramsCurrentData();
@@ -88,6 +86,5 @@ export default class PrestigeComponent {
     this.#resourceService.resetOnPrestige();
     this.#paramService.resetOnPrestige();
     this.#upgradeService.resetOnPrestige();
-    this.#unlockService.resetOnPrestige();
   }
 }

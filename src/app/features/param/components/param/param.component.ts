@@ -10,6 +10,9 @@ import { ExponentNumber } from 'exponential-number';
   styleUrl: './param.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [],
+  host: {
+    '[class.resetless]': '!resourceData[data().key].isResetOnPrestige',
+  },
 })
 export class ParamComponent {
   readonly data = input.required<ParamInputData>();

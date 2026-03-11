@@ -27,6 +27,7 @@ export const PARAM_KEYS = {
   prestigeLogPower: 'prestigeLogPower',
   rubyShardsLogBase: 'rubyShardsLogBase',
   rubyShardsLogPower: 'rubyShardsLogPower',
+  rubyShardsMoneyMultiplier: 'rubyShardsMoneyMultiplier',
 
   crystalChanceRootBaseForCrystals: 'crystalChanceRootBaseForCrystals',
   rubyChanceRootBaseForRubies: 'rubyChanceRootBaseForRubies',
@@ -241,6 +242,14 @@ export const PARAM_DATA: Record<ParamKey, ParamData> = {
     isResetOnPrestige: true,
     isWithOne: true,
   },
+  [PARAM_KEYS.rubyShardsMoneyMultiplier]: {
+    name: 'Ruby shards money multiplier',
+    defaultValue: new ExponentNumber(0, 1),
+    prefix: 'x',
+    isPercent: false,
+    isResetOnPrestige: true,
+    isWithOne: false,
+  },
 };
 
 export const PARAM_CURRENT_VALUE: Record<ParamKey, ParamCurrentData> = {
@@ -319,5 +328,8 @@ export const PARAM_CURRENT_VALUE: Record<ParamKey, ParamCurrentData> = {
   },
   [PARAM_KEYS.rubyChanceRootBaseForRubies]: {
     value: PARAM_DATA[PARAM_KEYS.rubyChanceRootBaseForRubies].defaultValue.copy(),
+  },
+  [PARAM_KEYS.rubyShardsMoneyMultiplier]: {
+    value: PARAM_DATA[PARAM_KEYS.rubyShardsMoneyMultiplier].defaultValue.copy(),
   },
 };

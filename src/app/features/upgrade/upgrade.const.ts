@@ -23,6 +23,7 @@ export const UPGRADE_KEYS = {
   prestigeLogPower: 'prestigeLogPower',
   rubyShardLogBase: 'rubyShardLogBase',
   rubyShardLogPower: 'rubyShardLogPower',
+  rubyShardMoneyMultiplier: 'rubyShardMoneyMultiplier',
 } as const;
 
 export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
@@ -375,7 +376,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
             resource: RESOURCE_KEYS.prestigePoints,
             change: {
               changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
-              value: new ExponentNumber(0, 2),
+              value: new ExponentNumber(0, 4),
             },
           },
         ],
@@ -824,6 +825,48 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
       },
     ],
   },
+  [UPGRADE_KEYS.rubyShardMoneyMultiplier]: {
+    name: 'Ruby shard seller',
+    description: 'Sell ruby shards to multiply money',
+    isResetOnPrestige: true,
+    effects: [
+      {
+        paramKey: PARAM_KEYS.rubyShardsMoneyMultiplier,
+        change: {
+          changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
+          value: new ExponentNumber(0, 1.5),
+        },
+      },
+    ],
+    costs: [
+      {
+        startAtLevel: 0,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 1),
+            resource: RESOURCE_KEYS.rubyShards,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 1),
+            },
+          },
+        ],
+      },
+      {
+        startAtLevel: 10,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 20),
+            resource: RESOURCE_KEYS.prestigePoints,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 2),
+            },
+          },
+        ],
+      },
+    ],
+  },
 };
 
 export const UPGRADE_CURRENT_DATA: Record<UpgradeKey, UpgradeCurrentData> = {
@@ -876,7 +919,6 @@ export const UPGRADE_CURRENT_DATA: Record<UpgradeKey, UpgradeCurrentData> = {
     isUnlocked: false,
     level: 0,
   },
-
   [UPGRADE_KEYS.moneyLogBase]: {
     costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.moneyLogBase].costs),
     isUnlocked: false,
@@ -887,7 +929,6 @@ export const UPGRADE_CURRENT_DATA: Record<UpgradeKey, UpgradeCurrentData> = {
     isUnlocked: false,
     level: 0,
   },
-
   [UPGRADE_KEYS.crystalShardLogBase]: {
     costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.crystalShardLogBase].costs),
     isUnlocked: false,
@@ -898,7 +939,6 @@ export const UPGRADE_CURRENT_DATA: Record<UpgradeKey, UpgradeCurrentData> = {
     isUnlocked: false,
     level: 0,
   },
-
   [UPGRADE_KEYS.prestigeLogBase]: {
     costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.prestigeLogBase].costs),
     isUnlocked: false,
@@ -909,7 +949,6 @@ export const UPGRADE_CURRENT_DATA: Record<UpgradeKey, UpgradeCurrentData> = {
     isUnlocked: false,
     level: 0,
   },
-
   [UPGRADE_KEYS.rubyShardLogBase]: {
     costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.rubyShardLogBase].costs),
     isUnlocked: false,
@@ -917,6 +956,11 @@ export const UPGRADE_CURRENT_DATA: Record<UpgradeKey, UpgradeCurrentData> = {
   },
   [UPGRADE_KEYS.rubyShardLogPower]: {
     costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.rubyShardLogPower].costs),
+    isUnlocked: false,
+    level: 0,
+  },
+  [UPGRADE_KEYS.rubyShardMoneyMultiplier]: {
+    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.rubyShardMoneyMultiplier].costs),
     isUnlocked: false,
     level: 0,
   },

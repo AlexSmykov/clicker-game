@@ -112,7 +112,7 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
     costs: [
       {
         resourceKey: RESOURCE_KEYS.crystalShards,
-        value: new ExponentNumber(0, 1000),
+        value: new ExponentNumber(0, 2500),
       },
     ],
     effect: (_: UpgradeService, paramService: ParamService, resourceService: ResourceService) => {
@@ -137,16 +137,24 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
     costs: [
       {
         resourceKey: RESOURCE_KEYS.crystalShards,
-        value: new ExponentNumber(0, 100),
+        value: new ExponentNumber(0, 500),
       },
     ],
-    effect: (_: UpgradeService, paramService: ParamService, resourceService: ResourceService) => {
+    effect: (
+      upgradeService: UpgradeService,
+      paramService: ParamService,
+      resourceService: ResourceService,
+    ) => {
       resourceService.updateResource(RESOURCE_KEYS.rubyShards, {
         isUnlocked: true,
       });
 
+      upgradeService.updateUpgrade(UPGRADE_KEYS.rubyShardMoneyMultiplier, {
+        isUnlocked: true,
+      });
+
       paramService.updateParam(PARAM_KEYS.baseRubyChance, {
-        value: new ExponentNumber(0, 10000),
+        value: new ExponentNumber(0, 2500),
       });
     },
   },
@@ -162,7 +170,7 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
     costs: [
       {
         resourceKey: RESOURCE_KEYS.rubyShards,
-        value: new ExponentNumber(0, 1000),
+        value: new ExponentNumber(0, 25),
       },
     ],
     effect: (_: UpgradeService, paramService: ParamService, resourceService: ResourceService) => {
@@ -235,7 +243,7 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
       },
       {
         resourceKey: RESOURCE_KEYS.money,
-        value: new ExponentNumber(1, 15),
+        value: new ExponentNumber(1, 20),
       },
     ],
     effect: (upgradeService: UpgradeService) => {
@@ -406,58 +414,44 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
 export const UNLOCK_CURRENT_DATA: Record<UnlockKey, UnlockCurrentData> = {
   [UNLOCK_KEYS.baseUnlock]: {
     isUnlocked: false,
-    isResetOnPrestige: false,
   },
   [UNLOCK_KEYS.prestige]: {
     isUnlocked: false,
-    isResetOnPrestige: false,
   },
   [UNLOCK_KEYS.crystalShards]: {
     isUnlocked: false,
-    isResetOnPrestige: false,
   },
   [UNLOCK_KEYS.crystals]: {
     isUnlocked: false,
-    isResetOnPrestige: false,
   },
   [UNLOCK_KEYS.rubyShards]: {
     isUnlocked: false,
-    isResetOnPrestige: false,
   },
   [UNLOCK_KEYS.rubies]: {
     isUnlocked: false,
-    isResetOnPrestige: false,
   },
   [UNLOCK_KEYS.statistic]: {
     isUnlocked: false,
-    isResetOnPrestige: false,
   },
   [UNLOCK_KEYS.bonusCrystalChance]: {
     isUnlocked: false,
-    isResetOnPrestige: true,
   },
   [UNLOCK_KEYS.moneyCrystalChance]: {
     isUnlocked: false,
-    isResetOnPrestige: true,
   },
   [UNLOCK_KEYS.logarithms]: {
     isUnlocked: false,
-    isResetOnPrestige: false,
   },
   [UNLOCK_KEYS.moneyLog]: {
     isUnlocked: false,
-    isResetOnPrestige: true,
   },
   [UNLOCK_KEYS.crystalShardLog]: {
     isUnlocked: false,
-    isResetOnPrestige: true,
   },
   [UNLOCK_KEYS.prestigeLog]: {
     isUnlocked: false,
-    isResetOnPrestige: true,
   },
   [UNLOCK_KEYS.rubyShardLog]: {
     isUnlocked: false,
-    isResetOnPrestige: true,
   },
 };

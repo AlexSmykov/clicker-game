@@ -24,7 +24,6 @@ export type UnlockData = {
 
 export type UnlockCurrentData = {
   isUnlocked: boolean;
-  isResetOnPrestige: boolean;
 };
 
 export type UnlockPosition = {
