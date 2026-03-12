@@ -19,38 +19,42 @@
       [style.width.px]="treeSize"
       [style.height.px]="treeSize"
     >
-      @for (unlock of unlockList(); track unlock.key) {
-        <app-unlock [data]="unlock" (buy)="buyUnlock(unlock.key, unlock.isCanBuy)" />
+      @if (!isHideUnlockIcons()) {
+        @for (unlock of unlockList(); track unlock.key) {
+          <app-unlock [data]="unlock" (buy)="buyUnlock(unlock.key)" />
+        }
       }
 
-      <svg [style.width.px]="treeSize" [style.height.px]="treeSize">
-        @for (line of lines(); track $index) {
-          <line
-            [attr.x1]="line.x1"
-            [attr.y1]="line.y1"
-            [attr.x2]="line.x2"
-            [attr.y2]="line.y2"
-            [style.stroke]="
-              line.isUnlocked ? 'var(--color-border)' : 'var(--color-border-disabled)'
-            "
-          />
-        }
-      </svg>
+      @if (!isHideUnlockPaths()) {
+        <svg [style.width.px]="treeSize" [style.height.px]="treeSize">
+          @for (line of lines(); track $index) {
+            <line
+              [attr.x1]="line.x1"
+              [attr.y1]="line.y1"
+              [attr.x2]="line.x2"
+              [attr.y2]="line.y2"
+              [style.stroke]="
+                line.isUnlocked ? 'var(--color-border)' : 'var(--color-border-disabled)'
+              "
+            />
+          }
+        </svg>
+      }
     </div>
   </div>
 </div>
 
 <div class="info">
-  <app-dropdown label="Info">
+  <app-collapse label="Info">
     <p>Use mouse to move and mousewheel to zoom</p>
     <p>You can buy available unlocks and hover/click on them to open info about them</p>
     <p>Click on unlock with open info to buy it</p>
-  </app-dropdown>
+  </app-collapse>
 
-  <app-dropdown label="Zoom">
+  <app-collapse label="Zoom">
     <div class="zoom-buttons">
       <button class="zoom-button" (click)="downScale()">+</button>
       <button class="zoom-button" (click)="upScale()">-</button>
     </div>
-  </app-dropdown>
+  </app-collapse>
 </div>

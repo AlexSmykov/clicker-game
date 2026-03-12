@@ -1,6 +1,5 @@
 import { ParamCurrentData, ParamData, ParamKey } from 'src/app/features/param/param.type';
 import { ExponentNumber } from 'exponential-number';
-import { environment } from 'src/environments/environment.dev';
 
 export const PARAM_KEYS = {
   simpleMoneyMultiplier: 'simpleMoneyMultiplier',
@@ -108,7 +107,7 @@ export const PARAM_DATA: Record<ParamKey, ParamData> = {
   },
   [PARAM_KEYS.prestigeBorder]: {
     name: 'Prestige border',
-    defaultValue: new ExponentNumber(1, environment.isBorderlessPrestige ? 1 : 10),
+    defaultValue: new ExponentNumber(1, 10),
     prefix: '',
     isPercent: false,
     isResetOnPrestige: false,

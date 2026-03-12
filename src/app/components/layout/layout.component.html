@@ -3,7 +3,9 @@
 
   <app-click-area />
 
-  <app-params />
+  @if (isShowParameters()) {
+    <app-params />
+  }
 
   <div class="main-content">
     <app-tabs [items]="mainRouteTabs()" />

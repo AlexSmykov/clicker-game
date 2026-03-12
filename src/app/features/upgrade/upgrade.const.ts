@@ -116,6 +116,32 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
           },
         ],
       },
+      {
+        startAtLevel: 100,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(1, 140),
+            resource: RESOURCE_KEYS.money,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
+              value: new ExponentNumber(0, 400),
+            },
+          },
+        ],
+      },
+      {
+        startAtLevel: 1000,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(1, 2700),
+            resource: RESOURCE_KEYS.money,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
+              value: new ExponentNumber(1, 5),
+            },
+          },
+        ],
+      },
     ],
   },
   [UPGRADE_KEYS.simpleMoneyPower]: {

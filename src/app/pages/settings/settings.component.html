@@ -1,1 +1,15 @@
-settings
+<div class="content">
+  @for (settingGroup of settingsGroups(); track settingGroup.key) {
+    <app-collapse [label]="settingGroup.name">
+      <div class="settings">
+        @for (setting of settingGroup.settings; track setting.key) {
+          <app-checkbox
+            [label]="setting.name"
+            [ngModel]="setting.isOn"
+            (ngModelChange)="setSettingsValue(setting.key, $event)"
+          />
+        }
+      </div>
+    </app-collapse>
+  }
+</div>

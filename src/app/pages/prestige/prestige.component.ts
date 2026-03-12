@@ -8,6 +8,9 @@ import { PARAM_KEYS } from 'src/app/features/param/param.const';
 import { UpgradeService } from 'src/app/features/upgrade/upgrade.service';
 import { ResourceSimpleComponent } from 'src/app/features/resource/components/simple/resource-simple.component';
 import { UPGRADE_KEYS } from 'src/app/features/upgrade/upgrade.const';
+import { SettingService } from 'src/app/features/setting/setting.service';
+import { SETTING_KEYS } from 'src/app/features/setting/setting.const';
+import { ExponentNumber } from 'exponential-number';
 
 @Component({
   selector: 'app-prestige',
@@ -17,6 +20,7 @@ import { UPGRADE_KEYS } from 'src/app/features/upgrade/upgrade.const';
   imports: [ResourceComponent, ResourceSimpleComponent],
 })
 export default class PrestigeComponent {
+  readonly #settingsService = inject(SettingService);
   readonly #resourceService = inject(ResourceService);
   readonly #paramService = inject(ParamService);
   readonly #upgradeService = inject(UpgradeService);
@@ -34,9 +38,13 @@ export default class PrestigeComponent {
   });
 
   readonly prestigeBorder = computed(() => {
+    const currentSettingsData = this.#settingsService.settingCurrentData();
+
     return {
       key: RESOURCE_KEYS.money,
-      value: this.#paramService.paramsCurrentData()[PARAM_KEYS.prestigeBorder].value,
+      value: currentSettingsData[SETTING_KEYS.offPrestigeBorder].isOn
+        ? new ExponentNumber(0, 0)
+        : this.#paramService.paramsCurrentData()[PARAM_KEYS.prestigeBorder].value,
     };
   });
 
@@ -55,6 +63,7 @@ export default class PrestigeComponent {
   readonly resourceKeys = RESOURCE_KEYS;
 
   prestige(): void {
+    const settingsCurrentData = this.#settingsService.settingCurrentData();
     const paramsCurrentData = this.#paramService.paramsCurrentData();
 
     this.#resourceService.updateResource(RESOURCE_KEYS.prestigePoints, {
@@ -83,8 +92,10 @@ export default class PrestigeComponent {
       isUnlocked: true,
     });
 
-    this.#resourceService.resetOnPrestige();
-    this.#paramService.resetOnPrestige();
-    this.#upgradeService.resetOnPrestige();
+    if (!settingsCurrentData[SETTING_KEYS.keepEverythingOnPrestige].isOn) {
+      this.#resourceService.resetOnPrestige();
+      this.#paramService.resetOnPrestige();
+      this.#upgradeService.resetOnPrestige();
+    }
   }
 }

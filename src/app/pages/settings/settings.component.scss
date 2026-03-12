@@ -1,0 +1,14 @@
+.content {
+  margin: -8px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+
+  .settings {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+}

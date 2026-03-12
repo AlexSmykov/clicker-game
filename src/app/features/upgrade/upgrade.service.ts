@@ -11,9 +11,12 @@ import { ExponentNumber } from 'exponential-number';
 import { ResourceService } from 'src/app/features/resource/resource.service';
 import { ParamService } from 'src/app/features/param/param.service';
 import { transformCostToCurrentCosts } from 'src/app/features/upgrade/upgrade.utils';
+import { SETTING_KEYS } from 'src/app/features/setting/setting.const';
+import { SettingService } from 'src/app/features/setting/setting.service';
 
 @Injectable()
 export class UpgradeService {
+  readonly #settingsService = inject(SettingService);
   readonly #resourceService = inject(ResourceService);
   readonly #paramService = inject(ParamService);
 
@@ -23,6 +26,7 @@ export class UpgradeService {
     const upgradeData = UPGRADE_DATA[key];
 
     this.upgradeCurrentDataMap.update((oldCurrentData) => {
+      const settingsCurrentData = this.#settingsService.settingCurrentData();
       const oldUpgradeData = oldCurrentData[key];
 
       return {
@@ -40,9 +44,11 @@ export class UpgradeService {
 
             const resourceCurrentData = this.#resourceService.resourcesCurrentData()[cost.resource];
 
-            this.#resourceService.updateResource(currentCostData.resource, {
-              value: resourceCurrentData.value.minus(cost.value),
-            });
+            if (!settingsCurrentData[SETTING_KEYS.freeUpgrades].isOn) {
+              this.#resourceService.updateResource(currentCostData.resource, {
+                value: resourceCurrentData.value.minus(cost.value),
+              });
+            }
 
             return {
               ...cost,

@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core
 import { SvgIconComponent } from 'angular-svg-icon';
 
 @Component({
-  selector: 'app-dropdown',
-  templateUrl: './dropdown.component.html',
-  styleUrl: './dropdown.component.scss',
+  selector: 'app-collapse',
+  templateUrl: './collapse.component.html',
+  styleUrl: './collapse.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [SvgIconComponent],
 })
-export class DropdownComponent {
+export class CollapseComponent {
   readonly label = input<string>('');
 
   readonly isExpanded = signal(true);

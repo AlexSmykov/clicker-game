@@ -20,8 +20,9 @@ import { UpgradeService } from 'src/app/features/upgrade/upgrade.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage/local-storage.service';
 import { LOCAL_STORAGE_KEYS } from 'src/app/core/services/local-storage/local-storage.const';
 import { UnlockPageInterfaceSaveData } from 'src/app/pages/unlocks/unlocks.type';
-import { environment } from 'src/environments/environment.dev';
-import { DropdownComponent } from 'src/app/shared/components/dropdown/dropdown.component';
+import { SettingService } from 'src/app/features/setting/setting.service';
+import { SETTING_KEYS } from 'src/app/features/setting/setting.const';
+import { CollapseComponent } from 'src/app/shared/components/collapse/collapse.component';
 
 const MAX_SCROLL_VALUE = 7;
 const MIN_SCROLL_VALUE = -3;
@@ -38,7 +39,7 @@ const TREE_SIZE_HALF = TREE_SIZE / 2;
   templateUrl: './unlocks.component.html',
   styleUrl: './unlocks.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [UnlockComponent, DropdownComponent],
+  imports: [UnlockComponent, CollapseComponent],
   host: {
     '(window:beforeunload)': 'ngOnDestroy()',
   },
@@ -46,6 +47,7 @@ const TREE_SIZE_HALF = TREE_SIZE / 2;
 export default class UnlocksComponent implements AfterViewInit, OnDestroy {
   readonly viewport = viewChild.required<ElementRef<HTMLDivElement>>('viewport');
 
+  readonly #settingsService = inject(SettingService);
   readonly #unlockService = inject(UnlockService);
   readonly #resourceService = inject(ResourceService);
   readonly #upgradeService = inject(UpgradeService);
@@ -57,9 +59,18 @@ export default class UnlocksComponent implements AfterViewInit, OnDestroy {
 
   readonly scale = computed(() => 1 / Math.pow(1.3, this.scaleLevel()));
 
+  readonly isHideUnlockIcons = computed(
+    () => this.#settingsService.settingCurrentData()[SETTING_KEYS.hideUnlockIcons].isOn,
+  );
+
+  readonly isHideUnlockPaths = computed(
+    () => this.#settingsService.settingCurrentData()[SETTING_KEYS.hideUnlockPaths].isOn,
+  );
+
   readonly unlockList = computed(() => {
     const unlocksCurrentData = this.#unlockService.unlocksCurrentData();
     const resourcesCurrentData = this.#resourceService.resourcesCurrentData();
+    const currentSettings = this.#settingsService.settingCurrentData();
 
     return Object.entries(unlocksCurrentData)
       .map(([key, value]): UnlockInputData => {
@@ -73,19 +84,26 @@ export default class UnlocksComponent implements AfterViewInit, OnDestroy {
           isUnlocked: value.isUnlocked,
           size: UNLOCK_OBJECT_SIZE,
           offset: OFFSET,
-          isCanBuy:
-            data.costs.every((cost) =>
-              resourcesCurrentData[cost.resourceKey].value.isGreaterThanOrEqualValue(cost.value),
-            ) &&
-            data.requiredUnlocks.every(
-              (requiredUnlockKey) => unlocksCurrentData[requiredUnlockKey].isUnlocked,
-            ),
-          costs: data.costs.map((cost) => {
-            return {
-              key: cost.resourceKey,
-              value: cost.value,
-            };
-          }),
+          isCanBuy: value.isUnlocked
+            ? false
+            : currentSettings[SETTING_KEYS.freeUnlocks].isOn
+              ? true
+              : data.costs.every((cost) =>
+                  resourcesCurrentData[cost.resourceKey].value.isGreaterThanOrEqualValue(
+                    cost.value,
+                  ),
+                ) &&
+                data.requiredUnlocks.every(
+                  (requiredUnlockKey) => unlocksCurrentData[requiredUnlockKey].isUnlocked,
+                ),
+          costs: value.isUnlocked
+            ? []
+            : data.costs.map((cost) => {
+                return {
+                  key: cost.resourceKey,
+                  value: cost.value,
+                };
+              }),
           requiredUnlocks: data.requiredUnlocks,
           icon: data.iconPath,
           x: TREE_SIZE_HALF + (data.position.x - 0.5) * FULL_SIZE,
@@ -194,22 +212,24 @@ export default class UnlocksComponent implements AfterViewInit, OnDestroy {
     viewport.scrollTop -= event.movementY;
   }
 
-  buyUnlock(key: UnlockKey, isCanBuy: boolean): void {
-    if (isCanBuy || environment.isFreeUnlocks) {
-      this.#unlockService.updateUnlock(key, {
-        isUnlocked: true,
-      });
+  buyUnlock(key: UnlockKey): void {
+    const currentSettings = this.#settingsService.settingCurrentData();
 
-      const resourcesCurrentData = this.#resourceService.resourcesCurrentData();
+    this.#unlockService.updateUnlock(key, {
+      isUnlocked: true,
+    });
 
+    const resourcesCurrentData = this.#resourceService.resourcesCurrentData();
+
+    if (!currentSettings[SETTING_KEYS.freeUnlocks].isOn) {
       UNLOCK_DATA[key].costs.forEach((cost) => {
         this.#resourceService.updateResource(cost.resourceKey, {
           value: resourcesCurrentData[cost.resourceKey].value.minus(cost.value),
         });
       });
-
-      UNLOCK_DATA[key].effect(this.#upgradeService, this.#paramService, this.#resourceService);
     }
+
+    UNLOCK_DATA[key].effect(this.#upgradeService, this.#paramService, this.#resourceService);
   }
 
   upScale(): void {

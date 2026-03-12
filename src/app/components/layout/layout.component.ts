@@ -9,6 +9,8 @@ import { TabsComponent } from 'src/app/shared/components/tabs/tabs.component';
 import { getMainRouteLink } from 'src/app/app.links';
 import { UnlockService } from 'src/app/features/unlock/unlock.service';
 import { UNLOCK_KEYS } from 'src/app/features/unlock/unlock.const';
+import { SettingService } from 'src/app/features/setting/setting.service';
+import { SETTING_KEYS } from 'src/app/features/setting/setting.const';
 
 @Component({
   selector: 'app-layout',
@@ -18,7 +20,12 @@ import { UNLOCK_KEYS } from 'src/app/features/unlock/unlock.const';
   imports: [RouterOutlet, ClickAreaComponent, ResourcesComponent, ParamsComponent, TabsComponent],
 })
 export default class LayoutComponent {
+  readonly #settingsService = inject(SettingService);
   readonly #unlockService = inject(UnlockService);
+
+  readonly isShowParameters = computed(
+    () => this.#settingsService.settingCurrentData()[SETTING_KEYS.showParametersWidget].isOn,
+  );
 
   readonly mainRouteTabs = computed(() => {
     const unlocksCurrentData = this.#unlockService.unlocksCurrentData();

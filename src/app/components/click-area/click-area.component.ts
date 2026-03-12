@@ -82,10 +82,10 @@ export class ClickAreaComponent {
           .copy()
           .plus(new ExponentNumber(0, 1)),
       ),
-    ).multiply(paramsCurrentData[PARAM_KEYS.prestigeCrystalShardsMultiplier].value);
+    );
 
-    this.#resourceService.updateResource(RESOURCE_KEYS.crystalShards, {
-      value: resourcesCurrentData[RESOURCE_KEYS.crystalShards].value.plus(crystalsGained),
+    this.#resourceService.updateResource(RESOURCE_KEYS.crystals, {
+      value: resourcesCurrentData[RESOURCE_KEYS.crystals].value.plus(crystalsGained),
     });
   }
 
@@ -112,10 +112,10 @@ export class ClickAreaComponent {
           .copy()
           .plus(new ExponentNumber(0, 1)),
       ),
-    ).multiply(paramsCurrentData[PARAM_KEYS.prestigeCrystalShardsMultiplier].value);
+    );
 
-    this.#resourceService.updateResource(RESOURCE_KEYS.crystalShards, {
-      value: resourcesCurrentData[RESOURCE_KEYS.crystalShards].value.plus(rubiesGained),
+    this.#resourceService.updateResource(RESOURCE_KEYS.rubies, {
+      value: resourcesCurrentData[RESOURCE_KEYS.rubies].value.plus(rubiesGained),
     });
   }
 
