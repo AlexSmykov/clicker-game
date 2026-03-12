@@ -73,7 +73,11 @@ export const SETTING_DATA: Record<SettingKey, SettingData> = {
 };
 
 export const SETTING_GROUP_MAP: Record<SettingGroupKey, SettingKey[]> = {
-  common: [SETTING_KEYS.showParametersWidget, SETTING_KEYS.buyUpgradesByHold],
+  common: [
+    SETTING_KEYS.showParametersWidget,
+    SETTING_KEYS.buyUpgradesByHold,
+    SETTING_KEYS.fastBuyUpgradesByHold,
+  ],
   dev: [
     SETTING_KEYS.freeUnlocks,
     SETTING_KEYS.freeUpgrades,
