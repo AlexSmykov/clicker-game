@@ -1,0 +1,10 @@
+{
+  "name": "Resource clicker",
+  "short_name": "Resource clicker",
+  "start_url": "https://endless-upgrades.vercel.app/main",
+  "display": "standalone",
+  "background_color": "#232323",
+  "description": "Incremental clicker game",
+  "orientation": "portrait",
+
+}
