@@ -1,0 +1,11 @@
+.danger-button {
+  width: 200px;
+
+  border: 2px solid var(--color-danger);
+  transition: 0s;
+
+  &.confirm {
+    background-color: var(--color-danger);
+    color: var(--color-background-dark);
+  }
+}

@@ -6,6 +6,14 @@
   align-items: stretch;
   gap: 12px;
 
+  .action-buttons {
+    padding: 0 8px;
+
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+  }
+
   .settings {
     display: flex;
     flex-direction: column;

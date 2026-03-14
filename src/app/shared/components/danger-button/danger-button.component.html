@@ -1,0 +1,8 @@
+<button
+  class="danger-button"
+  [class.confirm]="isClicked()"
+  (click)="onClick()"
+  (mouseleave)="onMouseLeave()"
+>
+  {{ isClicked() ? 'Click again to confirm' : label() }}
+</button>

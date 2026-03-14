@@ -13,14 +13,25 @@ import { ParamService } from 'src/app/features/param/param.service';
 import { transformCostToCurrentCosts } from 'src/app/features/upgrade/upgrade.utils';
 import { SETTING_KEYS } from 'src/app/features/setting/setting.const';
 import { SettingService } from 'src/app/features/setting/setting.service';
+import { LocalStorageService } from 'src/app/core/services/local-storage/local-storage.service';
+import { LOCAL_STORAGE_KEYS } from 'src/app/core/services/local-storage/local-storage.const';
+import { parseObjectWithExponentNumber } from 'src/app/core/utils/exponent-number.utils';
+import { copy } from 'src/app/core/utils/common.utils';
 
 @Injectable()
 export class UpgradeService {
   readonly #settingsService = inject(SettingService);
   readonly #resourceService = inject(ResourceService);
   readonly #paramService = inject(ParamService);
+  readonly #localStorageService = inject(LocalStorageService);
 
-  readonly upgradeCurrentDataMap = signal(UPGRADE_CURRENT_DATA);
+  readonly upgradeCurrentDataMap = signal<Record<UpgradeKey, UpgradeCurrentData>>(
+    copy(UPGRADE_CURRENT_DATA),
+  );
+
+  constructor() {
+    this.loadFromLocalStorage();
+  }
 
   buyUpgrade(key: UpgradeKey): void {
     const upgradeData = UPGRADE_DATA[key];
@@ -111,5 +122,33 @@ export class UpgradeService {
         }),
       ) as Record<UpgradeKey, UpgradeCurrentData>,
     );
+  }
+
+  loadFromLocalStorage(): void {
+    const value = this.#localStorageService.getItem(LOCAL_STORAGE_KEYS.upgrades);
+
+    if (!value) {
+      return;
+    }
+
+    try {
+      this.upgradeCurrentDataMap.set(
+        parseObjectWithExponentNumber(JSON.parse(value) as Record<UpgradeKey, UpgradeCurrentData>),
+      );
+    } catch {
+      console.error('Error while loading upgrades data from local storage');
+    }
+  }
+
+  saveToLocalStorage(): void {
+    this.#localStorageService.setItem(
+      LOCAL_STORAGE_KEYS.upgrades,
+      JSON.stringify(this.upgradeCurrentDataMap()),
+    );
+  }
+
+  resetCurrentData(): void {
+    this.upgradeCurrentDataMap.set(copy(UPGRADE_CURRENT_DATA));
+    this.saveToLocalStorage();
   }
 }

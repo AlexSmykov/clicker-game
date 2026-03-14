@@ -1,4 +1,10 @@
 <div class="content">
+  <div class="action-buttons">
+    <app-danger-button label="Reset progress" (action)="resetProgress()" />
+
+    <button (click)="resetSettings()">Reset settings</button>
+  </div>
+
   @for (settingGroup of settingsGroups(); track settingGroup.key) {
     <app-collapse [label]="settingGroup.name">
       <div class="settings">

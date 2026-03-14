@@ -11,19 +11,28 @@ import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.c
 import { FormsModule } from '@angular/forms';
 import { SettingKey } from 'src/app/features/setting/setting.type';
 import { environment } from 'src/environments/environment.dev';
+import { DangerButtonComponent } from 'src/app/shared/components/danger-button/danger-button.component';
+import { ResourceService } from 'src/app/features/resource/resource.service';
+import { ParamService } from 'src/app/features/param/param.service';
+import { UpgradeService } from 'src/app/features/upgrade/upgrade.service';
+import { UnlockService } from 'src/app/features/unlock/unlock.service';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CollapseComponent, CheckboxComponent, FormsModule],
+  imports: [CollapseComponent, CheckboxComponent, FormsModule, DangerButtonComponent],
 })
 export default class SettingsComponent {
-  readonly #settingsService = inject(SettingService);
+  readonly #resourceService = inject(ResourceService);
+  readonly #paramService = inject(ParamService);
+  readonly #upgradeService = inject(UpgradeService);
+  readonly #unlockService = inject(UnlockService);
+  readonly #settingService = inject(SettingService);
 
   readonly settingsGroups = computed(() => {
-    const settingsCurrentData = this.#settingsService.settingCurrentData();
+    const settingCurrentData = this.#settingService.settingCurrentData();
 
     return Object.values(SETTING_GROUP_KEYS)
       .map((key) => {
@@ -31,11 +40,11 @@ export default class SettingsComponent {
           key,
           name: SETTING_GROUP_DATA[key].name,
           settings: SETTING_GROUP_MAP[key]
-            .filter((settingKey) => settingsCurrentData[settingKey].isUnlocked)
+            .filter((settingKey) => settingCurrentData[settingKey].isUnlocked)
             .map((settingKey) => {
               return {
                 key: settingKey,
-                ...settingsCurrentData[settingKey],
+                ...settingCurrentData[settingKey],
                 name: SETTING_DATA[settingKey].name,
               };
             }),
@@ -48,6 +57,17 @@ export default class SettingsComponent {
   });
 
   setSettingsValue(key: SettingKey, value: boolean) {
-    this.#settingsService.updateSetting(key, { isOn: value });
+    this.#settingService.updateSetting(key, { isOn: value });
+  }
+
+  resetProgress(): void {
+    this.#resourceService.resetCurrentData();
+    this.#paramService.resetCurrentData();
+    this.#upgradeService.resetCurrentData();
+    this.#unlockService.resetCurrentData();
+  }
+
+  resetSettings(): void {
+    this.#settingService.resetCurrentData();
   }
 }

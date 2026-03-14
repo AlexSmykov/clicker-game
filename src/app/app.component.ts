@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ResourceService } from 'src/app/features/resource/resource.service';
 import { UpgradeService } from 'src/app/features/upgrade/upgrade.service';
@@ -13,5 +13,22 @@ import { SettingService } from 'src/app/features/setting/setting.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterOutlet],
   providers: [ResourceService, ParamService, UpgradeService, UnlockService, SettingService],
+  host: {
+    '(window:beforeunload)': 'ngOnDestroy()',
+  },
 })
-export class AppComponent {}
+export class AppComponent implements OnDestroy {
+  readonly #resourceService = inject(ResourceService);
+  readonly #paramService = inject(ParamService);
+  readonly #upgradeService = inject(UpgradeService);
+  readonly #unlockService = inject(UnlockService);
+  readonly #settingService = inject(SettingService);
+
+  ngOnDestroy(): void {
+    this.#resourceService.saveToLocalStorage();
+    this.#paramService.saveToLocalStorage();
+    this.#upgradeService.saveToLocalStorage();
+    this.#unlockService.saveToLocalStorage();
+    this.#settingService.saveToLocalStorage();
+  }
+}
