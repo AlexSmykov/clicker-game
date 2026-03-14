@@ -30,6 +30,9 @@ export const PARAM_KEYS = {
   crystalChanceRootBaseForCrystals: 'crystalChanceRootBaseForCrystals',
   rubyChanceRootBaseForRubies: 'rubyChanceRootBaseForRubies',
   bonusMoneyMultiplier: 'bonusMoneyMultiplier',
+  rubyChance: 'rubyChance',
+  rubyPrestigeChance: 'rubyPrestigeChance',
+  rubyBonusChance: 'rubyBonusChance',
 } as const;
 
 export const PARAM_DATA: Record<ParamKey, ParamData> = {
@@ -257,6 +260,30 @@ export const PARAM_DATA: Record<ParamKey, ParamData> = {
     isResetOnPrestige: false,
     isWithOne: false,
   },
+  [PARAM_KEYS.rubyChance]: {
+    name: 'Ruby chance',
+    defaultValue: new ExponentNumber(0, 0),
+    prefix: '+',
+    isPercent: true,
+    isResetOnPrestige: true,
+    isWithOne: false,
+  },
+  [PARAM_KEYS.rubyPrestigeChance]: {
+    name: 'Ruby prestige chance',
+    defaultValue: new ExponentNumber(0, 0),
+    prefix: '+',
+    isPercent: true,
+    isResetOnPrestige: true,
+    isWithOne: false,
+  },
+  [PARAM_KEYS.rubyBonusChance]: {
+    name: 'Ruby bonus chance',
+    defaultValue: new ExponentNumber(0, 0),
+    prefix: '+',
+    isPercent: true,
+    isResetOnPrestige: true,
+    isWithOne: false,
+  },
 };
 
 export const PARAM_CURRENT_VALUE: Record<ParamKey, ParamCurrentData> = {
@@ -341,5 +368,14 @@ export const PARAM_CURRENT_VALUE: Record<ParamKey, ParamCurrentData> = {
   },
   [PARAM_KEYS.bonusMoneyMultiplier]: {
     value: PARAM_DATA[PARAM_KEYS.bonusMoneyMultiplier].defaultValue.copy(),
+  },
+  [PARAM_KEYS.rubyChance]: {
+    value: PARAM_DATA[PARAM_KEYS.rubyChance].defaultValue.copy(),
+  },
+  [PARAM_KEYS.rubyPrestigeChance]: {
+    value: PARAM_DATA[PARAM_KEYS.rubyPrestigeChance].defaultValue.copy(),
+  },
+  [PARAM_KEYS.rubyBonusChance]: {
+    value: PARAM_DATA[PARAM_KEYS.rubyBonusChance].defaultValue.copy(),
   },
 };

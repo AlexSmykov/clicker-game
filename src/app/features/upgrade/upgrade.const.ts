@@ -22,6 +22,8 @@ export const UPGRADE_KEYS = {
   prestigeLogBase: 'prestigeLogBase',
   prestigeLogPower: 'prestigeLogPower',
   rubyShardLogBase: 'rubyShardLogBase',
+  rubyChance: 'rubyChance',
+  rubyPrestigeChance: 'rubyPrestigeChance',
   rubyShardLogPower: 'rubyShardLogPower',
   rubyShardMoneyMultiplier: 'rubyShardMoneyMultiplier',
 } as const;
@@ -893,6 +895,106 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
       },
     ],
   },
+  [UPGRADE_KEYS.rubyChance]: {
+    name: 'Red collar',
+    description: 'Unique collar that helps you gain more ruby resources',
+    isResetOnPrestige: true,
+    effects: [
+      {
+        paramKey: PARAM_KEYS.rubyChance,
+        change: {
+          changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+          value: new ExponentNumber(0, 500),
+        },
+      },
+    ],
+    costs: [
+      {
+        startAtLevel: 0,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 1),
+            resource: RESOURCE_KEYS.rubyShards,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 1),
+            },
+          },
+        ],
+      },
+      {
+        startAtLevel: 99,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 100),
+            resource: RESOURCE_KEYS.prestigePoints,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 5),
+            },
+          },
+        ],
+      },
+    ],
+  },
+  [UPGRADE_KEYS.rubyPrestigeChance]: {
+    name: 'Red necklace',
+    description: "Special trinket that don't reset on prestige",
+    isResetOnPrestige: true,
+    effects: [
+      {
+        paramKey: PARAM_KEYS.rubyChance,
+        change: {
+          changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+          value: new ExponentNumber(0, 250),
+        },
+      },
+    ],
+    costs: [
+      {
+        startAtLevel: 0,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 1),
+            resource: RESOURCE_KEYS.rubyShards,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 0),
+            },
+          },
+          {
+            defaultValue: new ExponentNumber(0, 50),
+            resource: RESOURCE_KEYS.prestigePoints,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 25),
+            },
+          },
+        ],
+      },
+      {
+        startAtLevel: 10,
+        resources: [
+          {
+            defaultValue: new ExponentNumber(0, 1),
+            resource: RESOURCE_KEYS.rubyShards,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 1),
+            },
+          },
+          {
+            defaultValue: new ExponentNumber(0, 300),
+            resource: RESOURCE_KEYS.prestigePoints,
+            change: {
+              changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
+              value: new ExponentNumber(0, 100),
+            },
+          },
+        ],
+      },
+    ],
+  },
 };
 
 export const UPGRADE_CURRENT_DATA: Record<UpgradeKey, UpgradeCurrentData> = {
@@ -987,6 +1089,16 @@ export const UPGRADE_CURRENT_DATA: Record<UpgradeKey, UpgradeCurrentData> = {
   },
   [UPGRADE_KEYS.rubyShardMoneyMultiplier]: {
     costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.rubyShardMoneyMultiplier].costs),
+    isUnlocked: false,
+    level: 0,
+  },
+  [UPGRADE_KEYS.rubyChance]: {
+    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.rubyChance].costs),
+    isUnlocked: false,
+    level: 0,
+  },
+  [UPGRADE_KEYS.rubyPrestigeChance]: {
+    costs: transformCostToCurrentCosts(UPGRADE_DATA[UPGRADE_KEYS.rubyPrestigeChance].costs),
     isUnlocked: false,
     level: 0,
   },

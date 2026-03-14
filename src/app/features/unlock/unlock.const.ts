@@ -25,6 +25,8 @@ export const UNLOCK_KEYS = {
   prestigeLog: 'prestigeLog',
   rubyShardLog: 'rubyShardLog',
   bonusPrestigePointsMultiplier: 'bonusPrestigePointsMultiplier',
+  rubyPrestigeChance: 'rubyPrestigeChance',
+  rubyBonusChance: 'rubyBonusChance',
 } as const;
 
 export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
@@ -151,6 +153,10 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
       });
 
       upgradeService.updateUpgrade(UPGRADE_KEYS.rubyShardMoneyMultiplier, {
+        isUnlocked: true,
+      });
+
+      upgradeService.updateUpgrade(UPGRADE_KEYS.rubyChance, {
         isUnlocked: true,
       });
 
@@ -403,6 +409,60 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
       });
     },
   },
+
+  [UNLOCK_KEYS.rubyBonusChance]: {
+    name: 'Bonus ruby chance',
+    description: 'Just some percents for you',
+    iconPath: `_.svg`,
+    position: {
+      x: 3,
+      y: -3,
+    },
+    requiredUnlocks: [UNLOCK_KEYS.rubyPrestigeChance],
+    costs: [
+      {
+        resourceKey: RESOURCE_KEYS.crystals,
+        value: new ExponentNumber(0, 5),
+      },
+      {
+        resourceKey: RESOURCE_KEYS.rubyShards,
+        value: new ExponentNumber(0, 25),
+      },
+    ],
+    effect: (_: UpgradeService, paramService: ParamService) => {
+      paramService.updateParam(PARAM_KEYS.rubyBonusChance, {
+        value: paramService
+          .paramsCurrentData()
+          [PARAM_KEYS.rubyBonusChance].value.copy()
+          .plus(new ExponentNumber(0, 5000)),
+      });
+    },
+  },
+  [UNLOCK_KEYS.rubyPrestigeChance]: {
+    name: 'Prestige ruby chance',
+    description: 'New upgrade, that allow you to spend PP on ruby chance',
+    iconPath: `_.svg`,
+    position: {
+      x: 4,
+      y: -4,
+    },
+    requiredUnlocks: [UNLOCK_KEYS.rubyShards],
+    costs: [
+      {
+        resourceKey: RESOURCE_KEYS.money,
+        value: new ExponentNumber(1, 100),
+      },
+      {
+        resourceKey: RESOURCE_KEYS.rubyShards,
+        value: new ExponentNumber(0, 10),
+      },
+    ],
+    effect: (upgradeService: UpgradeService) => {
+      upgradeService.updateUpgrade(UPGRADE_KEYS.rubyPrestigeChance, {
+        isUnlocked: true,
+      });
+    },
+  },
 };
 
 export const UNLOCK_CURRENT_DATA: Record<UnlockKey, UnlockCurrentData> = {
@@ -449,6 +509,12 @@ export const UNLOCK_CURRENT_DATA: Record<UnlockKey, UnlockCurrentData> = {
     isUnlocked: false,
   },
   [UNLOCK_KEYS.bonusPrestigePointsMultiplier]: {
+    isUnlocked: false,
+  },
+  [UNLOCK_KEYS.rubyBonusChance]: {
+    isUnlocked: false,
+  },
+  [UNLOCK_KEYS.rubyPrestigeChance]: {
     isUnlocked: false,
   },
 };

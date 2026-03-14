@@ -91,11 +91,8 @@ export class ClickAreaComponent {
 
   updateRubyShards(): void {
     const resourcesCurrentData = this.#resourceService.resourcesCurrentData();
-    const paramsCurrentData = this.#paramService.paramsCurrentData();
 
-    const rubyShardsGained = calculateChance(
-      paramsCurrentData[PARAM_KEYS.baseRubyChance].value.copy(),
-    );
+    const rubyShardsGained = calculateChance(this.getRubyChance());
 
     this.#resourceService.updateResource(RESOURCE_KEYS.rubyShards, {
       value: resourcesCurrentData[RESOURCE_KEYS.rubyShards].value.plus(rubyShardsGained),
@@ -218,6 +215,9 @@ export class ClickAreaComponent {
   getRubyChance(): ExponentNumber {
     const paramsCurrentData = this.#paramService.paramsCurrentData();
 
-    return paramsCurrentData[PARAM_KEYS.baseRubyChance].value.copy();
+    return paramsCurrentData[PARAM_KEYS.baseRubyChance].value
+      .copy()
+      .plus(paramsCurrentData[PARAM_KEYS.rubyChance].value.copy())
+      .plus(paramsCurrentData[PARAM_KEYS.rubyPrestigeChance].value.copy());
   }
 }
