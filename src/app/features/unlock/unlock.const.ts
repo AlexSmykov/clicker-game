@@ -271,7 +271,7 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
   [UNLOCK_KEYS.bonusCrystalChance]: {
     name: 'Lucky crystal',
     description: 'Some crystal chance for you',
-    iconPath: `crystals.svg`,
+    iconPath: `bonus-crystal.svg`,
     position: {
       x: 3,
       y: 3,
@@ -420,21 +420,21 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
   },
   [UNLOCK_KEYS.bonusPrestigePointsMultiplier]: {
     name: 'Bonus PP multiplier',
-    description: '',
+    description: 'Multiplier for PP',
     iconPath: `prestige-points-multiplier.svg`,
     position: {
       x: 5,
       y: 0,
     },
-    requiredUnlocks: [UNLOCK_KEYS.crystals, UNLOCK_KEYS.rubyShards],
+    requiredUnlocks: [UNLOCK_KEYS.crystals, UNLOCK_KEYS.rubies],
     costs: [
       {
         resourceKey: RESOURCE_KEYS.crystals,
         value: new ExponentNumber(0, 5),
       },
       {
-        resourceKey: RESOURCE_KEYS.rubyShards,
-        value: new ExponentNumber(0, 25),
+        resourceKey: RESOURCE_KEYS.rubies,
+        value: new ExponentNumber(0, 1),
       },
     ],
     effect: (_: UpgradeService, paramService: ParamService) => {
@@ -443,16 +443,15 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
       });
     },
   },
-
   [UNLOCK_KEYS.rubyBonusChance]: {
     name: 'Bonus ruby chance',
     description: 'Just some percents for you',
-    iconPath: `_.svg`,
+    iconPath: `bonus-ruby-shards.svg`,
     position: {
-      x: 3,
-      y: -3,
+      x: 2,
+      y: -2,
     },
-    requiredUnlocks: [UNLOCK_KEYS.rubyPrestigeChance],
+    requiredUnlocks: [UNLOCK_KEYS.rubyShards],
     costs: [
       {
         resourceKey: RESOURCE_KEYS.crystals,
@@ -475,12 +474,12 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
   [UNLOCK_KEYS.rubyPrestigeChance]: {
     name: 'Prestige ruby chance',
     description: 'New upgrade, that allow you to spend PP on ruby chance',
-    iconPath: `_.svg`,
+    iconPath: `ruby-prestige.svg`,
     position: {
-      x: 4,
-      y: -4,
+      x: 3,
+      y: -3,
     },
-    requiredUnlocks: [UNLOCK_KEYS.rubyShards],
+    requiredUnlocks: [UNLOCK_KEYS.rubyBonusChance],
     costs: [
       {
         resourceKey: RESOURCE_KEYS.money,
