@@ -11,6 +11,7 @@ export const SETTING_KEYS = {
   buyUpgradesByHold: 'buyUpgradesByHold',
   fastBuyUpgradesByHold: 'fastBuyUpgradesByHold',
   scrollInsideContentArea: 'scrollInsideContentArea',
+  saveOnPageReload: 'saveOnPageReload',
   freeUnlocks: 'freeUnlocks',
   freeUpgrades: 'freeUpgrades',
   unlockedUpgradesAutomatization: 'unlockedUpgradesAutomatization',
@@ -42,6 +43,10 @@ export const SETTING_DATA: Record<SettingKey, SettingData> = {
   scrollInsideContentArea: {
     name: 'Scroll inside content area',
     isOnByDefault: false,
+  },
+  saveOnPageReload: {
+    name: 'Save progress on page reload',
+    isOnByDefault: true,
   },
   freeUnlocks: {
     name: 'Free unlocks',
@@ -83,6 +88,7 @@ export const SETTING_GROUP_MAP: Record<SettingGroupKey, SettingKey[]> = {
     SETTING_KEYS.buyUpgradesByHold,
     SETTING_KEYS.fastBuyUpgradesByHold,
     SETTING_KEYS.scrollInsideContentArea,
+    SETTING_KEYS.saveOnPageReload,
   ],
   dev: [
     SETTING_KEYS.freeUnlocks,
@@ -121,6 +127,10 @@ export const SETTING_CURRENT_DATA: Record<SettingKey, SettingCurrentData> = {
   scrollInsideContentArea: {
     isUnlocked: true,
     isOn: SETTING_DATA[SETTING_KEYS.scrollInsideContentArea].isOnByDefault,
+  },
+  saveOnPageReload: {
+    isUnlocked: true,
+    isOn: SETTING_DATA[SETTING_KEYS.saveOnPageReload].isOnByDefault,
   },
   freeUnlocks: {
     isUnlocked: true,

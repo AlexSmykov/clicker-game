@@ -3,6 +3,8 @@
     <app-danger-button label="Reset progress" (action)="resetProgress()" />
 
     <button (click)="resetSettings()">Reset settings</button>
+
+    <button (click)="saveProgress()">Manual save</button>
   </div>
 
   @for (settingGroup of settingsGroups(); track settingGroup.key) {

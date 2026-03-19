@@ -70,4 +70,11 @@ export default class SettingsComponent {
   resetSettings(): void {
     this.#settingService.resetCurrentData();
   }
+
+  saveProgress(): void {
+    this.#resourceService.saveToLocalStorage();
+    this.#paramService.saveToLocalStorage();
+    this.#upgradeService.saveToLocalStorage();
+    this.#unlockService.saveToLocalStorage();
+  }
 }

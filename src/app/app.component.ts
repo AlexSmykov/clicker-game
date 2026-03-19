@@ -5,6 +5,7 @@ import { UpgradeService } from 'src/app/features/upgrade/upgrade.service';
 import { ParamService } from 'src/app/features/param/param.service';
 import { UnlockService } from 'src/app/features/unlock/unlock.service';
 import { SettingService } from 'src/app/features/setting/setting.service';
+import { SETTING_KEYS } from 'src/app/features/setting/setting.const';
 
 @Component({
   selector: 'app-root',
@@ -25,10 +26,13 @@ export class AppComponent implements OnDestroy {
   readonly #settingService = inject(SettingService);
 
   ngOnDestroy(): void {
-    this.#resourceService.saveToLocalStorage();
-    this.#paramService.saveToLocalStorage();
-    this.#upgradeService.saveToLocalStorage();
-    this.#unlockService.saveToLocalStorage();
+    if (this.#settingService.settingCurrentData()[SETTING_KEYS.saveOnPageReload].isOn) {
+      this.#resourceService.saveToLocalStorage();
+      this.#paramService.saveToLocalStorage();
+      this.#upgradeService.saveToLocalStorage();
+      this.#unlockService.saveToLocalStorage();
+    }
+
     this.#settingService.saveToLocalStorage();
   }
 }
