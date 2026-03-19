@@ -7,7 +7,7 @@
     <app-params />
   }
 
-  <div class="main-content">
+  <div class="main-content" [class.scrollable]="isContentAreaScrollInside()">
     <app-tabs [items]="mainRouteTabs()" />
 
     <router-outlet />

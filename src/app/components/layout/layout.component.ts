@@ -27,6 +27,10 @@ export default class LayoutComponent {
     () => this.#settingsService.settingCurrentData()[SETTING_KEYS.showParametersWidget].isOn,
   );
 
+  readonly isContentAreaScrollInside = computed(
+    () => this.#settingsService.settingCurrentData()[SETTING_KEYS.scrollInsideContentArea].isOn,
+  );
+
   readonly mainRouteTabs = computed(() => {
     const unlocksCurrentData = this.#unlockService.unlocksCurrentData();
 
