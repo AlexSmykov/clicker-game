@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 import { SvgIconComponent } from 'angular-svg-icon';
 
 @Component({
@@ -11,5 +11,5 @@ import { SvgIconComponent } from 'angular-svg-icon';
 export class CollapseComponent {
   readonly label = input<string>('');
 
-  readonly isExpanded = signal(true);
+  readonly isExpanded = model(true);
 }

@@ -1,15 +1,28 @@
 @let upgradeData = data();
 
 <div
-  class="upgrade"
+  class="upgrade mobile-hidden"
   [class.buyable]="isCanBuy()"
   [class.clickable]="isCanBuy()"
   [class.resetless]="!upgradeData.isResetOnPrestige"
   (mousedown)="onMouseDown()"
-  (touchstart)="onMouseDown()"
   (mouseup)="onMouseUp()"
-  (touchend)="onMouseDown()"
 >
+  <ng-container *ngTemplateOutlet="content"></ng-container>
+</div>
+
+<div
+  class="upgrade mobile-show"
+  [class.buyable]="isCanBuy()"
+  [class.clickable]="isCanBuy()"
+  [class.resetless]="!upgradeData.isResetOnPrestige"
+  (touchstart)="onMouseDown()"
+  (touchend)="onMouseUp()"
+>
+  <ng-container *ngTemplateOutlet="content"></ng-container>
+</div>
+
+<ng-template #content>
   <p class="name">
     {{ upgradeData.name }}
 
@@ -30,4 +43,4 @@
       <app-resource [data]="cost" [isShort]="true" />
     }
   </div>
-</div>
+</ng-template>

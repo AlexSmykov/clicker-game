@@ -17,6 +17,7 @@ import { UpgradeEffectComponent } from 'src/app/features/upgrade/components/effe
 import { SettingService } from 'src/app/features/setting/setting.service';
 import { SETTING_KEYS } from 'src/app/features/setting/setting.const';
 import { Subscription, timer } from 'rxjs';
+import { NgTemplateOutlet } from '@angular/common';
 
 const BASE_BUY_COOLDOWN_MS = 250;
 const FAST_BUY_COOLDOWN_MS = 150;
@@ -32,7 +33,7 @@ const FAST_BUY_COOLDOWN_MIN_MS = 10;
   templateUrl: './upgrade.component.html',
   styleUrl: './upgrade.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ResourceComponent, UpgradeEffectComponent],
+  imports: [ResourceComponent, UpgradeEffectComponent, NgTemplateOutlet],
 })
 export class UpgradeComponent {
   readonly data = input.required<UpgradeData>();

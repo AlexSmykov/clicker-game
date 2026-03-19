@@ -30,12 +30,12 @@
   }
 
   .value {
-    width: 100px;
+    width: 90px;
 
     color: inherit;
 
     @include mobile {
-      width: 80px;
+      width: 70px;
       font: var(--font-additional);
     }
   }
