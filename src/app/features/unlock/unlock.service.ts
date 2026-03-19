@@ -35,7 +35,10 @@ export class UnlockService {
     }
 
     try {
-      this.unlocksCurrentData.set(JSON.parse(value) as Record<UnlockKey, UnlockCurrentData>);
+      this.unlocksCurrentData.set({
+        ...copy(UNLOCK_CURRENT_DATA),
+        ...(JSON.parse(value) as Record<UnlockKey, UnlockCurrentData>),
+      });
     } catch {
       console.error('Error while loading unlocks data from local storage');
     }

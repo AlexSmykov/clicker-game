@@ -64,11 +64,12 @@ export class ResourceService {
     }
 
     try {
-      this.resourcesCurrentData.set(
-        parseObjectWithExponentNumber(
+      this.resourcesCurrentData.set({
+        ...copy(RESOURCE_CURRENT_VALUES),
+        ...parseObjectWithExponentNumber(
           JSON.parse(value) as Record<ResourceKey, ResourceCurrentData>,
         ),
-      );
+      });
     } catch {
       console.error('Error while loading resources data from local storage');
     }

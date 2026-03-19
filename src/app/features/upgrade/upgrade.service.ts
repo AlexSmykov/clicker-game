@@ -132,9 +132,12 @@ export class UpgradeService {
     }
 
     try {
-      this.upgradeCurrentDataMap.set(
-        parseObjectWithExponentNumber(JSON.parse(value) as Record<UpgradeKey, UpgradeCurrentData>),
-      );
+      this.upgradeCurrentDataMap.set({
+        ...copy(UPGRADE_CURRENT_DATA),
+        ...parseObjectWithExponentNumber(
+          JSON.parse(value) as Record<UpgradeKey, UpgradeCurrentData>,
+        ),
+      });
     } catch {
       console.error('Error while loading upgrades data from local storage');
     }

@@ -58,9 +58,10 @@ export class ParamService {
     }
 
     try {
-      this.paramsCurrentData.set(
-        parseObjectWithExponentNumber(JSON.parse(value) as Record<ParamKey, ParamCurrentData>),
-      );
+      this.paramsCurrentData.set({
+        ...copy(PARAM_CURRENT_VALUE),
+        ...parseObjectWithExponentNumber(JSON.parse(value) as Record<ParamKey, ParamCurrentData>),
+      });
     } catch {
       console.error('Error while loading parameters data from local storage');
     }
