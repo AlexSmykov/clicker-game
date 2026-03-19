@@ -10,6 +10,7 @@ export const SETTING_KEYS = {
   showParametersWidget: 'showParametersWidget',
   buyUpgradesByHold: 'buyUpgradesByHold',
   fastBuyUpgradesByHold: 'fastBuyUpgradesByHold',
+  scrollInsideContentArea: 'scrollInsideContentArea',
   freeUnlocks: 'freeUnlocks',
   freeUpgrades: 'freeUpgrades',
   unlockedUpgradesAutomatization: 'unlockedUpgradesAutomatization',
@@ -36,6 +37,10 @@ export const SETTING_DATA: Record<SettingKey, SettingData> = {
   },
   fastBuyUpgradesByHold: {
     name: 'Fast buy upgrades by hold',
+    isOnByDefault: false,
+  },
+  scrollInsideContentArea: {
+    name: 'Scroll inside content area',
     isOnByDefault: false,
   },
   freeUnlocks: {
@@ -77,6 +82,7 @@ export const SETTING_GROUP_MAP: Record<SettingGroupKey, SettingKey[]> = {
     SETTING_KEYS.showParametersWidget,
     SETTING_KEYS.buyUpgradesByHold,
     SETTING_KEYS.fastBuyUpgradesByHold,
+    SETTING_KEYS.scrollInsideContentArea,
   ],
   dev: [
     SETTING_KEYS.freeUnlocks,
@@ -111,6 +117,10 @@ export const SETTING_CURRENT_DATA: Record<SettingKey, SettingCurrentData> = {
   fastBuyUpgradesByHold: {
     isUnlocked: true,
     isOn: SETTING_DATA[SETTING_KEYS.fastBuyUpgradesByHold].isOnByDefault,
+  },
+  scrollInsideContentArea: {
+    isUnlocked: true,
+    isOn: SETTING_DATA[SETTING_KEYS.scrollInsideContentArea].isOnByDefault,
   },
   freeUnlocks: {
     isUnlocked: true,
