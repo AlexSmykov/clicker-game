@@ -26,11 +26,13 @@ export const PARAM_KEYS = {
   prestigeLogPower: 'prestigeLogPower',
   rubyShardsLogBase: 'rubyShardsLogBase',
   rubyShardsLogPower: 'rubyShardsLogPower',
-  rubyShardsMoneyMultiplier: 'rubyShardsMoneyMultiplier',
   crystalChanceRootBaseForCrystals: 'crystalChanceRootBaseForCrystals',
   rubyChanceRootBaseForRubies: 'rubyChanceRootBaseForRubies',
   bonusMoneyMultiplier: 'bonusMoneyMultiplier',
   rubyChance: 'rubyChance',
+  rubyShardsMoneyMultiplier: 'rubyShardsMoneyMultiplier',
+  rubyShardsMoneyPower: 'rubyShardsMoneyPower',
+  rubyShardsCrystalChance: 'rubyShardsCrystalChance',
   rubyPrestigeChance: 'rubyPrestigeChance',
   rubyBonusChance: 'rubyBonusChance',
 } as const;
@@ -244,14 +246,6 @@ export const PARAM_DATA: Record<ParamKey, ParamData> = {
     isResetOnPrestige: true,
     isWithOne: true,
   },
-  [PARAM_KEYS.rubyShardsMoneyMultiplier]: {
-    name: 'Ruby shards money multiplier',
-    defaultValue: new ExponentNumber(0, 1),
-    prefix: 'x',
-    isPercent: false,
-    isResetOnPrestige: true,
-    isWithOne: false,
-  },
   [PARAM_KEYS.bonusMoneyMultiplier]: {
     name: 'Bonus money multiplier',
     defaultValue: new ExponentNumber(0, 1),
@@ -268,8 +262,24 @@ export const PARAM_DATA: Record<ParamKey, ParamData> = {
     isResetOnPrestige: true,
     isWithOne: false,
   },
-  [PARAM_KEYS.rubyPrestigeChance]: {
-    name: 'Ruby prestige chance',
+  [PARAM_KEYS.rubyShardsMoneyMultiplier]: {
+    name: 'Ruby shards money multiplier',
+    defaultValue: new ExponentNumber(0, 1),
+    prefix: 'x',
+    isPercent: false,
+    isResetOnPrestige: true,
+    isWithOne: false,
+  },
+  [PARAM_KEYS.rubyShardsMoneyPower]: {
+    name: 'Ruby shards money power',
+    defaultValue: new ExponentNumber(0, 0),
+    prefix: '^',
+    isPercent: false,
+    isResetOnPrestige: true,
+    isWithOne: false,
+  },
+  [PARAM_KEYS.rubyShardsCrystalChance]: {
+    name: 'Ruby shards crystal chance',
     defaultValue: new ExponentNumber(0, 0),
     prefix: '+',
     isPercent: true,
@@ -278,6 +288,14 @@ export const PARAM_DATA: Record<ParamKey, ParamData> = {
   },
   [PARAM_KEYS.rubyBonusChance]: {
     name: 'Ruby bonus chance',
+    defaultValue: new ExponentNumber(0, 0),
+    prefix: '+',
+    isPercent: true,
+    isResetOnPrestige: false,
+    isWithOne: false,
+  },
+  [PARAM_KEYS.rubyPrestigeChance]: {
+    name: 'Ruby prestige chance',
     defaultValue: new ExponentNumber(0, 0),
     prefix: '+',
     isPercent: true,
@@ -363,19 +381,25 @@ export const PARAM_CURRENT_VALUE: Record<ParamKey, ParamCurrentData> = {
   [PARAM_KEYS.rubyChanceRootBaseForRubies]: {
     value: PARAM_DATA[PARAM_KEYS.rubyChanceRootBaseForRubies].defaultValue.copy(),
   },
-  [PARAM_KEYS.rubyShardsMoneyMultiplier]: {
-    value: PARAM_DATA[PARAM_KEYS.rubyShardsMoneyMultiplier].defaultValue.copy(),
-  },
   [PARAM_KEYS.bonusMoneyMultiplier]: {
     value: PARAM_DATA[PARAM_KEYS.bonusMoneyMultiplier].defaultValue.copy(),
   },
   [PARAM_KEYS.rubyChance]: {
     value: PARAM_DATA[PARAM_KEYS.rubyChance].defaultValue.copy(),
   },
-  [PARAM_KEYS.rubyPrestigeChance]: {
-    value: PARAM_DATA[PARAM_KEYS.rubyPrestigeChance].defaultValue.copy(),
+  [PARAM_KEYS.rubyShardsMoneyMultiplier]: {
+    value: PARAM_DATA[PARAM_KEYS.rubyShardsMoneyMultiplier].defaultValue.copy(),
+  },
+  [PARAM_KEYS.rubyShardsMoneyPower]: {
+    value: PARAM_DATA[PARAM_KEYS.rubyShardsMoneyPower].defaultValue.copy(),
+  },
+  [PARAM_KEYS.rubyShardsCrystalChance]: {
+    value: PARAM_DATA[PARAM_KEYS.rubyShardsCrystalChance].defaultValue.copy(),
   },
   [PARAM_KEYS.rubyBonusChance]: {
     value: PARAM_DATA[PARAM_KEYS.rubyBonusChance].defaultValue.copy(),
+  },
+  [PARAM_KEYS.rubyPrestigeChance]: {
+    value: PARAM_DATA[PARAM_KEYS.rubyPrestigeChance].defaultValue.copy(),
   },
 };

@@ -6,7 +6,9 @@
   [class.clickable]="isCanBuy()"
   [class.resetless]="!upgradeData.isResetOnPrestige"
   (mousedown)="onMouseDown()"
+  (touchstart)="onMouseDown()"
   (mouseup)="onMouseUp()"
+  (touchend)="onMouseDown()"
 >
   <p class="name">
     {{ upgradeData.name }}

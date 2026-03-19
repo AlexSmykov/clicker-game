@@ -12,6 +12,7 @@ export const UNLOCK_ICON_DIR_PATH = 'assets/icons/unlocks/';
 export const UNLOCK_KEYS = {
   baseUnlock: 'baseUnlock',
   prestige: 'prestige',
+  headStart: 'headStart',
   crystalShards: 'crystalShards',
   crystals: 'crystals',
   rubyShards: 'rubyShards',
@@ -63,6 +64,35 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
       },
     ],
     effect: () => {},
+  },
+  [UNLOCK_KEYS.headStart]: {
+    name: 'Head start',
+    description: 'Recommended buy after first prestige',
+    iconPath: `head-start.svg`,
+    position: {
+      x: -2,
+      y: 2,
+    },
+    requiredUnlocks: [UNLOCK_KEYS.prestige],
+    costs: [
+      {
+        resourceKey: RESOURCE_KEYS.prestigePoints,
+        value: new ExponentNumber(1, 10),
+      },
+    ],
+    effect: (_: UpgradeService, paramService: ParamService) => {
+      paramService.updateParam(PARAM_KEYS.bonusCrystalChance, {
+        value: paramService
+          .paramsCurrentData()
+          [PARAM_KEYS.bonusCrystalChance].value.plus(new ExponentNumber(0, 100000)),
+      });
+
+      paramService.updateParam(PARAM_KEYS.bonusMoneyMultiplier, {
+        value: paramService
+          .paramsCurrentData()
+          [PARAM_KEYS.bonusCrystalChance].value.multiply(new ExponentNumber(0, 5)),
+      });
+    },
   },
   [UNLOCK_KEYS.crystalShards]: {
     name: 'Crystal shards',
@@ -152,11 +182,19 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
         isUnlocked: true,
       });
 
-      upgradeService.updateUpgrade(UPGRADE_KEYS.rubyShardMoneyMultiplier, {
+      upgradeService.updateUpgrade(UPGRADE_KEYS.rubyChance, {
         isUnlocked: true,
       });
 
-      upgradeService.updateUpgrade(UPGRADE_KEYS.rubyChance, {
+      upgradeService.updateUpgrade(UPGRADE_KEYS.rubyShardsMoneyMultiplier, {
+        isUnlocked: true,
+      });
+
+      upgradeService.updateUpgrade(UPGRADE_KEYS.rubyShardsMoneyPower, {
+        isUnlocked: true,
+      });
+
+      upgradeService.updateUpgrade(UPGRADE_KEYS.rubyShardsCrystalChance, {
         isUnlocked: true,
       });
 
@@ -207,42 +245,15 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
     ],
     effect: () => {},
   },
-  [UNLOCK_KEYS.bonusCrystalChance]: {
-    name: 'Lucky crystal',
-    description: 'Some crystal chance for you',
-    iconPath: `crystals.svg`,
-    position: {
-      x: 2,
-      y: 2,
-    },
-    requiredUnlocks: [UNLOCK_KEYS.crystalShards],
-    costs: [
-      {
-        resourceKey: RESOURCE_KEYS.crystalShards,
-        value: new ExponentNumber(0, 25),
-      },
-      {
-        resourceKey: RESOURCE_KEYS.money,
-        value: new ExponentNumber(1, 6),
-      },
-    ],
-    effect: (_: UpgradeService, paramService: ParamService) => {
-      paramService.updateParam(PARAM_KEYS.bonusCrystalChance, {
-        value: paramService
-          .paramsCurrentData()
-          [PARAM_KEYS.bonusCrystalChance].value.plus(new ExponentNumber(0, 50000)),
-      });
-    },
-  },
   [UNLOCK_KEYS.moneyCrystalChance]: {
     name: 'Money crystallization',
     description: 'You can spend your money to gain more crystals',
     iconPath: `money-crystal.svg`,
     position: {
-      x: 3,
-      y: 3,
+      x: 2,
+      y: 2,
     },
-    requiredUnlocks: [UNLOCK_KEYS.bonusCrystalChance],
+    requiredUnlocks: [UNLOCK_KEYS.crystalShards],
     costs: [
       {
         resourceKey: RESOURCE_KEYS.crystalShards,
@@ -255,6 +266,29 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
     ],
     effect: (upgradeService: UpgradeService) => {
       upgradeService.updateUpgrade(UPGRADE_KEYS.moneyCrystalChance, { isUnlocked: true });
+    },
+  },
+  [UNLOCK_KEYS.bonusCrystalChance]: {
+    name: 'Lucky crystal',
+    description: 'Some crystal chance for you',
+    iconPath: `crystals.svg`,
+    position: {
+      x: 3,
+      y: 3,
+    },
+    requiredUnlocks: [UNLOCK_KEYS.moneyCrystalChance],
+    costs: [
+      {
+        resourceKey: RESOURCE_KEYS.crystalShards,
+        value: new ExponentNumber(0, 1000),
+      },
+    ],
+    effect: (_: UpgradeService, paramService: ParamService) => {
+      paramService.updateParam(PARAM_KEYS.bonusCrystalChance, {
+        value: paramService
+          .paramsCurrentData()
+          [PARAM_KEYS.bonusCrystalChance].value.plus(new ExponentNumber(0, 150000)),
+      });
     },
   },
   [UNLOCK_KEYS.logarithms]: {
@@ -470,6 +504,9 @@ export const UNLOCK_CURRENT_DATA: Record<UnlockKey, UnlockCurrentData> = {
     isUnlocked: false,
   },
   [UNLOCK_KEYS.prestige]: {
+    isUnlocked: false,
+  },
+  [UNLOCK_KEYS.headStart]: {
     isUnlocked: false,
   },
   [UNLOCK_KEYS.crystalShards]: {
