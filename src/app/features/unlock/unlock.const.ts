@@ -77,7 +77,7 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
     costs: [
       {
         resourceKey: RESOURCE_KEYS.prestigePoints,
-        value: new ExponentNumber(1, 10),
+        value: new ExponentNumber(0, 10),
       },
     ],
     effect: (_: UpgradeService, paramService: ParamService) => {
