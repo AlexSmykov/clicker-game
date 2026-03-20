@@ -123,11 +123,13 @@ export class ClickAreaComponent {
 
     const value = new ExponentNumber(0, 1)
       .multiply(paramsCurrentData[PARAM_KEYS.simpleMoneyMultiplier].value)
+      .multiply(paramsCurrentData[PARAM_KEYS.bonusMoneyMultiplier].value)
       .multiply(paramsCurrentData[PARAM_KEYS.crystalShardsMoneyMultiplier].value)
       .multiply(paramsCurrentData[PARAM_KEYS.rubyShardsMoneyMultiplier].value)
       .power(
         new ExponentNumber(0, 1)
           .plus(paramsCurrentData[PARAM_KEYS.simpleMoneyPower].value)
+          .plus(paramsCurrentData[PARAM_KEYS.rubyShardsMoneyPower].value)
           .plus(paramsCurrentData[PARAM_KEYS.prestigeMoneyPower].value),
       );
 
@@ -141,7 +143,7 @@ export class ClickAreaComponent {
           .log(
             paramsCurrentData[PARAM_KEYS.moneyLogBase].value.copy().plus(new ExponentNumber(0, 1)),
           )
-          .power(paramsCurrentData[PARAM_KEYS.moneyLogPower].value),
+          .power(paramsCurrentData[PARAM_KEYS.moneyLogPower].value.copy()),
       );
     }
 
@@ -159,7 +161,7 @@ export class ClickAreaComponent {
               .copy()
               .plus(new ExponentNumber(0, 1)),
           )
-          .power(paramsCurrentData[PARAM_KEYS.crystalShardsLogPower].value),
+          .power(paramsCurrentData[PARAM_KEYS.crystalShardsLogPower].value.copy()),
       );
     }
 
@@ -177,7 +179,7 @@ export class ClickAreaComponent {
               .copy()
               .plus(new ExponentNumber(0, 1)),
           )
-          .power(paramsCurrentData[PARAM_KEYS.prestigeLogPower].value),
+          .power(paramsCurrentData[PARAM_KEYS.prestigeLogPower].value.copy()),
       );
     }
 
@@ -195,7 +197,7 @@ export class ClickAreaComponent {
               .copy()
               .plus(new ExponentNumber(0, 1)),
           )
-          .power(paramsCurrentData[PARAM_KEYS.rubyShardsLogPower].value),
+          .power(paramsCurrentData[PARAM_KEYS.rubyShardsLogPower].value.copy()),
       );
     }
 
@@ -207,9 +209,10 @@ export class ClickAreaComponent {
 
     return paramsCurrentData[PARAM_KEYS.baseCrystalChance].value
       .copy()
-      .plus(paramsCurrentData[PARAM_KEYS.crystalChance].value)
-      .plus(paramsCurrentData[PARAM_KEYS.moneyCrystalChance].value)
-      .plus(paramsCurrentData[PARAM_KEYS.bonusCrystalChance].value);
+      .plus(paramsCurrentData[PARAM_KEYS.crystalChance].value.copy())
+      .plus(paramsCurrentData[PARAM_KEYS.moneyCrystalChance].value.copy())
+      .plus(paramsCurrentData[PARAM_KEYS.bonusCrystalChance].value.copy())
+      .plus(paramsCurrentData[PARAM_KEYS.rubyShardsCrystalChance].value.copy());
   }
 
   getRubyChance(): ExponentNumber {
@@ -218,6 +221,7 @@ export class ClickAreaComponent {
     return paramsCurrentData[PARAM_KEYS.baseRubyChance].value
       .copy()
       .plus(paramsCurrentData[PARAM_KEYS.rubyChance].value.copy())
+      .plus(paramsCurrentData[PARAM_KEYS.baseRubyChance].value.copy())
       .plus(paramsCurrentData[PARAM_KEYS.rubyPrestigeChance].value.copy());
   }
 }

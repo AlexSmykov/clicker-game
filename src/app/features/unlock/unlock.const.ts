@@ -90,7 +90,7 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
       paramService.updateParam(PARAM_KEYS.bonusMoneyMultiplier, {
         value: paramService
           .paramsCurrentData()
-          [PARAM_KEYS.bonusCrystalChance].value.multiply(new ExponentNumber(0, 5)),
+          [PARAM_KEYS.bonusMoneyMultiplier].value.multiply(new ExponentNumber(0, 5)),
       });
     },
   },
