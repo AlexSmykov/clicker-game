@@ -199,7 +199,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         paramKey: PARAM_KEYS.crystalShardsMoneyMultiplier,
         change: {
           changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
-          value: new ExponentNumber(0, 1.75),
+          value: new ExponentNumber(0, 2),
         },
       },
     ],
@@ -907,7 +907,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         paramKey: PARAM_KEYS.rubyShardsMoneyMultiplier,
         change: {
           changeType: SIMPLE_VALUE_CHANGE_KEYS.multiply,
-          value: new ExponentNumber(0, 2.5),
+          value: new ExponentNumber(0, 5),
         },
       },
     ],
@@ -936,7 +936,7 @@ export const UPGRADE_DATA: Record<UpgradeKey, UpgradeData> = {
         paramKey: PARAM_KEYS.rubyShardsMoneyPower,
         change: {
           changeType: SIMPLE_VALUE_CHANGE_KEYS.plus,
-          value: new ExponentNumber(0, 0.01),
+          value: new ExponentNumber(0, 0.02),
         },
       },
     ],

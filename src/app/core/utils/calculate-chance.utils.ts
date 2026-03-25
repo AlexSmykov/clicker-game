@@ -1,24 +1,12 @@
 import { ExponentNumber } from 'exponential-number';
-import { PERCENT_BORDER, PERCENT_DIVIDER } from 'src/app/core/consts/percent.const';
+import { PERCENT_BORDER } from 'src/app/core/consts/percent.const';
 
 export function calculateChance(chance: ExponentNumber): ExponentNumber {
-  if (!chance.isGreaterThanValue(PERCENT_DIVIDER)) {
-    if (Math.random() * PERCENT_BORDER < chance.value) {
-      return new ExponentNumber(0, 1);
-    }
+  const partedPercent = chance.value % PERCENT_BORDER;
 
-    return new ExponentNumber(0, 0);
-  }
-
-  const fullPercent = chance.divide(PERCENT_DIVIDER);
-
-  if (fullPercent.exponentFactor === 0) {
-    fullPercent.value = Math.floor(fullPercent.value);
-
-    if (Math.random() * PERCENT_BORDER < chance.value) {
-      return fullPercent.plus(new ExponentNumber(0, 1));
-    }
-  }
-
-  return fullPercent;
+  return new ExponentNumber(
+    0,
+    (chance.value - partedPercent) / PERCENT_BORDER +
+      (Math.random() * PERCENT_BORDER < partedPercent ? 1 : 0),
+  );
 }
