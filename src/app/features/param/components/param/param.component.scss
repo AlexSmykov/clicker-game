@@ -2,8 +2,10 @@
   display: inline;
 
   font: var(--font-additional);
+  color: var(--color-text-primary);
 
-  > * {
+  span {
     font: inherit;
+    color: inherit;
   }
 }

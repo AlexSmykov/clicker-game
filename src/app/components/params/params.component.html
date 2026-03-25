@@ -2,7 +2,9 @@
   <div class="list">
     @for (param of paramList(); track param.key) {
       <div class="param">
-        <p class="param-name">{{ paramData[param.key].name }}:</p>
+        <p class="param-name" [class.resetless]="!paramData[param.key].isResetOnPrestige">
+          {{ paramData[param.key].name }}:
+        </p>
 
         <app-param [data]="param" />
       </div>
