@@ -26,11 +26,11 @@ export class ParamComponent {
     let value = data.value;
 
     if (this.isPercent()) {
-      value = data.value.copy().divide(HUNDRED_PERCENT_DIVIDER);
+      value = data.value.divide(HUNDRED_PERCENT_DIVIDER);
     }
 
     if (this.resourceData[data.key].isWithOne) {
-      value = data.value.copy().plus(new ExponentNumber(0, 1));
+      value = data.value.plus(new ExponentNumber(0, 1));
     }
 
     return value;

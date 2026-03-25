@@ -99,7 +99,7 @@ export class UpgradeComponent {
         paramKey: effect.paramKey,
         oldValue: paramsCurrentData[effect.paramKey].value,
         newValue: changeParamValue(
-          paramsCurrentData[effect.paramKey].value.copy(),
+          paramsCurrentData[effect.paramKey].value,
           effect.change,
           paramsCurrentData,
         ),

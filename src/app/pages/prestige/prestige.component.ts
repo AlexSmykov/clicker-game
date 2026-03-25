@@ -31,9 +31,9 @@ export default class PrestigeComponent {
 
     return {
       key: RESOURCE_KEYS.prestigePoints,
-      value: resourcesCurrentData[RESOURCE_KEYS.money].value
-        .copy()
-        .log(paramsCurrentData[PARAM_KEYS.prestigePointsCoefficient].value),
+      value: resourcesCurrentData[RESOURCE_KEYS.money].value.log(
+        paramsCurrentData[PARAM_KEYS.prestigePointsCoefficient].value,
+      ),
     };
   });
 
@@ -70,14 +70,13 @@ export default class PrestigeComponent {
       isUnlocked: true,
       value: this.#resourceService
         .resourcesCurrentData()
-        [RESOURCE_KEYS.prestigePoints].value.copy()
-        .plus(this.prestigePointsGain().value),
+        [RESOURCE_KEYS.prestigePoints].value.plus(this.prestigePointsGain().value),
     });
 
     this.#paramService.updateParam(PARAM_KEYS.prestigeBorder, {
-      value: paramsCurrentData[PARAM_KEYS.prestigeBorder].value
-        .copy()
-        .power(paramsCurrentData[PARAM_KEYS.prestigeBorderGrowth].value),
+      value: paramsCurrentData[PARAM_KEYS.prestigeBorder].value.power(
+        paramsCurrentData[PARAM_KEYS.prestigeBorderGrowth].value,
+      ),
     });
 
     this.#upgradeService.updateUpgrade(UPGRADE_KEYS.prestigeMoneyPower, {

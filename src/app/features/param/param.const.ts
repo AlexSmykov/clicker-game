@@ -306,100 +306,100 @@ export const PARAM_DATA: Record<ParamKey, ParamData> = {
 
 export const PARAM_CURRENT_VALUE: Record<ParamKey, ParamCurrentData> = {
   [PARAM_KEYS.simpleMoneyMultiplier]: {
-    value: PARAM_DATA[PARAM_KEYS.simpleMoneyMultiplier].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.simpleMoneyMultiplier].defaultValue,
   },
   [PARAM_KEYS.simpleMoneyMultiplierIncrement]: {
-    value: PARAM_DATA[PARAM_KEYS.simpleMoneyMultiplierIncrement].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.simpleMoneyMultiplierIncrement].defaultValue,
   },
   [PARAM_KEYS.crystalShardsMoneyMultiplier]: {
-    value: PARAM_DATA[PARAM_KEYS.crystalShardsMoneyMultiplier].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.crystalShardsMoneyMultiplier].defaultValue,
   },
   [PARAM_KEYS.simpleMoneyPower]: {
-    value: PARAM_DATA[PARAM_KEYS.simpleMoneyPower].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.simpleMoneyPower].defaultValue,
   },
   [PARAM_KEYS.baseCrystalChance]: {
-    value: PARAM_DATA[PARAM_KEYS.baseCrystalChance].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.baseCrystalChance].defaultValue,
   },
   [PARAM_KEYS.bonusCrystalChance]: {
-    value: PARAM_DATA[PARAM_KEYS.bonusCrystalChance].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.bonusCrystalChance].defaultValue,
   },
   [PARAM_KEYS.moneyCrystalChance]: {
-    value: PARAM_DATA[PARAM_KEYS.moneyCrystalChance].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.moneyCrystalChance].defaultValue,
   },
-  [PARAM_KEYS.crystalChance]: { value: PARAM_DATA[PARAM_KEYS.crystalChance].defaultValue.copy() },
+  [PARAM_KEYS.crystalChance]: { value: PARAM_DATA[PARAM_KEYS.crystalChance].defaultValue },
   [PARAM_KEYS.prestigePointsCoefficient]: {
-    value: PARAM_DATA[PARAM_KEYS.prestigePointsCoefficient].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.prestigePointsCoefficient].defaultValue,
   },
   [PARAM_KEYS.prestigeBorder]: {
-    value: PARAM_DATA[PARAM_KEYS.prestigeBorder].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.prestigeBorder].defaultValue,
   },
   [PARAM_KEYS.prestigeBorderGrowth]: {
-    value: PARAM_DATA[PARAM_KEYS.prestigeBorderGrowth].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.prestigeBorderGrowth].defaultValue,
   },
   [PARAM_KEYS.prestigeMoneyPower]: {
-    value: PARAM_DATA[PARAM_KEYS.prestigeMoneyPower].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.prestigeMoneyPower].defaultValue,
   },
   [PARAM_KEYS.prestigeCrystalChance]: {
-    value: PARAM_DATA[PARAM_KEYS.prestigeCrystalChance].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.prestigeCrystalChance].defaultValue,
   },
   [PARAM_KEYS.prestigeCrystalShardsMultiplier]: {
-    value: PARAM_DATA[PARAM_KEYS.prestigeCrystalShardsMultiplier].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.prestigeCrystalShardsMultiplier].defaultValue,
   },
   [PARAM_KEYS.baseRubyChance]: {
-    value: PARAM_DATA[PARAM_KEYS.baseRubyChance].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.baseRubyChance].defaultValue,
   },
   [PARAM_KEYS.bonusPrestigePointsMultiplier]: {
-    value: PARAM_DATA[PARAM_KEYS.bonusPrestigePointsMultiplier].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.bonusPrestigePointsMultiplier].defaultValue,
   },
   [PARAM_KEYS.moneyLogBase]: {
-    value: PARAM_DATA[PARAM_KEYS.moneyLogBase].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.moneyLogBase].defaultValue,
   },
   [PARAM_KEYS.moneyLogPower]: {
-    value: PARAM_DATA[PARAM_KEYS.moneyLogPower].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.moneyLogPower].defaultValue,
   },
   [PARAM_KEYS.crystalShardsLogBase]: {
-    value: PARAM_DATA[PARAM_KEYS.crystalShardsLogBase].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.crystalShardsLogBase].defaultValue,
   },
   [PARAM_KEYS.crystalShardsLogPower]: {
-    value: PARAM_DATA[PARAM_KEYS.crystalShardsLogPower].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.crystalShardsLogPower].defaultValue,
   },
   [PARAM_KEYS.prestigeLogBase]: {
-    value: PARAM_DATA[PARAM_KEYS.prestigeLogBase].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.prestigeLogBase].defaultValue,
   },
   [PARAM_KEYS.prestigeLogPower]: {
-    value: PARAM_DATA[PARAM_KEYS.prestigeLogPower].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.prestigeLogPower].defaultValue,
   },
   [PARAM_KEYS.rubyShardsLogBase]: {
-    value: PARAM_DATA[PARAM_KEYS.rubyShardsLogBase].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.rubyShardsLogBase].defaultValue,
   },
   [PARAM_KEYS.rubyShardsLogPower]: {
-    value: PARAM_DATA[PARAM_KEYS.rubyShardsLogPower].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.rubyShardsLogPower].defaultValue,
   },
   [PARAM_KEYS.crystalChanceRootBaseForCrystals]: {
-    value: PARAM_DATA[PARAM_KEYS.crystalChanceRootBaseForCrystals].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.crystalChanceRootBaseForCrystals].defaultValue,
   },
   [PARAM_KEYS.rubyChanceRootBaseForRubies]: {
-    value: PARAM_DATA[PARAM_KEYS.rubyChanceRootBaseForRubies].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.rubyChanceRootBaseForRubies].defaultValue,
   },
   [PARAM_KEYS.bonusMoneyMultiplier]: {
-    value: PARAM_DATA[PARAM_KEYS.bonusMoneyMultiplier].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.bonusMoneyMultiplier].defaultValue,
   },
   [PARAM_KEYS.rubyChance]: {
-    value: PARAM_DATA[PARAM_KEYS.rubyChance].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.rubyChance].defaultValue,
   },
   [PARAM_KEYS.rubyShardsMoneyMultiplier]: {
-    value: PARAM_DATA[PARAM_KEYS.rubyShardsMoneyMultiplier].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.rubyShardsMoneyMultiplier].defaultValue,
   },
   [PARAM_KEYS.rubyShardsMoneyPower]: {
-    value: PARAM_DATA[PARAM_KEYS.rubyShardsMoneyPower].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.rubyShardsMoneyPower].defaultValue,
   },
   [PARAM_KEYS.rubyShardsCrystalChance]: {
-    value: PARAM_DATA[PARAM_KEYS.rubyShardsCrystalChance].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.rubyShardsCrystalChance].defaultValue,
   },
   [PARAM_KEYS.rubyBonusChance]: {
-    value: PARAM_DATA[PARAM_KEYS.rubyBonusChance].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.rubyBonusChance].defaultValue,
   },
   [PARAM_KEYS.rubyPrestigeChance]: {
-    value: PARAM_DATA[PARAM_KEYS.rubyPrestigeChance].defaultValue.copy(),
+    value: PARAM_DATA[PARAM_KEYS.rubyPrestigeChance].defaultValue,
   },
 };

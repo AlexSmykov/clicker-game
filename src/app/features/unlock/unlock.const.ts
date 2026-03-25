@@ -472,8 +472,7 @@ export const UNLOCK_DATA: Record<UnlockKey, UnlockData> = {
       paramService.updateParam(PARAM_KEYS.rubyBonusChance, {
         value: paramService
           .paramsCurrentData()
-          [PARAM_KEYS.rubyBonusChance].value.copy()
-          .plus(new ExponentNumber(0, 5000)),
+          [PARAM_KEYS.rubyBonusChance].value.plus(new ExponentNumber(0, 5000)),
       });
     },
   },

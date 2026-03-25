@@ -40,9 +40,7 @@ export class ParamService {
           return [
             key,
             {
-              value: paramData.isResetOnPrestige
-                ? paramData.defaultValue.copy()
-                : currentParamData.value,
+              value: paramData.isResetOnPrestige ? paramData.defaultValue : currentParamData.value,
             },
           ];
         }),
