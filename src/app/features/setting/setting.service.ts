@@ -37,7 +37,11 @@ export class SettingService {
     try {
       this.settingCurrentData.set({
         ...copy(SETTING_CURRENT_DATA),
-        ...(JSON.parse(value) as Record<SettingKey, SettingCurrentData>),
+        ...Object.fromEntries(
+          Object.entries(JSON.parse(value) as Record<SettingKey, SettingCurrentData>).filter(
+            ([key]) => SETTING_CURRENT_DATA[key as SettingKey],
+          ),
+        ),
       });
     } catch {
       console.error('Error while loading settings data from local storage');

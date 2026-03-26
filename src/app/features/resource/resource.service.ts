@@ -66,8 +66,12 @@ export class ResourceService {
     try {
       this.resourcesCurrentData.set({
         ...copy(RESOURCE_CURRENT_VALUES),
-        ...parseObjectWithExponentNumber(
-          JSON.parse(value) as Record<ResourceKey, ResourceCurrentData>,
+        ...Object.fromEntries(
+          Object.entries(
+            parseObjectWithExponentNumber(
+              JSON.parse(value) as Record<ResourceKey, ResourceCurrentData>,
+            ),
+          ).filter(([key]) => RESOURCE_CURRENT_VALUES[key as ResourceKey]),
         ),
       });
     } catch {

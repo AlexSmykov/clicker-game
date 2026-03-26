@@ -134,8 +134,12 @@ export class UpgradeService {
     try {
       this.upgradeCurrentDataMap.set({
         ...copy(UPGRADE_CURRENT_DATA),
-        ...parseObjectWithExponentNumber(
-          JSON.parse(value) as Record<UpgradeKey, UpgradeCurrentData>,
+        ...Object.fromEntries(
+          Object.entries(
+            parseObjectWithExponentNumber(
+              JSON.parse(value) as Record<UpgradeKey, UpgradeCurrentData>,
+            ),
+          ).filter(([key]) => UPGRADE_CURRENT_DATA[key as UpgradeKey]),
         ),
       });
     } catch {
