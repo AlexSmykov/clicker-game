@@ -22,11 +22,6 @@ export const routes: Routes = [
         loadComponent: () => import('src/app/pages/unlocks/unlocks.component'),
       },
       {
-        title: ' Statistics',
-        path: MAIN_ROUTE_IDS.statistic,
-        loadComponent: () => import('src/app/pages/statistics/statistics.component'),
-      },
-      {
         title: 'Settings',
         path: MAIN_ROUTE_IDS.settings,
         loadComponent: () => import('src/app/pages/settings/settings.component'),

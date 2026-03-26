@@ -40,9 +40,6 @@ export default class LayoutComponent {
           case MAIN_ROUTE_IDS.prestige:
             return unlocksCurrentData[UNLOCK_KEYS.prestige].isUnlocked;
 
-          case MAIN_ROUTE_IDS.statistic:
-            return unlocksCurrentData[UNLOCK_KEYS.statistic].isUnlocked;
-
           default:
             return true;
         }
