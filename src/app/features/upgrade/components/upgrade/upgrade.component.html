@@ -17,6 +17,7 @@
   [class.clickable]="isCanBuy()"
   [class.resetless]="!upgradeData.isResetOnPrestige"
   (touchstart)="onMouseDown()"
+  (touchmove)="onMouseUp()"
   (touchend)="onMouseUp()"
 >
   <ng-container *ngTemplateOutlet="content"></ng-container>

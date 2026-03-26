@@ -196,8 +196,8 @@ export class ClickAreaComponent {
     const paramsCurrentData = this.#paramService.paramsCurrentData();
 
     return paramsCurrentData[PARAM_KEYS.baseCrystalChance].value
-
       .plus(paramsCurrentData[PARAM_KEYS.crystalChance].value)
+      .plus(paramsCurrentData[PARAM_KEYS.prestigeCrystalChance].value)
       .plus(paramsCurrentData[PARAM_KEYS.moneyCrystalChance].value)
       .plus(paramsCurrentData[PARAM_KEYS.bonusCrystalChance].value)
       .plus(paramsCurrentData[PARAM_KEYS.rubyShardsCrystalChance].value);
@@ -207,7 +207,6 @@ export class ClickAreaComponent {
     const paramsCurrentData = this.#paramService.paramsCurrentData();
 
     return paramsCurrentData[PARAM_KEYS.baseRubyChance].value
-
       .plus(paramsCurrentData[PARAM_KEYS.rubyChance].value)
       .plus(paramsCurrentData[PARAM_KEYS.baseRubyChance].value)
       .plus(paramsCurrentData[PARAM_KEYS.rubyPrestigeChance].value);
