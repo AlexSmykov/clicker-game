@@ -7,27 +7,27 @@ export const routes: Routes = [
     loadComponent: () => import('src/app/components/layout/layout.component'),
     children: [
       {
-        title: 'Clicker game | Upgrades',
+        title: 'Upgrades',
         path: MAIN_ROUTE_IDS.upgrades,
         loadComponent: () => import('src/app/pages/upgrades/upgrades.component'),
       },
       {
-        title: 'Clicker game | Prestige',
+        title: 'Prestige',
         path: MAIN_ROUTE_IDS.prestige,
         loadComponent: () => import('src/app/pages/prestige/prestige.component'),
       },
       {
-        title: 'Clicker game | Unlocks',
+        title: 'Unlocks',
         path: MAIN_ROUTE_IDS.unlocks,
         loadComponent: () => import('src/app/pages/unlocks/unlocks.component'),
       },
       {
-        title: 'Clicker game | Statistics',
+        title: ' Statistics',
         path: MAIN_ROUTE_IDS.statistic,
         loadComponent: () => import('src/app/pages/statistics/statistics.component'),
       },
       {
-        title: 'Clicker game | Settings',
+        title: 'Settings',
         path: MAIN_ROUTE_IDS.settings,
         loadComponent: () => import('src/app/pages/settings/settings.component'),
       },
