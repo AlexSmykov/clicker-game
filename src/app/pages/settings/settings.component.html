@@ -4,7 +4,9 @@
 
     <button (click)="resetSettings()">Reset settings</button>
 
-    <button (click)="saveProgress()">Manual save</button>
+    <button (click)="saveProgress()" (blur)="isSavedTextDisplay.set(false)">
+      {{ isSavedTextDisplay() ? 'Progress saved!' : 'Manual save' }}
+    </button>
   </div>
 
   @for (settingGroup of settingsGroups(); track settingGroup.key) {
