@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { SettingService } from 'src/app/features/setting/setting.service';
 import {
   SETTING_DATA,
@@ -30,6 +30,8 @@ export default class SettingsComponent {
   readonly #upgradeService = inject(UpgradeService);
   readonly #unlockService = inject(UnlockService);
   readonly #settingService = inject(SettingService);
+
+  readonly isSavedTextDisplay = signal(false);
 
   readonly settingsGroups = computed(() => {
     const settingCurrentData = this.#settingService.settingCurrentData();
@@ -76,5 +78,7 @@ export default class SettingsComponent {
     this.#paramService.saveToLocalStorage();
     this.#upgradeService.saveToLocalStorage();
     this.#unlockService.saveToLocalStorage();
+
+    this.isSavedTextDisplay.set(true);
   }
 }
