@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.danger {
+  border-color: var(--color-danger);
+
+  &.confirm {
+    background-color: var(--color-danger);
+    color: var(--color-background-dark);
+  }
+}

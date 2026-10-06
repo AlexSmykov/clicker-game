@@ -1,0 +1,49 @@
+@use 'mobile';
+
+:host {
+  padding: 20px;
+  background-color: var(--color-background-dark);
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+}
+
+.zone {
+  flex: 1;
+  min-width: 0;
+}
+
+.click-button {
+  width: 200px;
+  height: 100px;
+  flex-shrink: 0;
+  font: var(--font-header-small);
+}
+
+.title {
+  font: var(--font-subheader);
+}
+
+.gains {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+@include mobile.mobile {
+  :host {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .zone:empty {
+    display: none;
+  }
+
+  .gains {
+    align-items: center;
+  }
+}

@@ -1,0 +1,7 @@
+<app-icon [path]="data().iconPath" />
+
+@if (!isShort()) {
+  <span class="name">{{ data().name }}:</span>
+}
+
+<span class="value">{{ formattedValue() }}</span>

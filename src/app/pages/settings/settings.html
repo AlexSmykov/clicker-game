@@ -1,0 +1,15 @@
+<div class="actions">
+  <button type="button" (click)="save()" (blur)="clearSaved()">{{ saveLabel() }}</button>
+
+  <button
+    class="danger"
+    type="button"
+    [class.confirm]="isResetConfirming()"
+    (click)="reset()"
+    (blur)="cancelReset()"
+  >
+    {{ isResetConfirming() ? 'Click again to confirm' : 'Reset progress' }}
+  </button>
+</div>
+
+<p class="page-hint">The game is saved automatically every minute and when you leave the page.</p>

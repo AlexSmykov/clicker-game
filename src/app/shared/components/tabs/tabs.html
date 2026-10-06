@@ -1,0 +1,7 @@
+@for (tab of items(); track tab.id) {
+  <a class="tab" routerLinkActive="active" ariaCurrentWhenActive="page" [routerLink]="tab.route">
+    <app-icon [path]="tab.iconPath" />
+
+    <span class="tab-name">{{ tab.name }}</span>
+  </a>
+}

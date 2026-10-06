@@ -1,0 +1,23 @@
+:root {
+  --font-header-large: 800 48px/56px 'Manrope', sans-serif;
+  --font-header: 700 24px/32px 'Manrope', sans-serif;
+  --font-header-small: 700 20px/24px 'Manrope', sans-serif;
+  --font-default: 500 16px/24px 'Manrope', sans-serif;
+  --font-subheader: 700 16px/24px 'Manrope', sans-serif;
+  --font-additional: 500 14px/22px 'Manrope', sans-serif;
+  --font-additional-bold: 700 14px/22px 'Manrope', sans-serif;
+  --font-hint: 500 12px/20px 'Manrope', sans-serif;
+  --font-hint-bold: 700 12px/20px 'Manrope', sans-serif;
+}
+
+p,
+h1,
+h2,
+h3,
+span,
+a,
+button {
+  margin: 0;
+  color: var(--color-text-primary);
+  font: var(--font-default);
+}

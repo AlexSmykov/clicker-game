@@ -1,0 +1,55 @@
+<button
+  class="upgrade"
+  type="button"
+  [class.buyable]="isAffordable()"
+  [class.maxed]="isMaxed()"
+  [class.resetless]="!data().isResetOnPrestige"
+  [attr.aria-disabled]="!isAffordable()"
+  (pointerdown)="startBuying($event)"
+  (keydown.enter)="buy()"
+  (keydown.space)="buy()"
+>
+  <span class="header">
+    <span class="name">{{ data().name }}</span>
+
+    <span class="level">
+      @if (isMaxed()) {
+        Max
+      } @else {
+        {{ level() }} / {{ maxLevel() }}
+      }
+    </span>
+  </span>
+
+  <span class="description">{{ data().description }}</span>
+
+  <span class="effects">
+    @for (effect of effects(); track effect.param) {
+      <span class="effect">
+        <span class="effect-name">{{ effect.name }}</span>
+
+        <span class="effect-value">
+          {{ effect.currentValue }}
+
+          @if (effect.nextValue !== null) {
+            → {{ effect.nextValue }}
+          }
+        </span>
+      </span>
+    }
+  </span>
+
+  <span class="footer">
+    <span class="costs">
+      @for (cost of costs(); track cost.resource) {
+        <app-resource [key]="cost.resource" [value]="cost.value" [isShort]="true" />
+      }
+    </span>
+
+    <span class="tags">
+      @for (tag of tags(); track tag.name) {
+        <app-icon [path]="tag.iconPath" />
+      }
+    </span>
+  </span>
+</button>
