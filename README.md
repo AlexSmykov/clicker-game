@@ -36,23 +36,16 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Linting and formatting
 
 ```bash
-ng test
+npm run lint        # ESLint
+npm run lint:fix    # ESLint with autofix
+npm run format      # Prettier
+npm run check       # ESLint + Prettier check, same as in CI
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Staged files are linted and formatted on every commit by husky and lint-staged.
 
 ## Additional Resources
 
