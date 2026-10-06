@@ -13,7 +13,8 @@
           "skipTests": true
         },
         "@schematics/angular:component": {
-          "skipTests": true
+          "skipTests": true,
+          "style": "scss"
         },
         "@schematics/angular:directive": {
           "skipTests": true
@@ -46,10 +47,16 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "src/assets",
+                "output": "/assets"
               }
             ],
-            "styles": ["src/styles.css"]
+            "styles": ["src/styles.scss"],
+            "allowedCommonJsDependencies": ["exponential-number"],
+            "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
+            }
           },
           "configurations": {
             "production": {
@@ -77,6 +84,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "port": 4217
+          },
           "configurations": {
             "production": {
               "buildTarget": "clicker-game-two:build:production"

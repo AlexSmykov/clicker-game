@@ -103,6 +103,7 @@ export default defineConfig(
         },
       ],
 
+      '@angular-eslint/component-max-inline-declarations': ['error', { styles: 0, template: 0 }],
       '@angular-eslint/component-selector': [
         'error',
         { prefix: SELECTOR_PREFIX, style: 'kebab-case', type: 'element' },
@@ -115,6 +116,20 @@ export default defineConfig(
       '@angular-eslint/prefer-output-readonly': 'error',
       '@angular-eslint/prefer-signals': 'error',
       '@angular-eslint/use-injectable-provided-in': 'error',
+
+      'no-restricted-syntax': [
+        'error',
+        {
+          message: 'Component must have a separate template file referenced with templateUrl',
+          selector:
+            'Decorator[expression.callee.name="Component"] > CallExpression > ObjectExpression:not(:has(> Property[key.name="templateUrl"]))',
+        },
+        {
+          message: 'Component must have a separate style file referenced with styleUrl',
+          selector:
+            'Decorator[expression.callee.name="Component"] > CallExpression > ObjectExpression:not(:has(> Property[key.name="styleUrl"]))',
+        },
+      ],
 
       'import-x/no-cycle': 'error',
       'import-x/no-duplicates': 'error',
