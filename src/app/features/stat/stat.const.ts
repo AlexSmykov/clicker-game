@@ -17,6 +17,11 @@ export const STAT_DATA = {
     format: 'number',
     isResetOnPrestige: false,
   },
+  missedClicks: {
+    name: 'Missed clicks',
+    format: 'number',
+    isResetOnPrestige: false,
+  },
   highestMoneyPerClick: {
     name: 'Highest income per click',
     format: 'number',
@@ -37,13 +42,23 @@ export const STAT_DATA = {
     format: 'number',
     isResetOnPrestige: false,
   },
+  restarts: {
+    name: 'Restarts',
+    format: 'number',
+    isResetOnPrestige: false,
+  },
   highestPrestigePointsGain: {
     name: 'Highest prestige points gain',
     format: 'number',
     isResetOnPrestige: false,
   },
   runTime: {
-    name: 'Time in this run',
+    name: 'All time in this run',
+    format: 'duration',
+    isResetOnPrestige: true,
+  },
+  runVisibleTime: {
+    name: 'Active time in this run',
     format: 'duration',
     isResetOnPrestige: true,
   },

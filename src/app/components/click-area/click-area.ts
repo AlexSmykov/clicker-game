@@ -8,22 +8,25 @@ import { formatParam } from '../../features/param/param.utils';
 import { Resource } from '../../features/resource/components/resource/resource';
 import { SettingService } from '../../features/setting/setting.service';
 
-interface CritFlash {
+interface ClickFlash {
   id: number;
   label: string;
+  isMiss: boolean;
 }
 
 interface ChanceLine {
   chance: ParamKey;
   amount?: ParamKey;
+  hiddenAt: number;
 }
 
 const CHANCE_LINES: ChanceLine[] = [
-  { chance: 'critChance', amount: 'critMultiplier' },
-  { chance: 'crystalShardTotalChance', amount: 'shardsPerDrop' },
-  { chance: 'crystalChance' },
-  { chance: 'rubyShardChance', amount: 'rubyShardsPerDrop' },
-  { chance: 'rubyChance' },
+  { chance: 'clickHitChance', hiddenAt: 1 },
+  { chance: 'critChance', amount: 'effectiveCritMultiplier', hiddenAt: 0 },
+  { chance: 'crystalShardTotalChance', amount: 'shardsPerDrop', hiddenAt: 0 },
+  { chance: 'crystalChance', hiddenAt: 0 },
+  { chance: 'rubyShardChance', amount: 'rubyShardsPerDrop', hiddenAt: 0 },
+  { chance: 'rubyChance', hiddenAt: 0 },
 ];
 
 @Component({
@@ -37,17 +40,17 @@ export class ClickArea {
   readonly #paramService = inject(ParamService);
   readonly #settingService = inject(SettingService);
 
-  #critId = 0;
+  #flashId = 0;
 
   protected readonly moneyPerClick = this.#clickService.moneyPerClick;
 
-  protected readonly critFlashes = signal<CritFlash[]>([]);
+  protected readonly flashes = signal<ClickFlash[]>([]);
 
   protected readonly chances = computed(() =>
     CHANCE_LINES.filter(
       (line) =>
         this.#settingService.isOn('showClickChances') &&
-        !this.#paramService.value(line.chance).isZero(),
+        !this.#paramService.value(line.chance).isEqual(line.hiddenAt),
     ).map((line) => ({
       key: line.chance,
       name: PARAM_DATA[line.chance].name,
@@ -57,14 +60,18 @@ export class ClickArea {
   );
 
   protected click(): void {
-    const crits = this.#clickService.click();
+    const { isHit, crits } = this.#clickService.click();
 
-    if (crits > 0 && this.#settingService.isOn('showCritEffect')) {
-      this.#critId += 1;
-      this.critFlashes.set([
-        { id: this.#critId, label: crits === 1 ? 'Crit!' : `Crit x${crits}!` },
-      ]);
+    if (!isHit) {
+      this.#flash('Miss', true);
+    } else if (crits > 0 && this.#settingService.isOn('showCritEffect')) {
+      this.#flash(crits === 1 ? 'Crit!' : `Crit x${crits}!`, false);
     }
+  }
+
+  #flash(label: string, isMiss: boolean): void {
+    this.#flashId += 1;
+    this.flashes.set([{ id: this.#flashId, label, isMiss }]);
   }
 
   #format(key: ParamKey): string {

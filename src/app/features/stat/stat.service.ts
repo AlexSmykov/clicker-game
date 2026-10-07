@@ -39,9 +39,17 @@ export class StatService {
     this.#eventService
       .on('tick')
       .pipe(takeUntilDestroyed())
-      .subscribe(({ seconds }) => {
+      .subscribe(({ seconds, isVisible }) => {
         this.#add(this.#counters.playTime, seconds);
         this.#add(this.#counters.runTime, seconds);
+        this.#add(this.#counters.runVisibleTime, isVisible ? seconds : 0);
+      });
+
+    this.#eventService
+      .on('clickMissed')
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.#add(this.#counters.missedClicks, 1);
       });
 
     this.#eventService
@@ -64,12 +72,15 @@ export class StatService {
       .subscribe(({ prestigePoints }) => {
         this.#add(this.#counters.prestiges, 1);
         this.#raise(this.#counters.highestPrestigePointsGain, prestigePoints);
+        this.#resetRunCounters();
+      });
 
-        for (const key of STAT_KEYS) {
-          if (this.#data[key].isResetOnPrestige) {
-            this.#counters[key].set(ExponentNumber.ZERO);
-          }
-        }
+    this.#eventService
+      .on('restart')
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.#add(this.#counters.restarts, 1);
+        this.#resetRunCounters();
       });
 
     this.#eventService
@@ -119,6 +130,14 @@ export class StatService {
     this.#write(STAT_KEYS, this.#counters, saved.counters ?? {});
     this.#write(RESOURCE_KEYS, this.#resourcesEarned, saved.resourcesEarned ?? {});
     this.#write(RESOURCE_KEYS, this.#resourcesSpent, saved.resourcesSpent ?? {});
+  }
+
+  #resetRunCounters(): void {
+    for (const key of STAT_KEYS) {
+      if (this.#data[key].isResetOnPrestige) {
+        this.#counters[key].set(ExponentNumber.ZERO);
+      }
+    }
   }
 
   #createSignals<Key extends string>(keys: readonly Key[]): StatSignals<Key> {

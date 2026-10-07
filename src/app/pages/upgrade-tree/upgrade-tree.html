@@ -9,6 +9,8 @@
         [attr.x2]="line.x2"
         [attr.y2]="line.y2"
       />
+
+      <polygon class="arrow" [class.active]="line.isActive" [attr.points]="line.arrow" />
     }
   </svg>
 
@@ -44,17 +46,10 @@
       <p class="permanent-note">Is not reset on prestige</p>
     }
 
-    @for (effect of node.effects; track effect.param) {
+    @for (effect of node.effects; track effect.id) {
       <p class="effect">
         <span class="effect-name">{{ effect.name }}</span>
-
-        <span class="effect-value">
-          {{ effect.currentValue }}
-
-          @if (effect.nextValue !== null) {
-            → {{ effect.nextValue }}
-          }
-        </span>
+        <span class="effect-value">{{ effect.value }}</span>
       </p>
     }
 

@@ -1,7 +1,7 @@
 import { ExponentNumber } from 'exponential-number';
 
 import { ResourceKey } from '../resource/resource.type';
-import { FormulaContext, ParamDefinition, ParamFormat } from './param.type';
+import { Effect, FormulaContext, ParamDefinition, ParamFormat } from './param.type';
 
 const PERCENT_SCALE = 100;
 const LOGARITHM_MIN_AMOUNT = 2;
@@ -37,6 +37,19 @@ export function logarithmMultiplier<Key extends string>(
       context.param(power),
     );
   };
+}
+
+export function formatEffect(effect: Effect, value: ExponentNumber, format: ParamFormat): string {
+  switch (effect.operation) {
+    case 'add':
+      return format === 'percent'
+        ? `+${value.multiply(PERCENT_SCALE).toString()}%`
+        : `+${value.toString()}`;
+    case 'multiply':
+      return `x${value.toString()}`;
+    case 'power':
+      return `^${value.plus(1).toString()}`;
+  }
 }
 
 export function formatParam(value: ExponentNumber, format: ParamFormat): string {

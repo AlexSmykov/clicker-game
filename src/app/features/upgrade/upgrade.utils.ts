@@ -1,7 +1,9 @@
 import { ExponentNumber } from 'exponential-number';
 
+import { ResourceKey } from '../resource/resource.type';
 import {
   CostFormula,
+  CostModifiers,
   CostTier,
   ResolvedCostFormula,
   ResolvedCostTier,
@@ -17,6 +19,7 @@ export function defineUpgrades<Key extends string>(
 
 export function resolveCostTiers(upgradeName: string, tiers: CostTier[]): ResolvedCostTier[] {
   const resolvedTiers: ResolvedCostTier[] = [];
+  const startValues = new Map<ResourceKey, ExponentNumber>();
   let fromLevel = 0;
 
   for (const tier of tiers) {
@@ -25,12 +28,20 @@ export function resolveCostTiers(upgradeName: string, tiers: CostTier[]): Resolv
     resolvedTiers.push({
       fromLevel,
       levels: tier.levels,
-      costs: tier.costs.map((cost) => ({
-        resource: cost.resource,
-        baseValue: resolveBaseValue(upgradeName, cost, previousTier),
-        growth: cost.growth,
-        growthValue: ExponentNumber.from(cost.growthValue),
-      })),
+      costs: tier.costs.map((cost) => {
+        const baseValue = resolveBaseValue(upgradeName, cost, previousTier);
+        const startValue = startValues.get(cost.resource) ?? baseValue;
+
+        startValues.set(cost.resource, startValue);
+
+        return {
+          resource: cost.resource,
+          baseValue,
+          startValue,
+          growth: cost.growth,
+          growthValue: ExponentNumber.from(cost.growthValue),
+        };
+      }),
     });
 
     fromLevel += tier.levels;
@@ -42,7 +53,7 @@ export function resolveCostTiers(upgradeName: string, tiers: CostTier[]): Resolv
 export function calculateCosts(
   tiers: ResolvedCostTier[],
   level: number,
-  divider: ExponentNumber,
+  modifiers: CostModifiers,
 ): UpgradeCurrentCost[] {
   const tier = tiers.find((item) => level < item.fromLevel + item.levels);
 
@@ -52,10 +63,31 @@ export function calculateCosts(
 
   return tier.costs.map((cost) => ({
     resource: cost.resource,
-    value: calculateCostValue(cost, level - tier.fromLevel)
-      .divide(divider)
+    value: applyStartCostModifiers(
+      calculateCostValue(cost, level - tier.fromLevel),
+      cost,
+      modifiers,
+    )
+      .divide(modifiers.divider)
+      .power(modifiers.power)
       .ceil(),
   }));
+}
+
+function applyStartCostModifiers(
+  value: ExponentNumber,
+  cost: ResolvedCostFormula,
+  modifiers: CostModifiers,
+): ExponentNumber {
+  if (cost.resource !== 'money') {
+    return value.multiply(modifiers.otherStartMultiplier);
+  }
+
+  if (cost.growth === 'power') {
+    return value.power(modifiers.moneyStartPower);
+  }
+
+  return value.multiply(cost.startValue.power(modifiers.moneyStartPower.minus(1)));
 }
 
 function resolveBaseValue(

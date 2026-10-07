@@ -1,8 +1,11 @@
 import { effect, Injectable, signal } from '@angular/core';
 
+import { environment } from '../../../environments/environment';
 import { mapKeys } from '../../core/utils/record.utils';
 import { SETTING_DATA, SETTING_KEYS, SETTINGS_STORAGE_KEY } from './setting.const';
 import { SavedSettings, SettingKey } from './setting.type';
+
+const DEVELOP_GROUP = 'develop';
 
 @Injectable({ providedIn: 'root' })
 export class SettingService {
@@ -23,6 +26,10 @@ export class SettingService {
   }
 
   public isOn(key: SettingKey): boolean {
+    if (!environment.isDevelopment && SETTING_DATA[key].group === DEVELOP_GROUP) {
+      return false;
+    }
+
     return this.#values[key]();
   }
 

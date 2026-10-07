@@ -27,8 +27,16 @@ export interface CostTier {
 export interface ResolvedCostFormula {
   resource: ResourceKey;
   baseValue: ExponentNumber;
+  startValue: ExponentNumber;
   growth: CostGrowth;
   growthValue: ExponentNumber;
+}
+
+export interface CostModifiers {
+  divider: ExponentNumber;
+  power: ExponentNumber;
+  moneyStartPower: ExponentNumber;
+  otherStartMultiplier: ExponentNumber;
 }
 
 export interface ResolvedCostTier {

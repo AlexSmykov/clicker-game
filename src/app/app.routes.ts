@@ -19,6 +19,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/prestige/prestige'),
   },
   {
+    title: MAIN_ROUTE_DATA[MAIN_ROUTE_IDS.modifiers].name,
+    path: MAIN_ROUTE_IDS.modifiers,
+    loadComponent: () => import('./pages/modifiers/modifiers'),
+  },
+  {
     title: MAIN_ROUTE_DATA[MAIN_ROUTE_IDS.statistics].name,
     path: MAIN_ROUTE_IDS.statistics,
     loadComponent: () => import('./pages/statistics/statistics'),

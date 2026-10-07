@@ -11,7 +11,9 @@ export interface GameEvents {
   upgradeBought: { upgrade: UpgradeKey };
   treeNodeBought: { node: TreeNodeKey };
   prestige: { prestigePoints: ExponentNumber };
-  tick: { seconds: number };
+  restart: Record<string, never>;
+  clickMissed: Record<string, never>;
+  tick: { seconds: number; isVisible: boolean };
 }
 
 export type GameEventType = keyof GameEvents;

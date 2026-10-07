@@ -1,12 +1,13 @@
 import { computed, inject, Injectable } from '@angular/core';
 import { ExponentNumber } from 'exponential-number';
 
-import { rollCount } from '../../core/utils/random.utils';
+import { rollChance, rollCount } from '../../core/utils/random.utils';
 import { EventService } from '../event/event.service';
 import { ParamService } from '../param/param.service';
 import { ParamKey } from '../param/param.type';
 import { ResourceService } from '../resource/resource.service';
 import { ResourceKey } from '../resource/resource.type';
+import { ClickResult } from './click.type';
 
 interface StoneDrop {
   shard: ResourceKey;
@@ -21,7 +22,7 @@ const CRYSTAL_DROP: StoneDrop = {
   shard: 'crystalShards',
   stone: 'crystals',
   shardChance: 'crystalShardTotalChance',
-  shardChanceForStone: 'crystalShardChance',
+  shardChanceForStone: 'crystalShardBaseChance',
   stoneChance: 'crystalStoneChance',
   shardsPerDrop: 'shardsPerDrop',
 };
@@ -43,10 +44,18 @@ export class ClickService {
 
   public readonly moneyPerClick = computed(() => this.#paramService.value('moneyPerClick'));
 
-  public click(): number {
+  public click(): ClickResult {
+    if (!rollChance(this.#paramService.value('clickHitChance'))) {
+      this.#eventService.emit('clickMissed', {});
+
+      return { isHit: false, crits: 0 };
+    }
+
     const crits = rollCount(this.#paramService.value('critChance'));
     const moneyPerClick = this.moneyPerClick();
-    const money = moneyPerClick.multiply(this.#paramService.value('critMultiplier').power(crits));
+    const money = moneyPerClick.multiply(
+      this.#paramService.value('effectiveCritMultiplier').power(crits),
+    );
 
     this.#resourceService.add('money', money);
 
@@ -57,7 +66,7 @@ export class ClickService {
 
     this.#eventService.emit('click', { money, isCrit: !crits.isZero() });
 
-    return crits.toNumber();
+    return { isHit: true, crits: crits.toNumber() };
   }
 
   #rollDrop(drop: StoneDrop): ExponentNumber {

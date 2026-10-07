@@ -41,6 +41,14 @@
   }
 }
 
+.arrow {
+  fill: var(--color-border-disabled);
+
+  &.active {
+    fill: var(--color-tree-bought);
+  }
+}
+
 .details {
   --icon-size: 16px;
   --resource-font: var(--font-additional-bold);

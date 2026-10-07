@@ -1,0 +1,65 @@
+@if (isUnlocked()) {
+  <div class="content">
+    <section class="intro">
+      <p class="text">
+        Every modifier makes one side of the game stronger and another one weaker. Pick levels here,
+        they start to work after the next prestige or restart and stay until the run ends.
+      </p>
+
+      <p class="hint">
+        Available level: {{ maxLevel() }} of 3. Higher levels are unlocked in the tree.
+      </p>
+    </section>
+
+    <div class="cards">
+      @for (key of keys; track key) {
+        <app-modifier-card [key]="key" />
+      }
+    </div>
+  </div>
+
+  <aside class="summary" aria-label="Modifier levels">
+    <h3 class="summary-title">Levels</h3>
+
+    <p class="hint">Now → next run</p>
+
+    <ul class="summary-list">
+      @for (item of summary(); track item.key) {
+        <li
+          class="summary-item"
+          [class.active]="item.isActive"
+          [class.changed]="item.isChanged"
+          [title]="item.name"
+        >
+          <app-icon [path]="item.iconPath" />
+
+          <span class="visually-hidden">{{ item.name }}</span>
+
+          <span class="summary-levels">{{ item.activeLevel }} → {{ item.selectedLevel }}</span>
+        </li>
+      }
+    </ul>
+
+    @if (hasPendingChanges()) {
+      <p class="pending">New levels start to work after prestige or restart.</p>
+    }
+
+    <button
+      class="restart"
+      type="button"
+      [class.confirm]="isConfirming()"
+      (click)="restart()"
+      (blur)="cancel()"
+    >
+      {{ isConfirming() ? 'Click again to confirm' : 'Restart run' }}
+    </button>
+
+    <p class="hint">
+      Restart resets the run like prestige, but gives nothing and does not raise the border.
+    </p>
+  </aside>
+} @else {
+  <section class="intro">
+    <p class="text">Buy "Modifiers" in the upgrade tree to unlock this tab.</p>
+  </section>
+}

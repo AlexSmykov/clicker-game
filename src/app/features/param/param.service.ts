@@ -2,6 +2,7 @@ import { computed, inject, Injectable } from '@angular/core';
 import { ExponentNumber } from 'exponential-number';
 
 import { mapKeys } from '../../core/utils/record.utils';
+import { ModifierService } from '../modifier/modifier.service';
 import { ResourceService } from '../resource/resource.service';
 import { ResourceKey } from '../resource/resource.type';
 import { StatService } from '../stat/stat.service';
@@ -29,7 +30,11 @@ interface AppliedEffect {
 export class ParamService {
   readonly #resourceService = inject(ResourceService);
   readonly #statService = inject(StatService);
-  readonly #providers: EffectProvider[] = [inject(UpgradeStateService), inject(TreeService)];
+  readonly #providers: EffectProvider[] = [
+    inject(UpgradeStateService),
+    inject(TreeService),
+    inject(ModifierService),
+  ];
 
   readonly #effectsByParam = this.#groupEffectsByParam();
 
@@ -66,6 +71,10 @@ export class ParamService {
     this.#affectedParams.set(source, result);
 
     return result;
+  }
+
+  public effectValue(effect: Effect): ExponentNumber {
+    return this.#resolve(effect.value, this.#readValue);
   }
 
   public shownParams(source: EffectSource): ParamKey[] {

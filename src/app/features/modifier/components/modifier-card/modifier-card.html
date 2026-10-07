@@ -1,0 +1,32 @@
+<div class="header">
+  <app-icon [path]="data().iconPath" />
+
+  <h3 class="name">{{ data().name }}</h3>
+</div>
+
+<p class="description">{{ data().description }}</p>
+
+<ul class="effects" [class.preview]="isPreview()">
+  @for (effect of effects(); track effect.id) {
+    <li class="effect" [class.penalty]="effect.isPenalty">
+      <span class="effect-label">{{ effect.label }}</span>
+
+      <span class="effect-value">{{ effect.value }}</span>
+    </li>
+  }
+</ul>
+
+<div class="levels" role="group" aria-label="Level">
+  @for (level of levels(); track level.value) {
+    <button
+      class="level toggle-button"
+      type="button"
+      [class.locked]="level.isLocked"
+      [attr.aria-pressed]="level.isSelected"
+      [attr.aria-disabled]="level.isLocked"
+      (click)="select(level.value)"
+    >
+      {{ level.value }}
+    </button>
+  }
+</div>

@@ -1,0 +1,131 @@
+@use 'mobile';
+
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.text {
+  font: var(--font-additional);
+}
+
+.hint {
+  color: var(--color-text-secondary);
+  font: var(--font-hint);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.summary {
+  --icon-size: 20px;
+
+  position: sticky;
+  top: 0;
+  width: 180px;
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border-disabled);
+  border-radius: 4px;
+  background-color: var(--color-background-semi-dark);
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summary-title {
+  font: var(--font-subheader);
+}
+
+.summary-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px 12px;
+}
+
+.summary-item {
+  color: var(--color-text-secondary);
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+
+  &.active {
+    color: var(--color-text-primary);
+  }
+
+  &.changed {
+    color: var(--color-selected);
+  }
+}
+
+.summary-levels {
+  color: inherit;
+  font: var(--font-additional-bold);
+  white-space: nowrap;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.pending {
+  color: var(--color-selected);
+  font: var(--font-hint-bold);
+}
+
+.restart {
+  border-color: var(--color-danger);
+
+  &.confirm {
+    background-color: var(--color-danger);
+    color: var(--color-background-dark);
+  }
+}
+
+@include mobile.mobile {
+  :host {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .summary {
+    position: static;
+    width: auto;
+  }
+
+  .summary-list {
+    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  }
+}

@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { DOCUMENT, inject, Injectable } from '@angular/core';
 
 import { EventService } from './event.service';
 
@@ -7,6 +7,7 @@ const MAX_TICK_SECONDS = 60;
 
 @Injectable({ providedIn: 'root' })
 export class ClockService {
+  readonly #document = inject(DOCUMENT);
   readonly #eventService = inject(EventService);
 
   #lastTickAt = Date.now();
@@ -19,7 +20,10 @@ export class ClockService {
       const seconds = Math.min((now - this.#lastTickAt) / TICK_INTERVAL_MS, MAX_TICK_SECONDS);
 
       this.#lastTickAt = now;
-      this.#eventService.emit('tick', { seconds });
+      this.#eventService.emit('tick', {
+        seconds,
+        isVisible: this.#document.visibilityState === 'visible',
+      });
     }, TICK_INTERVAL_MS);
   }
 }

@@ -11,13 +11,13 @@ export const CRYSTAL_UPGRADES = defineUpgrades({
     costTiers: [
       {
         levels: 25,
-        costs: [{ resource: 'crystalShards', baseValue: 10, growth: 'multiply', growthValue: 1.4 }],
+        costs: [{ resource: 'crystalShards', baseValue: 10, growth: 'multiply', growthValue: 1.3 }],
       },
       {
         levels: 25,
         costs: [
-          { resource: 'crystalShards', growth: 'multiply', growthValue: 2 },
-          { resource: 'money', baseValue: 'e8', growth: 'multiply', growthValue: 10 },
+          { resource: 'crystalShards', growth: 'multiply', growthValue: 1.6 },
+          { resource: 'money', baseValue: 'e30', growth: 'power', growthValue: 1.1 },
         ],
       },
     ],
@@ -32,9 +32,9 @@ export const CRYSTAL_UPGRADES = defineUpgrades({
     costDividers: ['upgradeCostDivider', 'shardUpgradeCostDivider'],
     costTiers: [
       {
-        levels: 20,
+        levels: 25,
         costs: [
-          { resource: 'crystalShards', baseValue: 100, growth: 'multiply', growthValue: 2.5 },
+          { resource: 'crystalShards', baseValue: 100, growth: 'multiply', growthValue: 1.5 },
         ],
       },
     ],
@@ -50,7 +50,7 @@ export const CRYSTAL_UPGRADES = defineUpgrades({
     costTiers: [
       {
         levels: 30,
-        costs: [{ resource: 'crystalShards', baseValue: 10, growth: 'multiply', growthValue: 1.8 }],
+        costs: [{ resource: 'crystalShards', baseValue: 10, growth: 'multiply', growthValue: 1.5 }],
       },
     ],
     effects: [{ param: 'shardsPerDrop', operation: 'add', value: 1 }],
@@ -79,7 +79,7 @@ export const CRYSTAL_UPGRADES = defineUpgrades({
     costDividers: ['upgradeCostDivider', 'shardUpgradeCostDivider'],
     costTiers: [
       {
-        levels: 15,
+        levels: 25,
         costs: [{ resource: 'crystalShards', baseValue: 20, growth: 'multiply', growthValue: 2 }],
       },
     ],
@@ -95,10 +95,10 @@ export const CRYSTAL_UPGRADES = defineUpgrades({
     costTiers: [
       {
         levels: 20,
-        costs: [{ resource: 'crystalShards', baseValue: 500, growth: 'multiply', growthValue: 3 }],
+        costs: [{ resource: 'crystalShards', baseValue: 250, growth: 'multiply', growthValue: 2 }],
       },
     ],
-    effects: [{ param: 'crystalStoneChance', operation: 'add', value: 0.002 }],
+    effects: [{ param: 'crystalStoneChance', operation: 'add', value: 0.0025 }],
   },
   crystalLens: {
     name: 'Crystal lens',
@@ -109,11 +109,11 @@ export const CRYSTAL_UPGRADES = defineUpgrades({
     costDividers: ['upgradeCostDivider'],
     costTiers: [
       {
-        levels: 6,
+        levels: 5,
         costs: [{ resource: 'crystals', baseValue: 1, growth: 'add', growthValue: 1 }],
       },
       {
-        levels: 4,
+        levels: 5,
         costs: [{ resource: 'crystals', growth: 'multiply', growthValue: 1.5 }],
       },
     ],

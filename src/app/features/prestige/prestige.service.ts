@@ -1,6 +1,7 @@
 import { computed, inject, Injectable } from '@angular/core';
 
 import { EventService } from '../event/event.service';
+import { ModifierService } from '../modifier/modifier.service';
 import { ParamService } from '../param/param.service';
 import { ResourceService } from '../resource/resource.service';
 import { SaveService } from '../save/save.service';
@@ -17,6 +18,7 @@ import {
 @Injectable({ providedIn: 'root' })
 export class PrestigeService {
   readonly #eventService = inject(EventService);
+  readonly #modifierService = inject(ModifierService);
   readonly #paramService = inject(ParamService);
   readonly #resourceService = inject(ResourceService);
   readonly #saveService = inject(SaveService);
@@ -36,7 +38,7 @@ export class PrestigeService {
       this.#paramService.value('prestigeBorderBase'),
       this.#paramService.value('prestigeBorderGrowth'),
       this.#statService.value('prestiges').plus(1),
-    ),
+    ).power(this.#paramService.value('prestigeBorderPower')),
   );
 
   public readonly pointsGain = computed(() => this.#paramService.value('prestigePointsGain'));
@@ -75,6 +77,7 @@ export class PrestigeService {
       this.#treeService.resetOnPrestige();
     }
 
+    this.#modifierService.applySelection();
     this.#resourceService.add('prestigePoints', prestigePoints);
 
     if (!stardust.isZero()) {
@@ -86,6 +89,22 @@ export class PrestigeService {
     }
 
     this.#eventService.emit('prestige', { prestigePoints });
+    this.#saveService.save();
+  }
+
+  public restart(): void {
+    this.#resourceService.resetOnPrestige();
+    this.#upgradeStateService.resetOnPrestige();
+    this.#treeService.resetOnPrestige();
+    this.#modifierService.applySelection();
+
+    const startingCapital = this.#paramService.value('startingCapital');
+
+    if (!startingCapital.isZero()) {
+      this.#resourceService.add('money', startingCapital);
+    }
+
+    this.#eventService.emit('restart', {});
     this.#saveService.save();
   }
 }

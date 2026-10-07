@@ -13,9 +13,12 @@
 <button class="click-button" type="button" (click)="click()">
   Click me!
 
-  @for (flash of critFlashes(); track flash.id) {
-    <span class="crit-flash" aria-hidden="true"></span>
-    <span class="crit-label" aria-hidden="true">{{ flash.label }}</span>
+  @for (flash of flashes(); track flash.id) {
+    @if (!flash.isMiss) {
+      <span class="crit-flash" aria-hidden="true"></span>
+    }
+
+    <span class="crit-label" aria-hidden="true" [class.miss]="flash.isMiss">{{ flash.label }}</span>
   }
 </button>
 

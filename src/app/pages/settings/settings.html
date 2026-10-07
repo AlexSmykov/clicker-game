@@ -8,7 +8,7 @@
     type="button"
     [class.confirm]="isResetConfirming()"
     (click)="reset()"
-    (blur)="cancelReset()"
+    (blur)="cancelConfirmation()"
   >
     {{ isResetConfirming() ? 'Click again to confirm' : 'Reset progress' }}
   </button>
@@ -26,6 +26,68 @@
             [isChecked]="setting.isOn"
             (changed)="setSetting(setting.key, $event)"
           />
+        }
+      </div>
+    </details>
+  }
+
+  <details class="group" open>
+    <summary class="group-title">Export and import</summary>
+
+    <div class="settings">
+      <div class="actions">
+        <button type="button" (click)="exportSave()">Export</button>
+
+        <button type="button" (click)="copySave()">Copy</button>
+
+        <button
+          class="danger"
+          type="button"
+          [class.confirm]="isImportConfirming()"
+          (click)="importSave()"
+          (blur)="cancelConfirmation()"
+        >
+          {{ isImportConfirming() ? 'Click again to replace progress' : 'Import' }}
+        </button>
+      </div>
+
+      <label class="hint" for="save-text">Save string</label>
+
+      <textarea
+        id="save-text"
+        class="save-text"
+        rows="5"
+        spellcheck="false"
+        placeholder="Press Export or paste a save string here"
+        [value]="saveText()"
+        (input)="onSaveTextInput($event)"
+      ></textarea>
+
+      <p class="hint" role="status">{{ transferMessage() }}</p>
+    </div>
+  </details>
+
+  @if (isDevelopment) {
+    <details class="group" open>
+      <summary class="group-title">Dev saves</summary>
+
+      <div class="settings">
+        <p class="hint">Replaces the current progress with a prepared stage of the game.</p>
+
+        @for (devSave of devSaves(); track devSave.index) {
+          <div class="dev-save">
+            <button
+              class="danger"
+              type="button"
+              [class.confirm]="devSave.isConfirming"
+              (click)="loadDevSave(devSave.index)"
+              (blur)="cancelConfirmation()"
+            >
+              {{ devSave.isConfirming ? 'Click again to load' : devSave.name }}
+            </button>
+
+            <span class="hint">{{ devSave.description }}</span>
+          </div>
         }
       </div>
     </details>

@@ -31,7 +31,12 @@ export class UpgradeService {
 
   readonly #costs = mapKeys(UPGRADE_KEYS, (key) =>
     computed(() =>
-      calculateCosts(this.#costTiers[key], this.#stateService.level(key), this.#costDivider(key)),
+      calculateCosts(this.#costTiers[key], this.#stateService.level(key), {
+        divider: this.#costDivider(key),
+        power: this.#paramService.value('upgradeCostPower'),
+        moneyStartPower: this.#paramService.value('moneyUpgradeStartCostPower'),
+        otherStartMultiplier: this.#paramService.value('otherUpgradeStartCostMultiplier'),
+      }),
     ),
   );
 

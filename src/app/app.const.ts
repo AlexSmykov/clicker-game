@@ -6,6 +6,7 @@ export const MAIN_ROUTE_IDS = {
   upgrades: 'upgrades',
   upgradeTree: 'upgrade-tree',
   prestige: 'prestige',
+  modifiers: 'modifiers',
   statistics: 'statistics',
   settings: 'settings',
 } as const;
@@ -33,6 +34,11 @@ export const MAIN_ROUTE_DATA: Record<MainRoute, MainRouteData> = {
     name: 'Prestige',
     iconPath: 'assets/icons/pages/prestige.svg',
     unlockConditions: [{ type: 'treeNode', node: 'prestige' }],
+  },
+  [MAIN_ROUTE_IDS.modifiers]: {
+    name: 'Modifiers',
+    iconPath: 'assets/icons/pages/modifiers.svg',
+    unlockConditions: [{ type: 'treeNode', node: 'modifiers' }],
   },
   [MAIN_ROUTE_IDS.statistics]: {
     name: 'Statistics',

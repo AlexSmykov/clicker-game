@@ -6,6 +6,8 @@ import { defineParams, logarithmMultiplier } from './param.utils';
 
 const SELF_BOOST_MIN_AMOUNT = 10;
 const STARTING_CAPITAL_BASE = 10;
+const MARATHON_CLICKS_STEP = 100;
+const MARATHON_SECONDS_STEP = 60;
 
 export const PARAM_DATA = defineParams({
   moneyMultiplier: {
@@ -32,6 +34,11 @@ export const PARAM_DATA = defineParams({
     name: 'Money power',
     format: 'power',
     baseValue: 1,
+  },
+  moneyPowerReduction: {
+    name: 'Money power reduction',
+    format: 'plain',
+    baseValue: 0,
   },
   clickStreakBonus: {
     name: 'Bonus per 100 clicks in a run',
@@ -170,6 +177,28 @@ export const PARAM_DATA = defineParams({
     format: 'multiplier',
     formula: ({ param, resource }) => resource('stardust').multiply(param('starMapFactor')).plus(1),
   },
+  marathonClickFactor: {
+    name: 'Money multiplier per 100 clicks in a run',
+    format: 'multiplier',
+    baseValue: 1,
+  },
+  marathonTimeFactor: {
+    name: 'Money multiplier per minute of a run',
+    format: 'multiplier',
+    baseValue: 1,
+  },
+  marathonMultiplier: {
+    name: 'Marathon multiplier',
+    format: 'multiplier',
+    formula: ({ param, stat }) =>
+      param('marathonClickFactor')
+        .power(stat('runClicks').divide(MARATHON_CLICKS_STEP).floor())
+        .multiply(
+          param('marathonTimeFactor').power(
+            stat('runVisibleTime').divide(MARATHON_SECONDS_STEP).floor(),
+          ),
+        ),
+  },
   moneyPerClick: {
     name: 'Income per click',
     format: 'plain',
@@ -184,7 +213,13 @@ export const PARAM_DATA = defineParams({
         .multiply(param('prestigeLogMultiplier'))
         .multiply(param('legacyMultiplier'))
         .multiply(param('starMapMultiplier'))
-        .power(param('moneyPower')),
+        .multiply(param('marathonMultiplier'))
+        .power(param('moneyPower').minus(param('moneyPowerReduction'))),
+  },
+  clickHitChance: {
+    name: 'Hit chance',
+    format: 'percent',
+    baseValue: 1,
   },
   critChance: {
     name: 'Critical click chance',
@@ -195,6 +230,16 @@ export const PARAM_DATA = defineParams({
     name: 'Critical click multiplier',
     format: 'multiplier',
     baseValue: 2,
+  },
+  critMultiplierPower: {
+    name: 'Critical click multiplier power',
+    format: 'power',
+    baseValue: 1,
+  },
+  effectiveCritMultiplier: {
+    name: 'Final critical click multiplier',
+    format: 'multiplier',
+    formula: ({ param }) => param('critMultiplier').power(param('critMultiplierPower')),
   },
   shardsPerDrop: {
     name: 'Crystal shards per drop',
@@ -234,13 +279,26 @@ export const PARAM_DATA = defineParams({
         ? ExponentNumber.ZERO
         : resource('crystalShards').log10().multiply(param('crystalShardSelfFactor')),
   },
+  crystalShardChanceMultiplier: {
+    name: 'Crystal shard chance multiplier',
+    format: 'multiplier',
+    baseValue: 1,
+  },
+  crystalShardBaseChance: {
+    name: 'Crystal shard chance without held shards',
+    format: 'percent',
+    formula: ({ param }) =>
+      param('crystalShardChance').multiply(param('crystalShardChanceMultiplier')),
+  },
   crystalShardTotalChance: {
-    name: 'Total crystal shard chance',
+    name: 'Crystal shard chance',
     format: 'percent',
     formula: ({ param }) =>
       param('crystalShardChance').isZero()
         ? ExponentNumber.ZERO
-        : param('crystalShardChance').plus(param('crystalShardSelfBonus')),
+        : param('crystalShardChance')
+            .plus(param('crystalShardSelfBonus'))
+            .multiply(param('crystalShardChanceMultiplier')),
   },
   crystalStoneChance: {
     name: 'Shard to crystal chance',
@@ -250,7 +308,7 @@ export const PARAM_DATA = defineParams({
   crystalChance: {
     name: 'Crystal chance per click',
     format: 'percent',
-    formula: ({ param }) => param('crystalShardChance').multiply(param('crystalStoneChance')),
+    formula: ({ param }) => param('crystalShardBaseChance').multiply(param('crystalStoneChance')),
   },
   rubyShardChance: {
     name: 'Ruby shard chance',
@@ -266,6 +324,21 @@ export const PARAM_DATA = defineParams({
     name: 'Ruby chance per click',
     format: 'percent',
     formula: ({ param }) => param('rubyShardChance').multiply(param('rubyStoneChance')),
+  },
+  upgradeCostPower: {
+    name: 'Upgrade cost power',
+    format: 'power',
+    baseValue: 1,
+  },
+  moneyUpgradeStartCostPower: {
+    name: 'Start cost power of money upgrades',
+    format: 'power',
+    baseValue: 1,
+  },
+  otherUpgradeStartCostMultiplier: {
+    name: 'Start cost multiplier of other upgrades',
+    format: 'multiplier',
+    baseValue: 1,
   },
   upgradeCostDivider: {
     name: 'Upgrade cost divider',
@@ -302,6 +375,11 @@ export const PARAM_DATA = defineParams({
     format: 'power',
     baseValue: 1.2,
   },
+  prestigeBorderPower: {
+    name: 'Prestige border power',
+    format: 'power',
+    baseValue: 1,
+  },
   prestigeBorder: {
     name: 'Prestige border',
     format: 'plain',
@@ -310,7 +388,7 @@ export const PARAM_DATA = defineParams({
         param('prestigeBorderBase'),
         param('prestigeBorderGrowth'),
         stat('prestiges'),
-      ),
+      ).power(param('prestigeBorderPower')),
   },
   prestigePointsGain: {
     name: 'Prestige points gain',
