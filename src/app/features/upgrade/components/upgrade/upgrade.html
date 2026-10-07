@@ -16,10 +16,14 @@
       @if (isMaxed()) {
         Max
       } @else {
-        {{ level() }} / {{ maxLevel() }}
+        {{ level() }} / {{ softcap().levelCap }}
       }
     </span>
   </span>
+
+  @if (softcapLabel(); as label) {
+    <span class="softcap">{{ label }}</span>
+  }
 
   <span class="description">{{ data().description }}</span>
 

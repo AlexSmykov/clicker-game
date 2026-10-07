@@ -1,0 +1,15 @@
+<button
+  class="node"
+  type="button"
+  [attr.data-status]="status()"
+  [class.affordable]="isAffordable()"
+  [class.permanent]="isPermanent()"
+  [class.selected]="isSelected()"
+  [attr.aria-label]="name()"
+  [attr.aria-pressed]="isSelected()"
+  (click)="selected.emit()"
+>
+  @if (!isIconHidden()) {
+    <app-icon [path]="iconPath()" />
+  }
+</button>

@@ -1,3 +1,86 @@
-<h2 class="page-title">Upgrade tree</h2>
+<app-pan-zoom class="viewport">
+  <svg class="lines" aria-hidden="true" [class.hidden]="isPathsHidden()">
+    @for (line of lines(); track line.id) {
+      <line
+        class="line"
+        [class.active]="line.isActive"
+        [attr.x1]="line.x1"
+        [attr.y1]="line.y1"
+        [attr.x2]="line.x2"
+        [attr.y2]="line.y2"
+      />
+    }
+  </svg>
 
-<p class="page-hint">Upgrade tree will be here.</p>
+  @for (node of nodes(); track node.key) {
+    <app-tree-node
+      [style.left.px]="node.left"
+      [style.top.px]="node.top"
+      [name]="node.name"
+      [iconPath]="node.iconPath"
+      [status]="node.status"
+      [isPermanent]="node.isPermanent"
+      [isAffordable]="node.isAffordable"
+      [isSelected]="node.isSelected"
+      [isIconHidden]="isIconsHidden()"
+      (selected)="select(node.key)"
+    />
+  }
+</app-pan-zoom>
+
+@if (details(); as node) {
+  <aside class="details" [class.permanent]="node.isPermanent">
+    <div class="header">
+      <h3 class="name">{{ node.name }}</h3>
+
+      <button class="close" type="button" aria-label="Close" (click)="close()">×</button>
+    </div>
+
+    <p class="description">{{ node.description }}</p>
+
+    <p class="status">{{ node.statusLabel }}</p>
+
+    @if (node.isPermanent) {
+      <p class="permanent-note">Is not reset on prestige</p>
+    }
+
+    @for (effect of node.effects; track effect.param) {
+      <p class="effect">
+        <span class="effect-name">{{ effect.name }}</span>
+
+        <span class="effect-value">
+          {{ effect.currentValue }}
+
+          @if (effect.nextValue !== null) {
+            → {{ effect.nextValue }}
+          }
+        </span>
+      </p>
+    }
+
+    @for (unlock of node.unlocks; track unlock.id) {
+      <p class="effect">
+        <span class="effect-name">Unlocks {{ unlock.kind.toLowerCase() }}</span>
+        <span class="effect-value">{{ unlock.name }}</span>
+      </p>
+    }
+
+    @if (!node.isBought) {
+      <div class="costs">
+        @for (cost of node.costs; track cost.resource) {
+          <app-resource [key]="cost.resource" [value]="cost.value" [isShort]="true" />
+        }
+      </div>
+
+      <button
+        class="buy"
+        type="button"
+        [class.affordable]="node.isAffordable"
+        [attr.aria-disabled]="!node.isAffordable"
+        (click)="buy()"
+      >
+        Buy
+      </button>
+    }
+  </aside>
+}

@@ -1,0 +1,7 @@
+<label class="checkbox">
+  <input class="input" type="checkbox" [checked]="isChecked()" (change)="onChange($event)" />
+
+  <span class="box" aria-hidden="true"></span>
+
+  <span class="text">{{ label() }}</span>
+</label>

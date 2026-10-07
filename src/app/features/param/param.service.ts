@@ -6,6 +6,7 @@ import { ResourceService } from '../resource/resource.service';
 import { ResourceKey } from '../resource/resource.type';
 import { StatService } from '../stat/stat.service';
 import { StatKey } from '../stat/stat.type';
+import { TreeService } from '../tree/tree.service';
 import { UpgradeStateService } from '../upgrade/upgrade-state.service';
 import { PARAM_DATA, PARAM_KEYS } from './param.const';
 import {
@@ -28,7 +29,7 @@ interface AppliedEffect {
 export class ParamService {
   readonly #resourceService = inject(ResourceService);
   readonly #statService = inject(StatService);
-  readonly #providers: EffectProvider[] = [inject(UpgradeStateService)];
+  readonly #providers: EffectProvider[] = [inject(UpgradeStateService), inject(TreeService)];
 
   readonly #effectsByParam = this.#groupEffectsByParam();
 
@@ -45,8 +46,6 @@ export class ParamService {
     }),
   );
 
-  readonly #dependents = this.#collectDependents();
-
   readonly #affectedParams = new Map<EffectSource, ParamKey[]>();
 
   public value(key: ParamKey): ExponentNumber {
@@ -62,17 +61,17 @@ export class ParamService {
 
     const affected = new Set(source.effects.map((effect) => effect.param));
 
-    for (const key of affected) {
-      for (const dependent of this.#dependents[key]) {
-        affected.add(dependent);
-      }
-    }
-
     const result = [...affected];
 
     this.#affectedParams.set(source, result);
 
     return result;
+  }
+
+  public shownParams(source: EffectSource): ParamKey[] {
+    return this.affectedParams(source).filter((param) =>
+      source.effects.some((effect) => effect.param === param && !this.#isNeutral(effect)),
+    );
   }
 
   public preview(key: ParamKey, boostedSource: EffectSource): ExponentNumber {
@@ -126,6 +125,12 @@ export class ParamService {
     return typeof value === 'object' ? read(value.param) : ExponentNumber.from(value);
   }
 
+  #isNeutral(effect: Effect): boolean {
+    const value = this.#resolve(effect.value, this.#readValue);
+
+    return effect.operation === 'multiply' ? value.isEqual(1) : value.isZero();
+  }
+
   #groupEffectsByParam(): Record<ParamKey, AppliedEffect[]> {
     const grouped = mapKeys(PARAM_KEYS, (): AppliedEffect[] => []);
 
@@ -138,29 +143,5 @@ export class ParamService {
     }
 
     return grouped;
-  }
-
-  #collectDependents(): Record<ParamKey, ParamKey[]> {
-    const dependents = mapKeys(PARAM_KEYS, (): ParamKey[] => []);
-
-    for (const key of PARAM_KEYS) {
-      for (const dependency of this.#collectDependencies(key)) {
-        dependents[dependency].push(key);
-      }
-    }
-
-    return dependents;
-  }
-
-  #collectDependencies(key: ParamKey): Set<ParamKey> {
-    const dependencies = new Set<ParamKey>();
-
-    for (const { effect } of this.#effectsByParam[key]) {
-      if (typeof effect.value === 'object') {
-        dependencies.add(effect.value.param);
-      }
-    }
-
-    return dependencies;
   }
 }

@@ -3,13 +3,14 @@ import type { ExponentNumber } from 'exponential-number';
 import type { Effect, ParamKey } from '../param/param.type';
 import type { ResourceKey } from '../resource/resource.type';
 import type { TagKey } from '../tag/tag.type';
+import type { UnlockCondition } from '../unlock/unlock.type';
 import type { UPGRADE_DATA } from './upgrade.const';
 
 export type UpgradeKey = keyof typeof UPGRADE_DATA;
 
 export type UpgradeData = UpgradeDefinition<UpgradeKey>;
 
-export type CostGrowth = 'multiply' | 'power';
+export type CostGrowth = 'add' | 'multiply' | 'power';
 
 export interface CostFormula {
   resource: ResourceKey;
@@ -36,21 +37,6 @@ export interface ResolvedCostTier {
   costs: ResolvedCostFormula[];
 }
 
-export interface ResourceUnlockCondition {
-  type: 'resource';
-  resource: ResourceKey;
-  amount: number | string;
-}
-
-export interface UpgradeLevelUnlockCondition<Key extends string> {
-  type: 'upgradeLevel';
-  upgrade: Key;
-  level: number;
-}
-
-export type UnlockCondition<Key extends string> =
-  ResourceUnlockCondition | UpgradeLevelUnlockCondition<Key>;
-
 export interface UpgradeDefinition<Key extends string> {
   name: string;
   description: string;
@@ -62,9 +48,13 @@ export interface UpgradeDefinition<Key extends string> {
   effects: Effect[];
 }
 
+export interface UpgradeSoftcap {
+  index: number;
+  levelCap: number;
+}
+
 export interface SavedUpgrade {
   level: number;
-  isUnlocked: boolean;
 }
 
 export type SavedUpgrades = Partial<Record<string, SavedUpgrade>>;

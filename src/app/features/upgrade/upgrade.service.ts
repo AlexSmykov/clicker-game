@@ -1,13 +1,14 @@
-import { computed, effect, inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable } from '@angular/core';
 import { ExponentNumber } from 'exponential-number';
 
 import { mapKeys } from '../../core/utils/record.utils';
 import { EventService } from '../event/event.service';
 import { ParamService } from '../param/param.service';
 import { ResourceService } from '../resource/resource.service';
+import { SettingService } from '../setting/setting.service';
 import { UpgradeStateService } from './upgrade-state.service';
 import { UPGRADE_DATA, UPGRADE_KEYS } from './upgrade.const';
-import { UnlockCondition, UpgradeCurrentCost, UpgradeData, UpgradeKey } from './upgrade.type';
+import { UpgradeCurrentCost, UpgradeData, UpgradeKey, UpgradeSoftcap } from './upgrade.type';
 import { calculateCosts, resolveCostTiers } from './upgrade.utils';
 
 @Injectable({ providedIn: 'root' })
@@ -15,6 +16,7 @@ export class UpgradeService {
   readonly #eventService = inject(EventService);
   readonly #paramService = inject(ParamService);
   readonly #resourceService = inject(ResourceService);
+  readonly #settingService = inject(SettingService);
   readonly #stateService = inject(UpgradeStateService);
 
   readonly #data: Record<UpgradeKey, UpgradeData> = UPGRADE_DATA;
@@ -39,23 +41,25 @@ export class UpgradeService {
 
       return (
         !this.isMaxed(key) &&
-        costs.every((cost) => this.#resourceService.canAfford(cost.resource, cost.value))
+        (this.#settingService.isOn('freeUpgrades') ||
+          costs.every((cost) => this.#resourceService.canAfford(cost.resource, cost.value)))
       );
     }),
   );
 
-  constructor() {
-    effect(() => {
-      for (const key of UPGRADE_KEYS) {
-        if (!this.#stateService.isUnlocked(key) && this.#areConditionsMet(key)) {
-          this.#stateService.unlock(key);
-        }
-      }
-    });
-  }
-
   public maxLevel(key: UpgradeKey): number {
     return this.#maxLevels[key];
+  }
+
+  public softcap(key: UpgradeKey): UpgradeSoftcap {
+    const tiers = this.#costTiers[key];
+    const level = this.#stateService.level(key);
+    const index = tiers.findIndex((tier) => level < tier.fromLevel + tier.levels);
+    const tier = tiers[index];
+
+    return tier
+      ? { index, levelCap: tier.fromLevel + tier.levels }
+      : { index: tiers.length - 1, levelCap: this.#maxLevels[key] };
   }
 
   public isMaxed(key: UpgradeKey): boolean {
@@ -75,8 +79,10 @@ export class UpgradeService {
       return;
     }
 
-    for (const cost of this.costs(key)) {
-      this.#resourceService.spend(cost.resource, cost.value);
+    if (!this.#settingService.isOn('freeUpgrades')) {
+      for (const cost of this.costs(key)) {
+        this.#resourceService.spend(cost.resource, cost.value);
+      }
     }
 
     this.#stateService.addLevel(key);
@@ -88,18 +94,5 @@ export class UpgradeService {
       (total, param) => total.multiply(this.#paramService.value(param)),
       ExponentNumber.ONE,
     );
-  }
-
-  #areConditionsMet(key: UpgradeKey): boolean {
-    return this.#data[key].unlockConditions.every((condition) => this.#isConditionMet(condition));
-  }
-
-  #isConditionMet(condition: UnlockCondition<UpgradeKey>): boolean {
-    switch (condition.type) {
-      case 'resource':
-        return this.#resourceService.canAfford(condition.resource, condition.amount);
-      case 'upgradeLevel':
-        return this.#stateService.level(condition.upgrade) >= condition.level;
-    }
   }
 }

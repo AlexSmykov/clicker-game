@@ -16,10 +16,79 @@
 }
 
 .click-button {
+  position: relative;
   width: 200px;
   height: 100px;
   flex-shrink: 0;
   font: var(--font-header-small);
+}
+
+.crit-flash {
+  position: absolute;
+  inset: -1px;
+  border: 2px solid var(--color-crit);
+  border-radius: 4px;
+  background-color: rgb(from var(--color-crit) r g b / 0.35);
+  pointer-events: none;
+  animation: crit-flash 0.35s ease-out forwards;
+}
+
+.crit-label {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  width: 100%;
+  color: var(--color-crit);
+  font: var(--font-additional-bold);
+  text-align: center;
+  pointer-events: none;
+  animation: crit-label 0.6s ease-out forwards;
+}
+
+@keyframes crit-flash {
+  from {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+@keyframes crit-label {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crit-flash {
+    animation-duration: 0.01s;
+  }
+
+  .crit-label {
+    animation-name: crit-flash;
+    animation-duration: 0.6s;
+  }
+}
+
+.chances {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.chance {
+  color: var(--color-text-secondary);
+  font: var(--font-additional);
 }
 
 .title {
@@ -43,7 +112,8 @@
     display: none;
   }
 
-  .gains {
+  .gains,
+  .chances {
     align-items: center;
   }
 }

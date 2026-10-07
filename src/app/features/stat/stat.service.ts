@@ -6,14 +6,16 @@ import { mapKeys } from '../../core/utils/record.utils';
 import { EventService } from '../event/event.service';
 import { RESOURCE_KEYS } from '../resource/resource.const';
 import { ResourceKey } from '../resource/resource.type';
-import { STAT_KEYS } from './stat.const';
-import { SavedStats, SavedStatValues, StatKey } from './stat.type';
+import { STAT_DATA, STAT_KEYS } from './stat.const';
+import { SavedStats, SavedStatValues, StatData, StatKey } from './stat.type';
 
 type StatSignals<Key extends string> = Record<Key, WritableSignal<ExponentNumber>>;
 
 @Injectable({ providedIn: 'root' })
 export class StatService {
   readonly #eventService = inject(EventService);
+
+  readonly #data: Record<StatKey, StatData> = STAT_DATA;
 
   readonly #startedAt = signal<number | null>(null);
 
@@ -27,8 +29,10 @@ export class StatService {
     this.#eventService
       .on('click')
       .pipe(takeUntilDestroyed())
-      .subscribe(({ money }) => {
+      .subscribe(({ money, isCrit }) => {
         this.#add(this.#counters.clicks, 1);
+        this.#add(this.#counters.crits, isCrit ? 1 : 0);
+        this.#add(this.#counters.runClicks, 1);
         this.#raise(this.#counters.highestMoneyPerClick, money);
       });
 
@@ -37,6 +41,7 @@ export class StatService {
       .pipe(takeUntilDestroyed())
       .subscribe(({ seconds }) => {
         this.#add(this.#counters.playTime, seconds);
+        this.#add(this.#counters.runTime, seconds);
       });
 
     this.#eventService
@@ -44,6 +49,27 @@ export class StatService {
       .pipe(takeUntilDestroyed())
       .subscribe(() => {
         this.#add(this.#counters.upgradeLevelsBought, 1);
+      });
+
+    this.#eventService
+      .on('treeNodeBought')
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.#add(this.#counters.treeNodesBought, 1);
+      });
+
+    this.#eventService
+      .on('prestige')
+      .pipe(takeUntilDestroyed())
+      .subscribe(({ prestigePoints }) => {
+        this.#add(this.#counters.prestiges, 1);
+        this.#raise(this.#counters.highestPrestigePointsGain, prestigePoints);
+
+        for (const key of STAT_KEYS) {
+          if (this.#data[key].isResetOnPrestige) {
+            this.#counters[key].set(ExponentNumber.ZERO);
+          }
+        }
       });
 
     this.#eventService

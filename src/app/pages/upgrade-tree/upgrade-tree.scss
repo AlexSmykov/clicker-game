@@ -1,0 +1,146 @@
+@use 'mobile';
+
+:host {
+  position: relative;
+  height: 100%;
+  min-height: 320px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.viewport {
+  flex: 1;
+  border: 1px solid var(--color-border-disabled);
+  border-radius: 4px;
+  background-color: var(--color-background-semi-dark);
+}
+
+.lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  overflow: visible;
+  pointer-events: none;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.line {
+  stroke: var(--color-border-disabled);
+  stroke-width: 2;
+  stroke-dasharray: 6 6;
+
+  &.active {
+    stroke: var(--color-tree-bought);
+    stroke-dasharray: none;
+  }
+}
+
+.details {
+  --icon-size: 16px;
+  --resource-font: var(--font-additional-bold);
+  --resource-value-width: 0;
+
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  width: 260px;
+  max-width: calc(100% - 16px);
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background-color: var(--color-background-dark);
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &.permanent {
+    border-color: var(--color-resetless);
+
+    .name {
+      color: var(--color-resetless);
+    }
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.name {
+  font: var(--font-subheader);
+}
+
+.close {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  font: var(--font-subheader);
+}
+
+.description,
+.status {
+  color: var(--color-text-secondary);
+  font: var(--font-hint);
+}
+
+.status {
+  font: var(--font-hint-bold);
+}
+
+.permanent-note {
+  color: var(--color-resetless);
+  font: var(--font-hint-bold);
+}
+
+.effect {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.effect-name {
+  font: var(--font-hint);
+}
+
+.effect-value {
+  font: var(--font-hint-bold);
+}
+
+.costs {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 8px;
+}
+
+.buy {
+  border-color: var(--color-border-disabled);
+  color: var(--color-border-disabled);
+  cursor: default;
+
+  &.affordable {
+    border-color: var(--color-tree-available);
+    color: var(--color-text-primary);
+    cursor: pointer;
+  }
+}
+
+@include mobile.mobile {
+  .details {
+    width: auto;
+    right: 8px;
+  }
+}

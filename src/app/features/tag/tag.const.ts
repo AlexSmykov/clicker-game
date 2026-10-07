@@ -18,6 +18,10 @@ export const TAG_DATA = {
     name: 'Prestige',
     iconPath: 'assets/icons/resources/prestige-points.svg',
   },
+  stardust: {
+    name: 'Stardust',
+    iconPath: 'assets/icons/resources/stardust.svg',
+  },
 } satisfies Record<string, TagData>;
 
 export const TAG_KEYS = keysOf(TAG_DATA);

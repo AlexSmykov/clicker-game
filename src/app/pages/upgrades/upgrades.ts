@@ -1,9 +1,10 @@
 import { Component, computed, inject, signal } from '@angular/core';
 
+import { SettingService } from '../../features/setting/setting.service';
 import { TAG_DATA, TAG_KEYS } from '../../features/tag/tag.const';
 import { TagKey } from '../../features/tag/tag.type';
+import { UnlockService } from '../../features/unlock/unlock.service';
 import { Upgrade } from '../../features/upgrade/components/upgrade/upgrade';
-import { UpgradeStateService } from '../../features/upgrade/upgrade-state.service';
 import { UPGRADE_DATA, UPGRADE_KEYS } from '../../features/upgrade/upgrade.const';
 import { Icon } from '../../shared/components/icon/icon';
 
@@ -14,12 +15,17 @@ import { Icon } from '../../shared/components/icon/icon';
   templateUrl: './upgrades.html',
 })
 export default class Upgrades {
-  readonly #upgradeStateService = inject(UpgradeStateService);
+  readonly #settingService = inject(SettingService);
+  readonly #unlockService = inject(UnlockService);
 
   readonly #selectedTags = signal<ReadonlySet<TagKey>>(new Set());
 
   readonly #unlockedKeys = computed(() =>
-    UPGRADE_KEYS.filter((key) => this.#upgradeStateService.isUnlocked(key)),
+    UPGRADE_KEYS.filter(
+      (key) =>
+        this.#settingService.isOn('showLockedUpgrades') ||
+        this.#unlockService.isUpgradeUnlocked(key),
+    ),
   );
 
   protected readonly tags = computed(() => {

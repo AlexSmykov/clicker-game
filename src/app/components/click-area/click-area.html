@@ -1,6 +1,23 @@
-<div class="zone"></div>
+<div class="zone chances">
+  @for (chance of chances(); track chance.key) {
+    <p class="chance">
+      {{ chance.name }}: {{ chance.value }}
 
-<button class="click-button" type="button" (click)="click()">Click me!</button>
+      @if (chance.amount !== null) {
+        ({{ chance.amount }})
+      }
+    </p>
+  }
+</div>
+
+<button class="click-button" type="button" (click)="click()">
+  Click me!
+
+  @for (flash of critFlashes(); track flash.id) {
+    <span class="crit-flash" aria-hidden="true"></span>
+    <span class="crit-label" aria-hidden="true">{{ flash.label }}</span>
+  }
+</button>
 
 <div class="zone gains">
   <p class="title">Income per click:</p>

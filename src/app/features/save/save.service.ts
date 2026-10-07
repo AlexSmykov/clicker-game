@@ -1,7 +1,9 @@
 import { DOCUMENT, inject, Injectable, signal } from '@angular/core';
 
 import { ResourceService } from '../resource/resource.service';
+import { SettingService } from '../setting/setting.service';
 import { StatService } from '../stat/stat.service';
+import { TreeService } from '../tree/tree.service';
 import { UpgradeStateService } from '../upgrade/upgrade-state.service';
 import {
   AUTOSAVE_INTERVAL_MS,
@@ -15,7 +17,9 @@ import { SaveData } from './save.type';
 export class SaveService {
   readonly #document = inject(DOCUMENT);
   readonly #resourceService = inject(ResourceService);
+  readonly #settingService = inject(SettingService);
   readonly #statService = inject(StatService);
+  readonly #treeService = inject(TreeService);
   readonly #upgradeStateService = inject(UpgradeStateService);
 
   readonly #lastSavedAt = signal<number | null>(null);
@@ -28,8 +32,14 @@ export class SaveService {
     this.#load();
 
     setInterval(() => {
-      this.save();
+      this.autosave();
     }, AUTOSAVE_INTERVAL_MS);
+  }
+
+  public autosave(): void {
+    if (this.#settingService.isOn('autosave')) {
+      this.save();
+    }
   }
 
   public save(): void {
@@ -43,6 +53,7 @@ export class SaveService {
       resources: this.#resourceService.snapshot(),
       upgrades: this.#upgradeStateService.snapshot(),
       stats: this.#statService.snapshot(),
+      tree: this.#treeService.snapshot(),
     };
 
     try {
@@ -72,6 +83,7 @@ export class SaveService {
       this.#resourceService.restore(data.resources ?? {});
       this.#upgradeStateService.restore(data.upgrades ?? {});
       this.#statService.restore(data.stats ?? {});
+      this.#treeService.restore(data.tree ?? {});
       this.#lastSavedAt.set(data.savedAt ?? null);
     } catch (error: unknown) {
       localStorage.setItem(CORRUPTED_SAVE_STORAGE_KEY, raw);

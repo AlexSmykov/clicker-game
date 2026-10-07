@@ -1,15 +1,17 @@
 import type { ExponentNumber, ExponentNumberLike } from 'exponential-number';
 
-import type { RESOURCE_DATA } from './resource.const';
+import type { UnlockCondition } from '../unlock/unlock.type';
+import type { UpgradeKey } from '../upgrade/upgrade.type';
+import type { RESOURCE_KEYS } from './resource.const';
 
-export type ResourceKey = keyof typeof RESOURCE_DATA;
+export type ResourceKey = (typeof RESOURCE_KEYS)[number];
 
 export interface ResourceData {
   name: string;
   iconPath: string;
   color: string;
-  isDefaultUnlocked: boolean;
   isResetOnPrestige: boolean;
+  unlockConditions: UnlockCondition<UpgradeKey>[];
 }
 
 export interface SavedResource {

@@ -12,6 +12,11 @@ export const STAT_DATA = {
     format: 'number',
     isResetOnPrestige: false,
   },
+  crits: {
+    name: 'Critical clicks',
+    format: 'number',
+    isResetOnPrestige: false,
+  },
   highestMoneyPerClick: {
     name: 'Highest income per click',
     format: 'number',
@@ -21,6 +26,31 @@ export const STAT_DATA = {
     name: 'Upgrade levels bought',
     format: 'number',
     isResetOnPrestige: false,
+  },
+  treeNodesBought: {
+    name: 'Tree nodes bought',
+    format: 'number',
+    isResetOnPrestige: false,
+  },
+  prestiges: {
+    name: 'Prestiges',
+    format: 'number',
+    isResetOnPrestige: false,
+  },
+  highestPrestigePointsGain: {
+    name: 'Highest prestige points gain',
+    format: 'number',
+    isResetOnPrestige: false,
+  },
+  runTime: {
+    name: 'Time in this run',
+    format: 'duration',
+    isResetOnPrestige: true,
+  },
+  runClicks: {
+    name: 'Clicks in this run',
+    format: 'number',
+    isResetOnPrestige: true,
   },
 } satisfies Record<string, StatData>;
 

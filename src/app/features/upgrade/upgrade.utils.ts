@@ -52,7 +52,9 @@ export function calculateCosts(
 
   return tier.costs.map((cost) => ({
     resource: cost.resource,
-    value: calculateCostValue(cost, level - tier.fromLevel).divide(divider),
+    value: calculateCostValue(cost, level - tier.fromLevel)
+      .divide(divider)
+      .ceil(),
   }));
 }
 
@@ -77,9 +79,12 @@ function resolveBaseValue(
 }
 
 function calculateCostValue(cost: ResolvedCostFormula, levelInTier: number): ExponentNumber {
-  const growth = cost.growthValue.power(levelInTier);
-
-  return cost.growth === 'multiply'
-    ? cost.baseValue.multiply(growth)
-    : cost.baseValue.power(growth);
+  switch (cost.growth) {
+    case 'add':
+      return cost.baseValue.plus(cost.growthValue.multiply(levelInTier));
+    case 'multiply':
+      return cost.baseValue.multiply(cost.growthValue.power(levelInTier));
+    case 'power':
+      return cost.baseValue.power(cost.growthValue.power(levelInTier));
+  }
 }

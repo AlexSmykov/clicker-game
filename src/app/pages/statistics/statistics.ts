@@ -10,6 +10,7 @@ import { SaveService } from '../../features/save/save.service';
 import { STAT_DATA, STAT_KEYS } from '../../features/stat/stat.const';
 import { StatService } from '../../features/stat/stat.service';
 import { formatStat } from '../../features/stat/stat.utils';
+import { UnlockService } from '../../features/unlock/unlock.service';
 import { UpgradeStateService } from '../../features/upgrade/upgrade-state.service';
 import { UPGRADE_DATA, UPGRADE_KEYS } from '../../features/upgrade/upgrade.const';
 import { UpgradeService } from '../../features/upgrade/upgrade.service';
@@ -26,10 +27,11 @@ export default class Statistics {
   readonly #saveService = inject(SaveService);
   readonly #statService = inject(StatService);
   readonly #upgradeService = inject(UpgradeService);
+  readonly #unlockService = inject(UnlockService);
   readonly #upgradeStateService = inject(UpgradeStateService);
 
   readonly #unlockedUpgradeKeys = computed(() =>
-    UPGRADE_KEYS.filter((key) => this.#upgradeStateService.isUnlocked(key)),
+    UPGRADE_KEYS.filter((key) => this.#unlockService.isUpgradeUnlocked(key)),
   );
 
   protected readonly startedAt = this.#statService.startedAt;

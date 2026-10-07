@@ -5,6 +5,7 @@ import { PARAM_DATA } from '../../../param/param.const';
 import { ParamService } from '../../../param/param.service';
 import { formatParam } from '../../../param/param.utils';
 import { Resource } from '../../../resource/components/resource/resource';
+import { SettingService } from '../../../setting/setting.service';
 import { TAG_DATA } from '../../../tag/tag.const';
 import { UpgradeStateService } from '../../upgrade-state.service';
 import { UPGRADE_DATA } from '../../upgrade.const';
@@ -14,6 +15,7 @@ import { UpgradeEffectView } from './upgrade.type';
 
 const HOLD_DELAY_MS = 300;
 const HOLD_INTERVAL_MS = 50;
+const FAST_HOLD_INTERVAL_MS = 10;
 const PRIMARY_BUTTON = 0;
 
 @Component({
@@ -28,6 +30,7 @@ const PRIMARY_BUTTON = 0;
 })
 export class Upgrade {
   readonly #paramService = inject(ParamService);
+  readonly #settingService = inject(SettingService);
   readonly #upgradeService = inject(UpgradeService);
   readonly #upgradeStateService = inject(UpgradeStateService);
 
@@ -38,7 +41,17 @@ export class Upgrade {
 
   protected readonly data = computed((): UpgradeData => UPGRADE_DATA[this.key()]);
   protected readonly level = computed(() => this.#upgradeStateService.level(this.key()));
-  protected readonly maxLevel = computed(() => this.#upgradeService.maxLevel(this.key()));
+  protected readonly softcap = computed(() => this.#upgradeService.softcap(this.key()));
+
+  protected readonly softcapLabel = computed(() => {
+    const { index } = this.softcap();
+
+    if (index === 0) {
+      return null;
+    }
+
+    return index === 1 ? 'Softcapped' : `Softcapped x${index}`;
+  });
   protected readonly isMaxed = computed(() => this.#upgradeService.isMaxed(this.key()));
   protected readonly isAffordable = computed(() => this.#upgradeService.isAffordable(this.key()));
   protected readonly costs = computed(() => this.#upgradeService.costs(this.key()));
@@ -48,7 +61,7 @@ export class Upgrade {
     const source = this.#upgradeStateService.sources[this.key()];
     const isMaxed = this.isMaxed();
 
-    return this.#paramService.affectedParams(source).map((param) => {
+    return this.#paramService.shownParams(source).map((param) => {
       const { name, format } = PARAM_DATA[param];
 
       return {
@@ -78,10 +91,18 @@ export class Upgrade {
     this.stopBuying();
     this.buy();
 
+    if (!this.#settingService.isOn('buyUpgradesByHold')) {
+      return;
+    }
+
+    const interval = this.#settingService.isOn('fastBuyUpgradesByHold')
+      ? FAST_HOLD_INTERVAL_MS
+      : HOLD_INTERVAL_MS;
+
     this.#holdDelay = setTimeout(() => {
       this.#holdInterval = setInterval(() => {
         this.buy();
-      }, HOLD_INTERVAL_MS);
+      }, interval);
     }, HOLD_DELAY_MS);
   }
 

@@ -1,9 +1,8 @@
 <div class="filters">
   @for (tag of tags(); track tag.key) {
     <button
-      class="filter"
+      class="filter toggle-button"
       type="button"
-      [class.selected]="tag.isSelected"
       [attr.aria-label]="tag.name"
       [attr.aria-pressed]="tag.isSelected"
       [title]="tag.name"

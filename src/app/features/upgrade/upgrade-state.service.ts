@@ -11,10 +11,6 @@ export class UpgradeStateService implements EffectProvider {
 
   readonly #levels = mapKeys(UPGRADE_KEYS, () => signal(0));
 
-  readonly #unlocked = mapKeys(UPGRADE_KEYS, (key) =>
-    signal(this.#data[key].unlockConditions.length === 0),
-  );
-
   public readonly sources = mapKeys(UPGRADE_KEYS, (key): EffectSource => ({
     effects: this.#data[key].effects,
     level: this.#levels[key].asReadonly(),
@@ -26,38 +22,29 @@ export class UpgradeStateService implements EffectProvider {
     return this.#levels[key]();
   }
 
-  public isUnlocked(key: UpgradeKey): boolean {
-    return this.#unlocked[key]();
-  }
-
   public addLevel(key: UpgradeKey): void {
     this.#levels[key].update((level) => level + 1);
   }
 
+  public resetOnPrestige(): void {
+    for (const key of UPGRADE_KEYS) {
+      if (this.#data[key].isResetOnPrestige) {
+        this.#levels[key].set(0);
+      }
+    }
+  }
+
   public snapshot(): SavedUpgrades {
-    return mapKeys(UPGRADE_KEYS, (key) => ({
-      level: this.#levels[key](),
-      isUnlocked: this.#unlocked[key](),
-    }));
+    return mapKeys(UPGRADE_KEYS, (key) => ({ level: this.#levels[key]() }));
   }
 
   public restore(saved: SavedUpgrades): void {
     for (const key of UPGRADE_KEYS) {
       const savedUpgrade = saved[key];
 
-      if (!savedUpgrade) {
-        continue;
-      }
-
-      this.#levels[key].set(Math.max(0, Math.floor(savedUpgrade.level)));
-
-      if (savedUpgrade.isUnlocked) {
-        this.#unlocked[key].set(true);
+      if (savedUpgrade) {
+        this.#levels[key].set(Math.max(0, Math.floor(savedUpgrade.level)));
       }
     }
-  }
-
-  public unlock(key: UpgradeKey): void {
-    this.#unlocked[key].set(true);
   }
 }

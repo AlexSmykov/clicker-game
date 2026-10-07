@@ -20,3 +20,15 @@ button {
     outline-offset: 2px;
   }
 }
+
+.toggle-button {
+  border-color: var(--color-border-disabled);
+  color: var(--color-text-secondary);
+
+  &[aria-pressed='true'] {
+    border-color: var(--color-selected);
+    background-color: var(--color-background-medium);
+    box-shadow: 0 0 8px 1px inset rgb(from var(--color-selected) r g b / 0.6);
+    color: var(--color-selected);
+  }
+}

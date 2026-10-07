@@ -12,7 +12,7 @@ export class ResourceService {
 
   readonly #resourcesCurrentData = signal(
     mapKeys(RESOURCE_KEYS, (key): ResourceCurrentData => ({
-      isUnlocked: RESOURCE_DATA[key].isDefaultUnlocked,
+      isUnlocked: RESOURCE_DATA[key].unlockConditions.length === 0,
       value: ExponentNumber.ZERO,
     })),
   );
@@ -35,6 +35,16 @@ export class ResourceService {
 
     this.#update(key, (current) => ({ ...current, value: current.value.minus(spent) }));
     this.#eventService.emit('resourceSpent', { resource: key, amount: spent });
+  }
+
+  public resetOnPrestige(): void {
+    this.#resourcesCurrentData.update((data) =>
+      mapKeys(RESOURCE_KEYS, (key): ResourceCurrentData =>
+        RESOURCE_DATA[key].isResetOnPrestige
+          ? { ...data[key], value: ExponentNumber.ZERO }
+          : data[key],
+      ),
+    );
   }
 
   public snapshot(): SavedResources {

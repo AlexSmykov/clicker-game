@@ -9,7 +9,7 @@ export type ParamKey = keyof typeof PARAM_DATA;
 
 export type ParamData = ParamDefinition<ParamKey>;
 
-export type ParamFormat = 'divider' | 'multiplier' | 'plain' | 'power';
+export type ParamFormat = 'divider' | 'multiplier' | 'percent' | 'plain' | 'power';
 
 export type ParamDefinition<Key extends string> = ParamDescription &
   (ParamWithBaseValue | ParamWithFormula<Key>);
