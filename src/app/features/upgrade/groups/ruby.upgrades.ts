@@ -21,7 +21,7 @@ export const RUBY_UPGRADES = defineUpgrades({
         ],
       },
     ],
-    effects: [{ param: 'rubyShardChance', operation: 'add', value: 0.004 }],
+    effects: [{ param: 'rubyShardChance', operation: 'add', value: 0.0025 }],
   },
   bloodPolish: {
     name: 'Blood polish',
@@ -33,7 +33,7 @@ export const RUBY_UPGRADES = defineUpgrades({
     costTiers: [
       {
         levels: 10,
-        costs: [{ resource: 'rubyShards', baseValue: 5, growth: 'add', growthValue: 5 }],
+        costs: [{ resource: 'rubyShards', baseValue: 10, growth: 'add', growthValue: 10 }],
       },
       {
         levels: 15,

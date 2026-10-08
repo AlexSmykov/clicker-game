@@ -50,7 +50,7 @@ export const CRYSTAL_UPGRADES = defineUpgrades({
     costTiers: [
       {
         levels: 30,
-        costs: [{ resource: 'crystalShards', baseValue: 10, growth: 'multiply', growthValue: 1.5 }],
+        costs: [{ resource: 'crystalShards', baseValue: 25, growth: 'multiply', growthValue: 2 }],
       },
     ],
     effects: [{ param: 'shardsPerDrop', operation: 'add', value: 1 }],
@@ -65,7 +65,7 @@ export const CRYSTAL_UPGRADES = defineUpgrades({
     costTiers: [
       {
         levels: 30,
-        costs: [{ resource: 'crystalShards', baseValue: 5, growth: 'multiply', growthValue: 2.2 }],
+        costs: [{ resource: 'crystalShards', baseValue: 5, growth: 'multiply', growthValue: 1.7 }],
       },
     ],
     effects: [{ param: 'moneyBonusMultiplier', operation: 'multiply', value: 1.5 }],
@@ -80,14 +80,16 @@ export const CRYSTAL_UPGRADES = defineUpgrades({
     costTiers: [
       {
         levels: 25,
-        costs: [{ resource: 'crystalShards', baseValue: 20, growth: 'multiply', growthValue: 2 }],
+        costs: [
+          { resource: 'crystalShards', baseValue: 25, growth: 'multiply', growthValue: 1.25 },
+        ],
       },
     ],
     effects: [{ param: 'moneyUpgradeCostDivider', operation: 'multiply', value: 1.25 }],
   },
   fusion: {
     name: 'Fusion',
-    description: 'A dropped shard turns into a whole crystal more often',
+    description: 'Whole crystals drop more often',
     isResetOnPrestige: true,
     tags: ['crystals'],
     unlockConditions: [{ type: 'treeNode', node: 'crystals' }],
@@ -98,7 +100,7 @@ export const CRYSTAL_UPGRADES = defineUpgrades({
         costs: [{ resource: 'crystalShards', baseValue: 250, growth: 'multiply', growthValue: 2 }],
       },
     ],
-    effects: [{ param: 'crystalStoneChance', operation: 'add', value: 0.0025 }],
+    effects: [{ param: 'crystalChance', operation: 'add', value: 0.0005 }],
   },
   crystalLens: {
     name: 'Crystal lens',

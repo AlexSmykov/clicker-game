@@ -13,7 +13,6 @@ interface StoneDrop {
   shard: ResourceKey;
   stone: ResourceKey;
   shardChance: ParamKey;
-  shardChanceForStone: ParamKey;
   stoneChance: ParamKey;
   shardsPerDrop: ParamKey;
 }
@@ -22,8 +21,7 @@ const CRYSTAL_DROP: StoneDrop = {
   shard: 'crystalShards',
   stone: 'crystals',
   shardChance: 'crystalShardTotalChance',
-  shardChanceForStone: 'crystalShardBaseChance',
-  stoneChance: 'crystalStoneChance',
+  stoneChance: 'crystalChance',
   shardsPerDrop: 'shardsPerDrop',
 };
 
@@ -31,8 +29,7 @@ const RUBY_DROP: StoneDrop = {
   shard: 'rubyShards',
   stone: 'rubies',
   shardChance: 'rubyShardChance',
-  shardChanceForStone: 'rubyShardChance',
-  stoneChance: 'rubyStoneChance',
+  stoneChance: 'rubyChance',
   shardsPerDrop: 'rubyShardsPerDrop',
 };
 
@@ -70,37 +67,13 @@ export class ClickService {
   }
 
   #rollDrop(drop: StoneDrop): ExponentNumber {
-    const shardChance = this.#paramService.value(drop.shardChance);
-
-    if (shardChance.isZero()) {
-      return ExponentNumber.ZERO;
-    }
-
-    const shardDrops = rollCount(shardChance);
+    const shardDrops = rollCount(this.#paramService.value(drop.shardChance));
     const shardsPerDrop = this.#paramService.value(drop.shardsPerDrop);
 
     this.#gain(drop.shard, rollCount(shardDrops.multiply(shardsPerDrop)));
-    this.#gain(drop.stone, this.#rollStones(drop, shardChance, shardDrops));
+    this.#gain(drop.stone, rollCount(this.#paramService.value(drop.stoneChance)));
 
     return shardDrops;
-  }
-
-  #rollStones(
-    drop: StoneDrop,
-    shardChance: ExponentNumber,
-    shardDrops: ExponentNumber,
-  ): ExponentNumber {
-    const stoneChancePerClick = this.#paramService
-      .value(drop.shardChanceForStone)
-      .multiply(this.#paramService.value(drop.stoneChance));
-
-    if (shardChance.isGreaterThanValue(1)) {
-      return rollCount(stoneChancePerClick);
-    }
-
-    return shardDrops.isZero()
-      ? ExponentNumber.ZERO
-      : rollCount(stoneChancePerClick.divide(shardChance));
   }
 
   #rollCrystalDropBonuses(crystalShardDrops: ExponentNumber, moneyPerClick: ExponentNumber): void {

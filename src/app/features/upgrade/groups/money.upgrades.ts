@@ -13,8 +13,8 @@ export const MONEY_UPGRADES = defineUpgrades({
         levels: 50,
         costs: [{ resource: 'money', baseValue: 10, growth: 'multiply', growthValue: 1.6 }],
       },
-      { levels: 100, costs: [{ resource: 'money', growth: 'multiply', growthValue: 2.5 }] },
-      { levels: 350, costs: [{ resource: 'money', growth: 'multiply', growthValue: 5 }] },
+      { levels: 50, costs: [{ resource: 'money', growth: 'multiply', growthValue: 4 }] },
+      { levels: 100, costs: [{ resource: 'money', growth: 'multiply', growthValue: 16 }] },
     ],
     effects: [
       { param: 'moneyMultiplier', operation: 'add', value: { param: 'moneyMultiplierIncrement' } },
@@ -37,7 +37,7 @@ export const MONEY_UPGRADES = defineUpgrades({
         levels: 20,
         costs: [{ resource: 'money', baseValue: 500, growth: 'multiply', growthValue: 25 }],
       },
-      { levels: 30, costs: [{ resource: 'money', growth: 'multiply', growthValue: 300 }] },
+      { levels: 20, costs: [{ resource: 'money', growth: 'multiply', growthValue: 300 }] },
     ],
     effects: [{ param: 'moneyMultiplierIncrement', operation: 'multiply', value: 2 }],
   },
@@ -54,7 +54,7 @@ export const MONEY_UPGRADES = defineUpgrades({
         costs: [{ resource: 'money', baseValue: 5000, growth: 'multiply', growthValue: 4 }],
       },
       { levels: 30, costs: [{ resource: 'money', growth: 'multiply', growthValue: 8 }] },
-      { levels: 50, costs: [{ resource: 'money', growth: 'multiply', growthValue: 20 }] },
+      { levels: 50, costs: [{ resource: 'money', growth: 'multiply', growthValue: 50 }] },
     ],
     effects: [{ param: 'critChance', operation: 'add', value: 0.01 }],
   },
@@ -67,11 +67,11 @@ export const MONEY_UPGRADES = defineUpgrades({
     costDividers: ['upgradeCostDivider', 'moneyUpgradeCostDivider'],
     costTiers: [
       {
-        levels: 30,
+        levels: 20,
         costs: [{ resource: 'money', baseValue: 50_000, growth: 'multiply', growthValue: 5 }],
       },
-      { levels: 40, costs: [{ resource: 'money', growth: 'multiply', growthValue: 10 }] },
-      { levels: 80, costs: [{ resource: 'money', growth: 'multiply', growthValue: 25 }] },
+      { levels: 30, costs: [{ resource: 'money', growth: 'multiply', growthValue: 20 }] },
+      { levels: 100, costs: [{ resource: 'money', growth: 'multiply', growthValue: 100 }] },
     ],
     effects: [{ param: 'critMultiplier', operation: 'add', value: 0.05 }],
   },
@@ -99,8 +99,16 @@ export const MONEY_UPGRADES = defineUpgrades({
     costDividers: ['upgradeCostDivider', 'moneyUpgradeCostDivider'],
     costTiers: [
       {
-        levels: 20,
-        costs: [{ resource: 'money', baseValue: 1e6, growth: 'power', growthValue: 1.4 }],
+        levels: 5,
+        costs: [{ resource: 'money', baseValue: 1e12, growth: 'power', growthValue: 1.4 }],
+      },
+      {
+        levels: 5,
+        costs: [{ resource: 'money', growth: 'power', growthValue: 1.7 }],
+      },
+      {
+        levels: 10,
+        costs: [{ resource: 'money', growth: 'power', growthValue: 2.2 }],
       },
     ],
     effects: [{ param: 'moneyPower', operation: 'add', value: 0.05 }],

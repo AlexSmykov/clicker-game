@@ -33,7 +33,7 @@ export const STARDUST_UPGRADES = defineUpgrades({
   },
   cosmicPrism: {
     name: 'Cosmic prism',
-    description: 'A dropped shard turns into a whole crystal more often',
+    description: 'Whole crystals drop more often',
     isResetOnPrestige: false,
     tags: ['crystals', 'stardust'],
     unlockConditions: [{ type: 'treeNode', node: 'observatory' }],
@@ -44,7 +44,7 @@ export const STARDUST_UPGRADES = defineUpgrades({
         costs: [{ resource: 'stardust', baseValue: 500, growth: 'multiply', growthValue: 1.5 }],
       },
     ],
-    effects: [{ param: 'crystalStoneChance', operation: 'multiply', value: 1.05 }],
+    effects: [{ param: 'crystalChance', operation: 'multiply', value: 1.05 }],
   },
   darkMatter: {
     name: 'Dark matter',
@@ -78,7 +78,7 @@ export const STARDUST_UPGRADES = defineUpgrades({
   },
   rubyHeart: {
     name: 'Ruby heart',
-    description: 'A dropped shard turns into a whole ruby more often',
+    description: 'Whole rubies drop more often',
     isResetOnPrestige: false,
     tags: ['rubies', 'stardust'],
     unlockConditions: [{ type: 'treeNode', node: 'redSky' }],
@@ -89,7 +89,7 @@ export const STARDUST_UPGRADES = defineUpgrades({
         costs: [{ resource: 'stardust', baseValue: 10_000, growth: 'multiply', growthValue: 1.6 }],
       },
     ],
-    effects: [{ param: 'rubyStoneChance', operation: 'multiply', value: 1.05 }],
+    effects: [{ param: 'rubyChance', operation: 'multiply', value: 1.05 }],
   },
   nebula: {
     name: 'Nebula',

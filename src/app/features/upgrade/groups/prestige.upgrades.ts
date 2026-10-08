@@ -18,7 +18,7 @@ export const PRESTIGE_UPGRADES = defineUpgrades({
         costs: [{ resource: 'prestigePoints', growth: 'multiply', growthValue: 1.5 }],
       },
     ],
-    effects: [{ param: 'legacyFactor', operation: 'add', value: 0.1 }],
+    effects: [{ param: 'legacyFactor', operation: 'add', value: 1 }],
   },
   deepPockets: {
     name: 'Deep pockets',

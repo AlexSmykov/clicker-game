@@ -284,12 +284,6 @@ export const PARAM_DATA = defineParams({
     format: 'multiplier',
     baseValue: 1,
   },
-  crystalShardBaseChance: {
-    name: 'Crystal shard chance without held shards',
-    format: 'percent',
-    formula: ({ param }) =>
-      param('crystalShardChance').multiply(param('crystalShardChanceMultiplier')),
-  },
   crystalShardTotalChance: {
     name: 'Crystal shard chance',
     format: 'percent',
@@ -300,30 +294,20 @@ export const PARAM_DATA = defineParams({
             .plus(param('crystalShardSelfBonus'))
             .multiply(param('crystalShardChanceMultiplier')),
   },
-  crystalStoneChance: {
-    name: 'Shard to crystal chance',
+  crystalChance: {
+    name: 'Crystal chance',
     format: 'percent',
     baseValue: 0,
-  },
-  crystalChance: {
-    name: 'Crystal chance per click',
-    format: 'percent',
-    formula: ({ param }) => param('crystalShardBaseChance').multiply(param('crystalStoneChance')),
   },
   rubyShardChance: {
     name: 'Ruby shard chance',
     format: 'percent',
     baseValue: 0,
   },
-  rubyStoneChance: {
-    name: 'Shard to ruby chance',
+  rubyChance: {
+    name: 'Ruby chance',
     format: 'percent',
     baseValue: 0,
-  },
-  rubyChance: {
-    name: 'Ruby chance per click',
-    format: 'percent',
-    formula: ({ param }) => param('rubyShardChance').multiply(param('rubyStoneChance')),
   },
   upgradeCostPower: {
     name: 'Upgrade cost power',

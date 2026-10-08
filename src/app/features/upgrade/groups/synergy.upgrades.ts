@@ -12,8 +12,8 @@ export const SYNERGY_UPGRADES = defineUpgrades({
       {
         levels: 20,
         costs: [
-          { resource: 'money', baseValue: 10_000, growth: 'multiply', growthValue: 3 },
-          { resource: 'crystalShards', baseValue: 5, growth: 'multiply', growthValue: 1.5 },
+          { resource: 'money', baseValue: 10_000, growth: 'multiply', growthValue: 9 },
+          { resource: 'crystalShards', baseValue: 25, growth: 'multiply', growthValue: 1.25 },
         ],
       },
     ],
@@ -30,19 +30,19 @@ export const SYNERGY_UPGRADES = defineUpgrades({
       {
         levels: 10,
         costs: [
-          { resource: 'money', baseValue: 1e6, growth: 'multiply', growthValue: 4 },
-          { resource: 'rubyShards', baseValue: 1, growth: 'add', growthValue: 1 },
+          { resource: 'money', baseValue: 1e10, growth: 'multiply', growthValue: 20 },
+          { resource: 'rubyShards', baseValue: 10, growth: 'add', growthValue: 10 },
         ],
       },
       {
         levels: 5,
         costs: [
-          { resource: 'money', growth: 'multiply', growthValue: 4 },
+          { resource: 'money', growth: 'power', growthValue: 1.3 },
           { resource: 'rubyShards', growth: 'multiply', growthValue: 1.4 },
         ],
       },
     ],
-    effects: [{ param: 'rubyShardsPerDrop', operation: 'add', value: 0.1 }],
+    effects: [{ param: 'rubyShardsPerDrop', operation: 'add', value: 0.5 }],
   },
   twinVeins: {
     name: 'Twin veins',
@@ -56,7 +56,7 @@ export const SYNERGY_UPGRADES = defineUpgrades({
         levels: 10,
         costs: [
           { resource: 'crystalShards', baseValue: 50, growth: 'multiply', growthValue: 1.6 },
-          { resource: 'rubyShards', baseValue: 1, growth: 'add', growthValue: 1 },
+          { resource: 'rubyShards', baseValue: 2, growth: 'add', growthValue: 2 },
         ],
       },
       {
@@ -67,6 +67,6 @@ export const SYNERGY_UPGRADES = defineUpgrades({
         ],
       },
     ],
-    effects: [{ param: 'twinVeinChance', operation: 'add', value: 0.005 }],
+    effects: [{ param: 'twinVeinChance', operation: 'add', value: 0.0025 }],
   },
 });
