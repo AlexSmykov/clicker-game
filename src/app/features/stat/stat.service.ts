@@ -6,6 +6,7 @@ import { mapKeys } from '../../core/utils/record.utils';
 import { EventService } from '../event/event.service';
 import { RESOURCE_KEYS } from '../resource/resource.const';
 import { ResourceKey } from '../resource/resource.type';
+import { AchievementCondition } from '../unlock/unlock.type';
 import { STAT_DATA, STAT_KEYS } from './stat.const';
 import { SavedStats, SavedStatValues, StatData, StatKey } from './stat.type';
 
@@ -114,6 +115,16 @@ export class StatService {
 
   public resourceSpent(key: ResourceKey): ExponentNumber {
     return this.#resourcesSpent[key]();
+  }
+
+  public conditionProgress(condition: AchievementCondition): ExponentNumber {
+    return condition.type === 'stat'
+      ? this.value(condition.stat)
+      : this.resourceEarned(condition.resource);
+  }
+
+  public isConditionMet(condition: AchievementCondition): boolean {
+    return this.conditionProgress(condition).isGreaterThanOrEqualValue(condition.amount);
   }
 
   public snapshot(): SavedStats {

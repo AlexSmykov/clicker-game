@@ -30,9 +30,10 @@ interface AppliedEffect {
 export class ParamService {
   readonly #resourceService = inject(ResourceService);
   readonly #statService = inject(StatService);
+  readonly #treeService = inject(TreeService);
   readonly #providers: EffectProvider[] = [
     inject(UpgradeStateService),
-    inject(TreeService),
+    this.#treeService,
     inject(ModifierService),
   ];
 
@@ -44,6 +45,12 @@ export class ParamService {
 
   readonly #readResource = (key: ResourceKey): ExponentNumber =>
     this.#resourceService.resourcesCurrentData()[key].value;
+
+  readonly #readResourceEarned = (key: ResourceKey): ExponentNumber =>
+    this.#statService.resourceEarned(key);
+
+  readonly #readBoughtTreeNodes = (): ExponentNumber =>
+    ExponentNumber.from(this.#treeService.connectedCount());
 
   readonly #values = mapKeys(PARAM_KEYS, (key) =>
     computed(() => this.#calculate(key, this.#readValue), {
@@ -96,6 +103,7 @@ export class ParamService {
 
   #calculate(key: ParamKey, read: ParamReader, boostedSource?: EffectSource): ExponentNumber {
     let added = this.#baseValue(PARAM_DATA[key], read);
+    let subtracted = ExponentNumber.ZERO;
     let multiplier = ExponentNumber.ONE;
     let exponent = ExponentNumber.ONE;
 
@@ -118,15 +126,24 @@ export class ParamService {
         case 'power':
           exponent = exponent.plus(value.multiply(level));
           break;
+        case 'subtract':
+          subtracted = subtracted.plus(value.multiply(level));
+          break;
       }
     }
 
-    return added.multiply(multiplier).power(exponent);
+    return added.minus(subtracted).multiply(multiplier).power(exponent);
   }
 
   #baseValue(data: ParamData, read: ParamReader): ExponentNumber {
     return 'formula' in data
-      ? data.formula({ param: read, resource: this.#readResource, stat: this.#readStat })
+      ? data.formula({
+          param: read,
+          resource: this.#readResource,
+          resourceEarned: this.#readResourceEarned,
+          stat: this.#readStat,
+          boughtTreeNodes: this.#readBoughtTreeNodes,
+        })
       : ExponentNumber.from(data.baseValue);
   }
 

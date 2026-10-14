@@ -30,10 +30,12 @@ export interface ParamWithFormula<Key extends string> {
 export interface FormulaContext<Key extends string> {
   param: (key: Key) => ExponentNumber;
   resource: (key: ResourceKey) => ExponentNumber;
+  resourceEarned: (key: ResourceKey) => ExponentNumber;
+  boughtTreeNodes: () => ExponentNumber;
   stat: (key: StatKey) => ExponentNumber;
 }
 
-export type EffectOperation = 'add' | 'multiply' | 'power';
+export type EffectOperation = 'add' | 'multiply' | 'power' | 'subtract';
 
 export type EffectValue = number | string | { param: ParamKey };
 

@@ -1,5 +1,6 @@
 import type { Effect } from '../param/param.type';
 import type { ResourceKey } from '../resource/resource.type';
+import type { AchievementCondition } from '../unlock/unlock.type';
 import type { TREE_NODE_DATA } from './tree.const';
 
 export type TreeNodeKey = keyof typeof TREE_NODE_DATA;
@@ -24,6 +25,7 @@ export interface TreeNodeDefinition<Key extends string> {
   iconPath: string;
   position: TreeNodePosition;
   requires: Key[];
+  unlockConditions: AchievementCondition[];
   costs: TreeNodeCost[];
   isResetOnPrestige: boolean;
   effects: Effect[];

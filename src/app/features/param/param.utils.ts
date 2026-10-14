@@ -49,6 +49,10 @@ export function formatEffect(effect: Effect, value: ExponentNumber, format: Para
       return `x${value.toString()}`;
     case 'power':
       return `^${value.plus(1).toString()}`;
+    case 'subtract':
+      return format === 'percent'
+        ? `-${value.multiply(PERCENT_SCALE).toString()}%`
+        : `-${value.toString()}`;
   }
 }
 

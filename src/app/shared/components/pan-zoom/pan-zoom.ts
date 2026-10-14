@@ -1,10 +1,17 @@
-import { afterNextRender, Component, computed, ElementRef, inject, signal } from '@angular/core';
+import {
+  afterNextRender,
+  Component,
+  computed,
+  ElementRef,
+  inject,
+  model,
+  signal,
+} from '@angular/core';
 
-interface Point {
-  x: number;
-  y: number;
-}
+import { PanZoomView, PanZoomPoint as Point } from './pan-zoom.type';
 
+const ORIGIN: Point = { x: 0, y: 0 };
+const DEFAULT_SCALE = 1;
 const MIN_SCALE = 0.4;
 const MAX_SCALE = 2.5;
 const DRAG_THRESHOLD_PX = 5;
@@ -29,11 +36,13 @@ export class PanZoom {
   readonly #element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
 
   readonly #pointers = new Map<number, Point>();
-  readonly #offset = signal<Point>({ x: 0, y: 0 });
-  readonly #scale = signal(1);
+  readonly #offset = computed(() => this.view()?.offset ?? ORIGIN);
+  readonly #scale = computed(() => this.view()?.scale ?? DEFAULT_SCALE);
 
   #travelledDistance = 0;
   #isClickSuppressed = false;
+
+  public readonly view = model<PanZoomView | null>(null);
 
   protected readonly isDragging = signal(false);
 
@@ -45,7 +54,9 @@ export class PanZoom {
 
   constructor() {
     afterNextRender(() => {
-      this.reset();
+      if (this.view() === null) {
+        this.reset();
+      }
     });
 
     this.#element.addEventListener(
@@ -62,8 +73,7 @@ export class PanZoom {
   }
 
   protected reset(): void {
-    this.#scale.set(1);
-    this.#offset.set(this.#center());
+    this.view.set({ offset: this.#center(), scale: DEFAULT_SCALE });
   }
 
   protected zoomBy(factor: number): void {
@@ -144,19 +154,21 @@ export class PanZoom {
   }
 
   #moveBy(deltaX: number, deltaY: number): void {
-    this.#offset.update(({ x, y }) => ({ x: x + deltaX, y: y + deltaY }));
+    const { x, y } = this.#offset();
+
+    this.view.set({ offset: { x: x + deltaX, y: y + deltaY }, scale: this.#scale() });
   }
 
   #zoomAt(point: Point, factor: number): void {
     const scale = this.#scale();
     const nextScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale * factor));
     const ratio = nextScale / scale;
+    const { x, y } = this.#offset();
 
-    this.#scale.set(nextScale);
-    this.#offset.update(({ x, y }) => ({
-      x: point.x - (point.x - x) * ratio,
-      y: point.y - (point.y - y) * ratio,
-    }));
+    this.view.set({
+      offset: { x: point.x - (point.x - x) * ratio, y: point.y - (point.y - y) * ratio },
+      scale: nextScale,
+    });
   }
 
   #center(): Point {

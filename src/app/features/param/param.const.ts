@@ -8,6 +8,11 @@ const SELF_BOOST_MIN_AMOUNT = 10;
 const STARTING_CAPITAL_BASE = 10;
 const MARATHON_CLICKS_STEP = 100;
 const MARATHON_SECONDS_STEP = 60;
+const MUSCLE_MEMORY_POWER = 3;
+const COLLECTOR_FACTOR = 1.25;
+const EXPERIENCE_FACTOR = 0.1;
+const BLOODLUST_CRITS_STEP = 2000;
+const BLOODLUST_POWER = 0.25;
 
 export const PARAM_DATA = defineParams({
   moneyMultiplier: {
@@ -199,6 +204,35 @@ export const PARAM_DATA = defineParams({
           ),
         ),
   },
+  crownJewelsMultiplier: {
+    name: 'Money multiplier from earned rubies',
+    format: 'multiplier',
+    formula: ({ resourceEarned }) => ExponentNumber.max(1, resourceEarned('rubies')),
+  },
+  muscleMemoryMultiplier: {
+    name: 'Money multiplier from all clicks',
+    format: 'multiplier',
+    formula: ({ stat }) =>
+      stat('clicks').isLessThanValue(SELF_BOOST_MIN_AMOUNT)
+        ? ExponentNumber.ONE
+        : stat('clicks').log10().power(MUSCLE_MEMORY_POWER),
+  },
+  collectorMultiplier: {
+    name: 'Money multiplier from bought tree nodes',
+    format: 'multiplier',
+    formula: ({ boughtTreeNodes }) =>
+      ExponentNumber.from(COLLECTOR_FACTOR).power(boughtTreeNodes()),
+  },
+  experienceMultiplier: {
+    name: 'Prestige points multiplier from prestiges',
+    format: 'multiplier',
+    formula: ({ stat }) => stat('prestiges').multiply(EXPERIENCE_FACTOR).plus(1),
+  },
+  bloodlustBonus: {
+    name: 'Critical click multiplier from all critical clicks',
+    format: 'plain',
+    formula: ({ stat }) => stat('crits').divide(BLOODLUST_CRITS_STEP).power(BLOODLUST_POWER),
+  },
   moneyPerClick: {
     name: 'Income per click',
     format: 'plain',
@@ -255,6 +289,11 @@ export const PARAM_DATA = defineParams({
     name: 'Ruby shard chance per crystal shard drop',
     format: 'percent',
     baseValue: 0,
+  },
+  twinVeinShardsPerDrop: {
+    name: 'Ruby shards per twin vein drop',
+    format: 'multiplier',
+    baseValue: 1,
   },
   rubyShardsPerDrop: {
     name: 'Ruby shards per drop',

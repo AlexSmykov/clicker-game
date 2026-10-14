@@ -8,7 +8,10 @@ import { formatEffect } from '../../features/param/param.utils';
 import { Resource } from '../../features/resource/components/resource/resource';
 import { RESOURCE_DATA, RESOURCE_KEYS } from '../../features/resource/resource.const';
 import { SettingService } from '../../features/setting/setting.service';
+import { STAT_DATA } from '../../features/stat/stat.const';
+import { StatService } from '../../features/stat/stat.service';
 import { TreeNode } from '../../features/tree/components/tree-node/tree-node';
+import { TreeViewService } from '../../features/tree/tree-view.service';
 import { TREE_NODE_DATA, TREE_NODE_KEYS } from '../../features/tree/tree.const';
 import { TreeService } from '../../features/tree/tree.service';
 import {
@@ -17,7 +20,7 @@ import {
   TreeNodePosition,
   TreeNodeStatus,
 } from '../../features/tree/tree.type';
-import { UnlockCondition } from '../../features/unlock/unlock.type';
+import { AchievementCondition, UnlockCondition } from '../../features/unlock/unlock.type';
 import { UPGRADE_DATA, UPGRADE_KEYS } from '../../features/upgrade/upgrade.const';
 import { UpgradeKey } from '../../features/upgrade/upgrade.type';
 import { PanZoom } from '../../shared/components/pan-zoom/pan-zoom';
@@ -63,7 +66,10 @@ const STATUS_LABELS: Record<TreeNodeStatus, string> = {
 export default class UpgradeTree {
   readonly #paramService = inject(ParamService);
   readonly #settingService = inject(SettingService);
+  readonly #statService = inject(StatService);
   readonly #treeService = inject(TreeService);
+
+  protected readonly view = inject(TreeViewService).view;
 
   protected readonly isIconsHidden = computed(() => this.#settingService.isOn('hideTreeIcons'));
   protected readonly isPathsHidden = computed(() => this.#settingService.isOn('hideTreePaths'));
@@ -136,6 +142,12 @@ export default class UpgradeTree {
         value: ExponentNumber.from(cost.amount),
       })),
       unlocks: this.#unlocks[key],
+      conditions: data.unlockConditions.map((condition, index) => ({
+        id: index,
+        name: this.#conditionName(condition),
+        progress: `${this.#statService.conditionProgress(condition).floor().toString()} / ${ExponentNumber.from(condition.amount).toString()}`,
+        isMet: this.#statService.isConditionMet(condition),
+      })),
       effects: data.effects.map((effect, index) => ({
         id: index,
         name: PARAM_DATA[effect.param].name,
@@ -174,6 +186,12 @@ export default class UpgradeTree {
     };
   }
 
+  #conditionName(condition: AchievementCondition): string {
+    return condition.type === 'stat'
+      ? STAT_DATA[condition.stat].name
+      : `${RESOURCE_DATA[condition.resource].name} earned`;
+  }
+
   #center(key: TreeNodeKey): TreeNodePosition {
     return {
       x: this.#data[key].position.x * CELL_SIZE_PX,
@@ -192,7 +210,19 @@ export default class UpgradeTree {
   }
 
   protected select(key: TreeNodeKey): void {
-    this.#selectedKey.update((selectedKey) => (selectedKey === key ? null : key));
+    if (this.#selectedKey() !== key) {
+      this.#selectedKey.set(key);
+
+      return;
+    }
+
+    if (this.#treeService.isAffordable(key)) {
+      this.#treeService.buy(key);
+
+      return;
+    }
+
+    this.#selectedKey.set(null);
   }
 
   protected close(): void {

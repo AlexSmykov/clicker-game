@@ -1,4 +1,5 @@
 import type { ResourceKey } from '../resource/resource.type';
+import type { StatKey } from '../stat/stat.type';
 import type { TreeNodeKey } from '../tree/tree.type';
 
 export interface ResourceUnlockCondition {
@@ -12,6 +13,14 @@ export interface ResourceEarnedUnlockCondition {
   resource: ResourceKey;
   amount: number | string;
 }
+
+export interface StatUnlockCondition {
+  type: 'stat';
+  stat: StatKey;
+  amount: number | string;
+}
+
+export type AchievementCondition = ResourceEarnedUnlockCondition | StatUnlockCondition;
 
 export interface TreeNodeUnlockCondition {
   type: 'treeNode';
@@ -27,5 +36,6 @@ export interface UpgradeLevelUnlockCondition<UpgradeKey extends string> {
 export type UnlockCondition<UpgradeKey extends string> =
   | ResourceEarnedUnlockCondition
   | ResourceUnlockCondition
+  | StatUnlockCondition
   | TreeNodeUnlockCondition
   | UpgradeLevelUnlockCondition<UpgradeKey>;

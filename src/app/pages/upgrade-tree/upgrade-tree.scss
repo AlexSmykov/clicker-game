@@ -127,6 +127,14 @@
   font: var(--font-hint-bold);
 }
 
+.condition {
+  color: var(--color-text-secondary);
+
+  &.met {
+    color: var(--color-tree-bought);
+  }
+}
+
 .costs {
   display: flex;
   flex-direction: row;

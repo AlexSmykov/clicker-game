@@ -53,9 +53,8 @@ export class UnlockService {
       case 'resource':
         return this.#resourceService.canAfford(condition.resource, condition.amount);
       case 'resourceEarned':
-        return this.#statService
-          .resourceEarned(condition.resource)
-          .isGreaterThanOrEqualValue(condition.amount);
+      case 'stat':
+        return this.#statService.isConditionMet(condition);
       case 'treeNode':
         return this.#treeService.isBought(condition.node);
       case 'upgradeLevel':

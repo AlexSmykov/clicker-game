@@ -5,6 +5,7 @@ import { EventService } from '../event/event.service';
 import { EffectProvider, EffectSource } from '../param/param.type';
 import { ResourceService } from '../resource/resource.service';
 import { SettingService } from '../setting/setting.service';
+import { StatService } from '../stat/stat.service';
 import { TREE_NODE_DATA, TREE_NODE_KEYS } from './tree.const';
 import { SavedTree, TreeNodeData, TreeNodeKey, TreeNodeStatus } from './tree.type';
 
@@ -13,6 +14,7 @@ export class TreeService implements EffectProvider {
   readonly #eventService = inject(EventService);
   readonly #resourceService = inject(ResourceService);
   readonly #settingService = inject(SettingService);
+  readonly #statService = inject(StatService);
 
   readonly #data: Record<TreeNodeKey, TreeNodeData> = TREE_NODE_DATA;
 
@@ -56,9 +58,10 @@ export class TreeService implements EffectProvider {
       () =>
         this.#statuses[key]() === 'available' &&
         (this.#settingService.isOn('freeTreeNodes') ||
-          this.#data[key].costs.every((cost) =>
-            this.#resourceService.canAfford(cost.resource, cost.amount),
-          )),
+          (this.#areConditionsMet(key) &&
+            this.#data[key].costs.every((cost) =>
+              this.#resourceService.canAfford(cost.resource, cost.amount),
+            ))),
     ),
   );
 
@@ -68,6 +71,10 @@ export class TreeService implements EffectProvider {
   }));
 
   public readonly effectSources = Object.values(this.sources);
+
+  public readonly connectedCount = computed(
+    () => TREE_NODE_KEYS.filter((key) => this.#connected[key]()).length,
+  );
 
   public isBought(key: TreeNodeKey): boolean {
     return this.#bought[key]();
@@ -116,6 +123,12 @@ export class TreeService implements EffectProvider {
     for (const key of TREE_NODE_KEYS) {
       this.#bought[key].set(saved[key] === true);
     }
+  }
+
+  #areConditionsMet(key: TreeNodeKey): boolean {
+    return this.#data[key].unlockConditions.every((condition) =>
+      this.#statService.isConditionMet(condition),
+    );
   }
 
   #areRequirementsConnected(key: TreeNodeKey): boolean {

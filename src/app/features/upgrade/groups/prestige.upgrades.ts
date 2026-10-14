@@ -58,6 +58,25 @@ export const PRESTIGE_UPGRADES = defineUpgrades({
     ],
     effects: [{ param: 'upgradeCostDivider', operation: 'multiply', value: 1.5 }],
   },
+  ascension: {
+    name: 'Ascension',
+    description: 'Raise your money income to a higher power',
+    isResetOnPrestige: false,
+    tags: ['money', 'prestige'],
+    unlockConditions: [{ type: 'treeNode', node: 'ambition' }],
+    costDividers: [],
+    costTiers: [
+      {
+        levels: 10,
+        costs: [{ resource: 'prestigePoints', baseValue: 2, growth: 'add', growthValue: 2 }],
+      },
+      {
+        levels: 40,
+        costs: [{ resource: 'prestigePoints', growth: 'multiply', growthValue: 1.2 }],
+      },
+    ],
+    effects: [{ param: 'moneyPower', operation: 'add', value: 0.01 }],
+  },
   negotiator: {
     name: 'Negotiator',
     description: 'Lower the logarithm base of prestige points',
@@ -68,13 +87,13 @@ export const PRESTIGE_UPGRADES = defineUpgrades({
     costTiers: [
       {
         levels: 4,
-        costs: [{ resource: 'prestigePoints', baseValue: 50, growth: 'add', growthValue: 50 }],
+        costs: [{ resource: 'prestigePoints', baseValue: 25, growth: 'add', growthValue: 25 }],
       },
       {
-        levels: 6,
+        levels: 4,
         costs: [{ resource: 'prestigePoints', growth: 'multiply', growthValue: 2 }],
       },
     ],
-    effects: [{ param: 'prestigePointsLogBase', operation: 'multiply', value: 0.95 }],
+    effects: [{ param: 'prestigePointsLogBase', operation: 'subtract', value: 1 }],
   },
 });

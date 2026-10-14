@@ -1,4 +1,4 @@
-<app-pan-zoom class="viewport">
+<app-pan-zoom class="viewport" [(view)]="view">
   <svg class="lines" aria-hidden="true" [class.hidden]="isPathsHidden()">
     @for (line of lines(); track line.id) {
       <line
@@ -61,6 +61,13 @@
     }
 
     @if (!node.isBought) {
+      @for (condition of node.conditions; track condition.id) {
+        <p class="effect condition" [class.met]="condition.isMet">
+          <span class="effect-name">Requires: {{ condition.name }}</span>
+          <span class="effect-value">{{ condition.progress }}</span>
+        </p>
+      }
+
       <div class="costs">
         @for (cost of node.costs; track cost.resource) {
           <app-resource [key]="cost.resource" [value]="cost.value" [isShort]="true" />

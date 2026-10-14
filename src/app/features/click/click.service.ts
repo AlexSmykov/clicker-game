@@ -89,7 +89,11 @@ export class ClickService {
     );
     this.#gain(
       'rubyShards',
-      rollCount(crystalShardDrops.multiply(this.#paramService.value('twinVeinChance'))),
+      rollCount(
+        crystalShardDrops
+          .multiply(this.#paramService.value('twinVeinChance'))
+          .multiply(this.#paramService.value('twinVeinShardsPerDrop')),
+      ),
     );
   }
 

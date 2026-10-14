@@ -1,5 +1,6 @@
 import { keysOf } from '../../core/utils/record.utils';
 import { CRYSTAL_UPGRADES } from './groups/crystal.upgrades';
+import { GEM_UPGRADES } from './groups/gem.upgrades';
 import { LOGARITHM_UPGRADES } from './groups/logarithm.upgrades';
 import { MONEY_UPGRADES } from './groups/money.upgrades';
 import { PRESTIGE_UPGRADES } from './groups/prestige.upgrades';
@@ -12,6 +13,7 @@ export const UPGRADE_DATA = {
   ...CRYSTAL_UPGRADES,
   ...RUBY_UPGRADES,
   ...SYNERGY_UPGRADES,
+  ...GEM_UPGRADES,
   ...LOGARITHM_UPGRADES,
   ...PRESTIGE_UPGRADES,
   ...STARDUST_UPGRADES,
