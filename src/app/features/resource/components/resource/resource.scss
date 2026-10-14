@@ -1,0 +1,33 @@
+@use 'mobile';
+
+:host {
+  vertical-align: bottom;
+
+  display: inline-flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.name,
+.value {
+  color: inherit;
+  font: var(--resource-font, var(--font-default));
+}
+
+.value {
+  min-width: var(--resource-value-width, 90px);
+  font-variant-numeric: tabular-nums;
+}
+
+@include mobile.mobile {
+  .name,
+  .value {
+    font: var(--font-additional);
+  }
+
+  .value {
+    min-width: var(--resource-value-width, 70px);
+  }
+}

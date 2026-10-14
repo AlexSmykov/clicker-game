@@ -1,0 +1,20 @@
+<div class="filters">
+  @for (tag of tags(); track tag.key) {
+    <button
+      class="filter toggle-button"
+      type="button"
+      [attr.aria-label]="tag.name"
+      [attr.aria-pressed]="tag.isSelected"
+      [title]="tag.name"
+      (click)="toggleTag(tag.key)"
+    >
+      <app-icon [path]="tag.iconPath" />
+    </button>
+  }
+</div>
+
+<div class="upgrades">
+  @for (key of visibleKeys(); track key) {
+    <app-upgrade [key]="key" />
+  }
+</div>

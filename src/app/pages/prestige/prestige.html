@@ -1,0 +1,116 @@
+@if (isUnlocked()) {
+  <section class="section main">
+    <h3 class="title">Prestige</h3>
+
+    <p class="text">
+      Prestige resets your run and gives prestige points in return. Every prestige raises the border
+      for the next one.
+    </p>
+
+    <div class="border">
+      <div class="border-header">
+        <span class="label">Border</span>
+
+        <app-resource key="money" [value]="border()" [isShort]="true" />
+      </div>
+
+      <div
+        class="progress"
+        role="progressbar"
+        aria-label="Progress to the prestige border"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        [attr.aria-valuenow]="progress() * 100"
+      >
+        <div class="progress-fill" [style.width.%]="progress() * 100"></div>
+      </div>
+
+      <span class="hint">{{ progress() | percent: '1.0-1' }}</span>
+    </div>
+
+    @if (isAvailable()) {
+      <p class="text">
+        Performing now, you will get
+        <app-resource class="inline" key="prestigePoints" [value]="pointsGain()" />
+      </p>
+    } @else {
+      <p class="text">
+        You have not passed the border yet. At the border you would get
+        <app-resource class="inline" key="prestigePoints" [value]="pointsGainAtBorder()" />
+      </p>
+    }
+
+    @if (isStardustUnlocked()) {
+      <p class="text">
+        Crystals you hold will turn into
+        <app-resource class="inline" key="stardust" [value]="stardustGain()" />
+      </p>
+    }
+
+    <button
+      class="prestige"
+      type="button"
+      [class.available]="isAvailable()"
+      [class.confirm]="isConfirming()"
+      [attr.aria-disabled]="!isAvailable()"
+      (click)="prestige()"
+      (blur)="cancel()"
+    >
+      {{ isConfirming() ? 'Click again to confirm' : 'Perform prestige' }}
+    </button>
+
+    <div class="row">
+      <span class="label">Border after this prestige</span>
+
+      <app-resource key="money" [value]="nextBorder()" [isShort]="true" />
+    </div>
+  </section>
+
+  <section class="section">
+    <h3 class="title">Formula</h3>
+
+    <p class="hint">Points = floor(log<sub>base</sub>(money) × multiplier)</p>
+    <p class="hint">Border = base border ^ (growth ^ prestiges)</p>
+
+    <dl class="rows">
+      @for (param of formulaParams(); track param.key) {
+        <div class="row">
+          <dt class="label">{{ param.name }}</dt>
+          <dd class="value">{{ param.value }}</dd>
+        </div>
+      }
+    </dl>
+  </section>
+
+  <section class="section">
+    <h3 class="title">Runs</h3>
+
+    <dl class="rows">
+      @for (stat of runStats(); track stat.key) {
+        <div class="row">
+          <dt class="label">{{ stat.name }}</dt>
+          <dd class="value">{{ stat.value }}</dd>
+        </div>
+      }
+    </dl>
+  </section>
+
+  <section class="section">
+    <h3 class="title">What is reset</h3>
+
+    <dl class="rows">
+      @for (item of resetSummary; track item.name) {
+        <div class="row">
+          <dt class="label">{{ item.name }}</dt>
+          <dd class="value">{{ item.value }}</dd>
+        </div>
+      }
+    </dl>
+  </section>
+} @else {
+  <section class="section main">
+    <h3 class="title">Prestige is locked</h3>
+
+    <p class="text">Buy "{{ unlockNodeName }}" in the upgrade tree to unlock prestige.</p>
+  </section>
+}

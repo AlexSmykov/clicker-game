@@ -1,0 +1,29 @@
+<div class="zone chances">
+  @for (chance of chances(); track chance.key) {
+    <p class="chance">
+      {{ chance.name }}: {{ chance.value }}
+
+      @if (chance.amount !== null) {
+        ({{ chance.amount }})
+      }
+    </p>
+  }
+</div>
+
+<button class="click-button" type="button" (click)="click()">
+  Click me!
+
+  @for (flash of flashes(); track flash.id) {
+    @if (!flash.isMiss) {
+      <span class="crit-flash" aria-hidden="true"></span>
+    }
+
+    <span class="crit-label" aria-hidden="true" [class.miss]="flash.isMiss">{{ flash.label }}</span>
+  }
+</button>
+
+<div class="zone gains">
+  <p class="title">Income per click:</p>
+
+  <app-resource key="money" [value]="moneyPerClick()" />
+</div>

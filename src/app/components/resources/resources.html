@@ -1,0 +1,3 @@
+@for (resource of unlockedResources(); track resource.key) {
+  <app-resource [key]="resource.key" [value]="resource.value" />
+}

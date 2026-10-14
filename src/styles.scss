@@ -1,0 +1,16 @@
+@use 'styles/color';
+@use 'styles/font';
+@use 'styles/shadow';
+@use 'styles/button';
+@use 'styles/common';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-background-dark);
+  user-select: none;
+}

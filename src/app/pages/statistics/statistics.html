@@ -1,0 +1,83 @@
+<section class="section">
+  <h3 class="title">General</h3>
+
+  <dl class="rows">
+    @for (counter of counters(); track counter.key) {
+      <div class="row">
+        <dt class="label">{{ counter.name }}</dt>
+        <dd class="value">{{ counter.value }}</dd>
+      </div>
+    }
+
+    <div class="row">
+      <dt class="label">Playing since</dt>
+      <dd class="value">{{ (startedAt() | date: 'short') ?? '—' }}</dd>
+    </div>
+
+    <div class="row">
+      <dt class="label">Last saved</dt>
+      <dd class="value">{{ (lastSavedAt() | date: 'short') ?? '—' }}</dd>
+    </div>
+  </dl>
+</section>
+
+<section class="section">
+  <h3 class="title">Resources</h3>
+
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="label" scope="col">Resource</th>
+          <th class="label" scope="col">Current</th>
+          <th class="label" scope="col">Earned</th>
+          <th class="label" scope="col">Spent</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (resource of resources(); track resource.key) {
+          <tr [style.color]="resource.color">
+            <th class="value" scope="row">{{ resource.name }}</th>
+            <td class="value">{{ resource.current }}</td>
+            <td class="value">{{ resource.earned }}</td>
+            <td class="value">{{ resource.spent }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section">
+  <h3 class="title">Upgrades</h3>
+
+  <dl class="rows">
+    @for (item of upgradeSummary(); track item.name) {
+      <div class="row">
+        <dt class="label">{{ item.name }}</dt>
+        <dd class="value">{{ item.value }}</dd>
+      </div>
+    }
+
+    @for (upgrade of upgrades(); track upgrade.key) {
+      <div class="row">
+        <dt class="label">{{ upgrade.name }}</dt>
+        <dd class="value">{{ upgrade.value }}</dd>
+      </div>
+    }
+  </dl>
+</section>
+
+<section class="section">
+  <h3 class="title">Parameters</h3>
+
+  <dl class="rows">
+    @for (param of params(); track param.key) {
+      <div class="row">
+        <dt class="label">{{ param.name }}</dt>
+        <dd class="value">{{ param.value }}</dd>
+      </div>
+    }
+  </dl>
+</section>
